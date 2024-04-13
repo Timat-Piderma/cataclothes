@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'data_manager.dart';
 import 'item_grid.dart';
 import 'item_horizontal_list.dart';
+import 'searchbar.dart';
 
 class ClosetScreen extends StatefulWidget {
   const ClosetScreen({
@@ -34,11 +35,16 @@ class _ClosetScreenState extends State<ClosetScreen> {
             ),
             body: Column(children: [
               Expanded(
+                child: const SearchBarComponent(),
                 flex: 1,
-                child: ItemHorizontalList(items: DataManager.getAllArticles()),
               ),
               Expanded(
-                flex: 6,
+                flex: 2,
+                child: ItemHorizontalList(items: DataManager.getAllArticles()),
+              ),
+              const Divider(),
+              Expanded(
+                flex: 11,
                 child: ItemGrid(items: DataManager.getAllArticles()),
               ),
             ]));
