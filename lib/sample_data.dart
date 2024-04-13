@@ -252,7 +252,36 @@ class SampleData {
 
   ];
 
+  static Outfit outfit1 = Outfit(
+    name: 'Berretto5',
+    image: 'assets/outfits/placeholder_outfit.jpg',
+    cost: "10.00 €",
+    isFavourite: false,
+  );
+  static Outfit outfit2 = Outfit(
+    name: 'Berretto5',
+    image: 'assets/outfits/placeholder_outfit.jpg',
+    cost: "10.00 €",
+    isFavourite: false,
+  );
+  static Outfit outfit3 = Outfit(
+    name: 'Berretto5',
+    image: 'assets/outfits/placeholder_outfit.jpg',
+    cost: "10.00 €",
+    isFavourite: false,
+  );
+  static Outfit outfit4 = Outfit(
+    name: 'Berretto5',
+    image: 'assets/outfits/placeholder_outfit.jpg',
+    cost: "10.00 €",
+    isFavourite: false,
+  );
+
   static List<Outfit> allOutfits = [
+    outfit1,
+    outfit2,
+    outfit3,
+    outfit4
   ];
 
   static List<Outfit> favouriteOutfits = [
