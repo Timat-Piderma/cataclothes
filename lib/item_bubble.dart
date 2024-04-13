@@ -20,7 +20,7 @@ class _ItemBubbleState extends State<ItemBubble> {
       child: ClipRRect(
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(100),
             border: Border.all(color: Colors.blueAccent, width: 4),
             image: DecorationImage(
               image: AssetImage(widget.item.image),
