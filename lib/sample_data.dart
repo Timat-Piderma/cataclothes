@@ -214,7 +214,6 @@ class SampleData {
   );
 
 
-
   static List<Article> allArticles = [
     article1,
     article2,
@@ -249,7 +248,6 @@ class SampleData {
   ];
 
   static List<Article> favouriteArticles = [
-
   ];
 
   static Outfit outfit1 = Outfit(
@@ -285,6 +283,9 @@ class SampleData {
   ];
 
   static List<Outfit> favouriteOutfits = [
+  ];
 
+  static List<Article> featuredItems = [
+    article1,
   ];
 }
