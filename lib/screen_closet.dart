@@ -34,13 +34,13 @@ class _ClosetScreenState extends State<ClosetScreen> {
               onPressed: () => {},
             ),
             body: Column(children: [
-              Expanded(
-                child: const SearchBarComponent(),
+              const Expanded(
                 flex: 1,
+                child: SearchBarComponent(),
               ),
               Expanded(
                 flex: 2,
-                child: ItemHorizontalList(items: DataManager.getAllArticles()),
+                child: ItemHorizontalList(items: DataManager.getAllArticles(), type: 0),
               ),
               const Divider(),
               Expanded(

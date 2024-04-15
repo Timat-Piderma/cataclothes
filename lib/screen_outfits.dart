@@ -34,13 +34,13 @@ class _OutfitScreenState extends State<OutfitsScreen> {
               onPressed: () => {},
             ),
             body: Column(children: [
-              Expanded(
-                child: const SearchBarComponent(),
+              const Expanded(
                 flex: 1,
+                child: SearchBarComponent(),
               ),
               Expanded(
                 flex: 2,
-                child: ItemHorizontalList(items: DataManager.getAllOutfits()),
+                child: ItemHorizontalList(items: DataManager.getAllOutfits(), type: 0),
               ),
               const Divider(),
               Expanded(
