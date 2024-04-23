@@ -90,19 +90,20 @@ class _CataClothesAppHomeState extends State<CataClothesAppHome> {
     return Scaffold(
       //extendBodyBehindAppBar: true,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(40),
+        preferredSize: const Size.fromHeight(60),
         child: AppBar(
-          //backgroundColor: Colors.black12,
+          backgroundColor: Colors.tealAccent,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Image.asset(
                 'assets/logo_alpha.png',
                 fit: BoxFit.cover,
-                height: 35.0,
+                height: 45.0,
               ),
               Text(
                 widget.title,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ],
           ),
