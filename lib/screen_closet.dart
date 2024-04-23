@@ -45,7 +45,7 @@ class _ClosetScreenState extends State<ClosetScreen> {
               const Divider(),
               Expanded(
                 flex: 11,
-                child: ItemGrid(items: DataManager.getAllArticles()),
+                child: ItemGrid(items: DataManager.getAllArticles(),type: 0,),
               ),
             ]));
       },

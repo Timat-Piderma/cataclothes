@@ -1,3 +1,5 @@
+import 'package:cataclothes/item_grid.dart';
+import 'package:cataclothes/searchbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cataclothes/data_manager.dart';
@@ -12,7 +14,6 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
-
   // double computeHeight() {
   //   double height = MediaQuery.of(context).size.height;
   //   var padding = MediaQuery.of(context).viewPadding;
@@ -24,17 +25,13 @@ class _ShopScreenState extends State<ShopScreen> {
   Widget build(BuildContext context) {
     return Consumer<DataManager>(
       builder: (context, manager, child) {
-        return ListView(
+        return Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Shop Screen",
-                      style: Theme.of(context).textTheme.headlineSmall),
-                  const SizedBox(height: 8),
-                ],
+            SearchBarComponent(),
+            Expanded(
+              child: ItemGrid(
+                items: DataManager.getAllArticles(),
+                type: 1,
               ),
             ),
           ],

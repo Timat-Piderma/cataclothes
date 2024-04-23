@@ -10,5 +10,6 @@ abstract class Item {
   });
 
   GestureDetector itemCardSmall(BuildContext context);
+  GestureDetector itemCardStore(BuildContext context);
 
 }

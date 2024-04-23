@@ -45,7 +45,7 @@ class _OutfitScreenState extends State<OutfitsScreen> {
               const Divider(),
               Expanded(
                 flex: 11,
-                child: ItemGrid(items: DataManager.getAllOutfits()),
+                child: ItemGrid(items: DataManager.getAllOutfits(), type: 0,),
               ),
             ]));
       },
