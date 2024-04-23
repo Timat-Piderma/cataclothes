@@ -37,13 +37,6 @@ class _CataClothesAppState extends State<CataClothes> {
         ChangeNotifierProvider(
           create: (context) => _settingsManager,
         ),
-
-        /*
-        ChangeNotifierProvider(
-          create: (context) => _groceryManager,
-        ),
-
-         */
       ],
       child: Consumer<SettingsManager>(
         builder: (context, settingsManager, child) {
