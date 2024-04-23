@@ -42,18 +42,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
           //Start of items Row
           SizedBox(
-            height: computeHeight() / 6.7,
+            height: computeHeight() / 6,
             child: Column(
               children: [
-                const Expanded(
-                    flex: 1,
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        "Non lo metti più? Mettilo su Vinted",
-                        textAlign: TextAlign.left,
-                      ),
-                    )),
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    "Non lo metti più? Mettilo su Vinted",
+                    style: Theme.of(context).textTheme.titleSmall,
+                    textAlign: TextAlign.left,
+                  ),
+                ),
                 Expanded(
                     flex: 9,
                     child: ItemHorizontalList(
@@ -64,18 +63,38 @@ class _HomeScreenState extends State<HomeScreen> {
 
           //Start of items Row
           SizedBox(
-            height: computeHeight() / 6.7,
+            height: computeHeight() / 6,
             child: Column(
               children: [
-                const Expanded(
-                    flex: 1,
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        "Non lo metti più? Mettilo su Vinted",
-                        textAlign: TextAlign.left,
-                      ),
-                    )),
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    "Non lo metti più? Mettilo su Vinted",
+                    style: Theme.of(context).textTheme.titleSmall,
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                Expanded(
+                    flex: 9,
+                    child: ItemHorizontalList(
+                        items: DataManager.getAllArticles(), type: 1))
+              ],
+            ),
+          ),
+
+          //Start of items Row
+          SizedBox(
+            height: computeHeight() / 6,
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    "Non lo metti più? Mettilo su Vinted",
+                    style: Theme.of(context).textTheme.titleSmall,
+                    textAlign: TextAlign.left,
+                  ),
+                ),
                 Expanded(
                     flex: 9,
                     child: ItemHorizontalList(
