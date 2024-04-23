@@ -40,7 +40,7 @@ class CataClothesTheme {
         color: Colors.black
     ),
     labelLarge: GoogleFonts.lato(
-        fontSize: 15,
+        fontSize: 9,
         fontWeight: FontWeight.w500,
         letterSpacing: 1.25,
         color: Colors.black
