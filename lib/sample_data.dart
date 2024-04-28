@@ -1,3 +1,5 @@
+import 'package:cataclothes/category.dart';
+
 import 'article.dart';
 import 'outfit.dart';
 
@@ -287,5 +289,24 @@ class SampleData {
 
   static List<Article> featuredItems = [
     article1,
+  ];
+
+  static Category cat1 = Category(
+    name: 'cat1',
+    id: 1
+  );
+  static Category cat2 = Category(
+      name: 'cat2',
+      id: 2
+  );
+  static Category cat3 = Category(
+      name: 'cat3',
+      id: 3
+  );
+
+  static List<Category> allCategories = [
+    cat1,
+    cat2,
+    cat3,
   ];
 }
