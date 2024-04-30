@@ -1,15 +1,18 @@
 import 'package:cataclothes/category.dart';
 
 import 'article.dart';
+import 'article_color.dart';
 import 'outfit.dart';
 
 class SampleData {
 
   static Article article1 = Article(
+
     name: 'Berretto',
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article2 = Article(
@@ -17,6 +20,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article3 = Article(
@@ -24,6 +28,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article4 = Article(
@@ -31,6 +36,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article5 = Article(
@@ -38,6 +44,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article11 = Article(
@@ -45,6 +52,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article12 = Article(
@@ -52,6 +60,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article13 = Article(
@@ -59,6 +68,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article14 = Article(
@@ -66,6 +76,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article15 = Article(
@@ -73,6 +84,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article21 = Article(
@@ -80,6 +92,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article22 = Article(
@@ -87,6 +100,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article23 = Article(
@@ -94,6 +108,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article24 = Article(
@@ -101,6 +116,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article25 = Article(
@@ -108,6 +124,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article31 = Article(
@@ -115,6 +132,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article32 = Article(
@@ -122,6 +140,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article33 = Article(
@@ -129,6 +148,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article34 = Article(
@@ -136,6 +156,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article35 = Article(
@@ -143,6 +164,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article41 = Article(
@@ -150,6 +172,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article42 = Article(
@@ -157,6 +180,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article43 = Article(
@@ -164,6 +188,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article44 = Article(
@@ -171,6 +196,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article45 = Article(
@@ -178,6 +204,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article51 = Article(
@@ -185,6 +212,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article52 = Article(
@@ -192,6 +220,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article53 = Article(
@@ -199,6 +228,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article54 = Article(
@@ -206,6 +236,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
   static Article article55 = Article(
@@ -213,6 +244,7 @@ class SampleData {
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
+    color: red,
   );
 
 
@@ -292,8 +324,8 @@ class SampleData {
   ];
 
   static Category cat1 = Category(
-    name: 'cat1',
-    id: 1
+      name: 'cat1',
+      id: 1
   );
   static Category cat2 = Category(
       name: 'cat2',
@@ -308,5 +340,23 @@ class SampleData {
     cat1,
     cat2,
     cat3,
+  ];
+
+
+  static ArticleColor red = ArticleColor(
+      name: 'red',
+      id: 1
+  );  static ArticleColor blue = ArticleColor(
+      name: 'blue',
+      id: 1
+  );  static ArticleColor yellow = ArticleColor(
+      name: 'yellow',
+      id: 1
+  );
+
+  static List<ArticleColor> allColors = [
+    red,
+    blue,
+    yellow,
   ];
 }

@@ -1,3 +1,4 @@
+import 'package:cataclothes/article_color.dart';
 import 'package:cataclothes/category.dart';
 import 'package:flutter/material.dart';
 import 'article.dart';
@@ -10,6 +11,7 @@ class DataManager extends ChangeNotifier {
   final List<Article> _favouriteArticles = SampleData.favouriteArticles;
   final List<Outfit> _favouriteOutfits = SampleData.favouriteOutfits;
   final List<Category> _allCategories = SampleData.allCategories;
+  final List<ArticleColor> _allColors = SampleData.allColors;
 
   List<Article> get allArticles => List.unmodifiable(_allArticles);
 
@@ -20,6 +22,8 @@ class DataManager extends ChangeNotifier {
   List<Outfit> get favouriteOutfits => List.unmodifiable(_favouriteOutfits);
 
   List<Category> get allCategories => List.unmodifiable(_allCategories);
+
+  List<ArticleColor> get allColors => List.unmodifiable(_allColors);
 
   void _deleteFavouriteArticle(int index) {
     _favouriteArticles.removeAt(index);
@@ -107,5 +111,12 @@ class DataManager extends ChangeNotifier {
     // await Future.delayed(const Duration(milliseconds: 5000));
 
     return List.unmodifiable(SampleData.allCategories);
+  }
+
+  static List<ArticleColor> getAllColors() {
+    // Simulate api request wait time
+    // await Future.delayed(const Duration(milliseconds: 5000));
+
+    return List.unmodifiable(SampleData.allColors);
   }
 }

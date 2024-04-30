@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cataclothes/data_manager.dart';
 import 'article.dart';
+import 'article_color.dart';
 import 'category.dart';
 
 class ArticleDetail extends StatefulWidget {
@@ -17,10 +18,8 @@ class ArticleDetail extends StatefulWidget {
 // SingleTickerProviderStateMixin serve per permettere di inizializzare vsync a this nel TabController
 class _ArticleDetailState extends State<ArticleDetail>
     with SingleTickerProviderStateMixin {
-
-  TextEditingController controllerNome = TextEditingController();
-  TextEditingController controllerCosto = TextEditingController();
-
+  TextEditingController controllerName = TextEditingController();
+  TextEditingController controllerCost = TextEditingController();
 
   bool _isFavourited = false;
   late TabController _tabController;
@@ -28,8 +27,8 @@ class _ArticleDetailState extends State<ArticleDetail>
   @override
   void initState() {
     _isFavourited = widget.article.isFavourite;
-    controllerNome.text = widget.article.name;
-    controllerCosto.text = widget.article.cost;
+    controllerName.text = widget.article.name;
+    controllerCost.text = widget.article.cost;
   }
 
   @override
@@ -59,7 +58,10 @@ class _ArticleDetailState extends State<ArticleDetail>
 
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.tealAccent,
-        label: Text("Modifica",style: TextStyle(color: Colors.black,fontSize: 20),),
+        label: Text(
+          "Modifica",
+          style: TextStyle(color: Colors.black, fontSize: 20),
+        ),
         onPressed: () => {},
       ),
 
@@ -128,7 +130,7 @@ class _ArticleDetailState extends State<ArticleDetail>
                         child: TextField(
                           style: TextStyle(fontSize: 18),
                           readOnly: true,
-                          controller: controllerNome,
+                          controller: controllerName,
                           decoration: InputDecoration(
                             labelText: 'Nome',
                           ),
@@ -140,8 +142,29 @@ class _ArticleDetailState extends State<ArticleDetail>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
+                        child: DropdownMenu<String>(
+                          initialSelection: widget.article.color.toString(),
+                          inputDecorationTheme: InputDecorationTheme(),
+                          label: const Text("Colore"),
+                          textStyle: TextStyle(fontSize: 18),
+                          width: computeWidth() / 1.1,
+                          dropdownMenuEntries: DataManager.getAllColors()
+                              .map<DropdownMenuEntry<String>>((ArticleColor value) {
+                            return DropdownMenuEntry<String>(
+                              value: value.name,
+                              label: value.name,
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: computeWidth() / 1.1,
                         child: TextField(
-                          controller: controllerCosto,
+                          controller: controllerCost,
                           style: TextStyle(fontSize: 18),
                           readOnly: true,
                           decoration: InputDecoration(
