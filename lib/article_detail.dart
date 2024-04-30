@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:cataclothes/data_manager.dart';
 import 'article.dart';
 import 'category.dart';
@@ -128,6 +127,7 @@ class _ArticleDetailState extends State<ArticleDetail>
                         width: computeWidth() / 1.1,
                         child: TextField(
                           style: TextStyle(fontSize: 18),
+                          readOnly: true,
                           controller: controllerNome,
                           decoration: InputDecoration(
                             labelText: 'Nome',
@@ -167,18 +167,6 @@ class _ArticleDetailState extends State<ArticleDetail>
                               label: value.name,
                             );
                           }).toList(),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: 'Gaming',
-                          ),
                         ),
                       ),
                     ],

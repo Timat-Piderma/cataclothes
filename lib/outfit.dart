@@ -1,4 +1,4 @@
-import 'package:cataclothes/item_card_store.dart';
+import 'package:cataclothes/article_card_store.dart';
 import 'package:flutter/material.dart';
 import 'item.dart';
 import 'item_card_small.dart';
@@ -35,18 +35,6 @@ class Outfit extends Item {
 
   @override
   GestureDetector itemCardStore(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return OutfitDetail(outfit: this);
-            },
-          ),
-        );
-      },
-      child: ItemCardStore(item: this),
-    );
+    return GestureDetector();
   }
 }
