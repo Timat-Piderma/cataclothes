@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'item.dart';
+import 'article.dart';
 
-class ItemCardStore extends StatefulWidget {
-  final Item item;
+class ArticleCardStore extends StatefulWidget {
+  final Article article;
 
-  const ItemCardStore({required this.item});
+  const ArticleCardStore({required this.article});
 
   @override
-  State<ItemCardStore> createState() {
-    return _ItemCardStore();
+  State<ArticleCardStore> createState() {
+    return _ArticleCardStore();
   }
 }
 
-class _ItemCardStore extends State<ItemCardStore> {
+class _ArticleCardStore extends State<ArticleCardStore> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,7 +29,7 @@ class _ItemCardStore extends State<ItemCardStore> {
                   border: Border.all(color: Colors.blueAccent, width: 4),
                   image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: AssetImage(widget.item.image),
+                    image: AssetImage(widget.article.image),
                   ),
                 ),
               ),
@@ -37,11 +37,11 @@ class _ItemCardStore extends State<ItemCardStore> {
           ),
         ),
         Text(
-          "Nome Articolo",
+          widget.article.name,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
         Text(
-          "99.99 €",
+          widget.article.cost,
           style: Theme.of(context).textTheme.bodySmall,
         )
       ],
