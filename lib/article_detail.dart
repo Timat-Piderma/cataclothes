@@ -23,10 +23,10 @@ class _ArticleDetailState extends State<ArticleDetail>
   TextEditingController controllerCost = TextEditingController();
 
   List<ArticleColor> colorItems = DataManager.getAllColors();
-  String dropdownColorValue = "";
+  ArticleColor? dropdownColorValue;
 
   List<Category> categoryItems = DataManager.getAllCategories();
-  String dropdownCategoryValue = "";
+  Category? dropdownCategoryValue;
 
   bool _isFavourited = false;
   late TabController _tabController;
@@ -35,11 +35,12 @@ class _ArticleDetailState extends State<ArticleDetail>
   void initState() {
     isEditable = false;
     _isFavourited = widget.article.isFavourite;
+
     controllerName.text = widget.article.name;
     controllerCost.text = widget.article.cost;
 
-    dropdownColorValue = widget.article.color!.name;
-    dropdownCategoryValue = widget.article.category!.name;
+    dropdownColorValue = widget.article.color;
+    dropdownCategoryValue = widget.article.category;
   }
 
   @override
@@ -77,6 +78,13 @@ class _ArticleDetailState extends State<ArticleDetail>
           ),
           onPressed: () => {
             setState(() {
+              if (isEditable) {
+                widget.article.name = controllerName.text;
+                widget.article.cost = controllerCost.text;
+                widget.article.color = dropdownColorValue;
+                widget.article.category = dropdownCategoryValue;
+              }
+
               isEditable = !isEditable;
             })
           },
@@ -164,22 +172,22 @@ class _ArticleDetailState extends State<ArticleDetail>
                         width: computeWidth() / 1.1,
                         child: IgnorePointer(
                           ignoring: !isEditable,
-                          child: DropdownButton<String>(
+                          child: DropdownButton<ArticleColor>(
                             value: dropdownColorValue,
                             //label: const Text("Colore"),
                             //textStyle: TextStyle(fontSize: 18),
                             //width: computeWidth() / 1.1,
                             items: colorItems
                                 .map(
-                                  (map) => DropdownMenuItem<String>(
+                                  (map) => DropdownMenuItem<ArticleColor>(
                                     child: Text(map.name),
-                                    value: map.name,
+                                    value: map,
                                   ),
                                 )
                                 .toList(),
-                            onChanged: (String? value) {
+                            onChanged: (ArticleColor? value) {
                               setState(() {
-                                dropdownColorValue = value.toString();
+                                dropdownColorValue = value;
                               });
                             },
                           ),
@@ -210,22 +218,22 @@ class _ArticleDetailState extends State<ArticleDetail>
                         width: computeWidth() / 1.1,
                         child: IgnorePointer(
                           ignoring: !isEditable,
-                          child: DropdownButton<String>(
+                          child: DropdownButton<Category>(
                             value: dropdownCategoryValue,
                             //label: const Text("Colore"),
                             //textStyle: TextStyle(fontSize: 18),
                             //width: computeWidth() / 1.1,
                             items: categoryItems
                                 .map(
-                                  (map) => DropdownMenuItem<String>(
-                                child: Text(map.name),
-                                value: map.name,
-                              ),
-                            )
+                                  (map) => DropdownMenuItem<Category>(
+                                    child: Text(map.name),
+                                    value: map,
+                                  ),
+                                )
                                 .toList(),
-                            onChanged: (String? value) {
+                            onChanged: (Category? value) {
                               setState(() {
-                                dropdownCategoryValue = value.toString();
+                                dropdownCategoryValue = value;
                               });
                             },
                           ),

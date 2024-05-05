@@ -17,19 +17,26 @@ class OutfitDetail extends StatefulWidget {
 // SingleTickerProviderStateMixin serve per permettere di inizializzare vsync a this nel TabController
 class _OutfitDetailState extends State<OutfitDetail>
     with SingleTickerProviderStateMixin {
+  bool isEditable = false;
 
-  TextEditingController controllerNome = TextEditingController();
-  TextEditingController controllerCosto = TextEditingController();
+  TextEditingController controllerName = TextEditingController();
+  TextEditingController controllerCost = TextEditingController();
 
+  List<Category> categoryItems = DataManager.getAllCategories();
+  Category? dropdownCategoryValue;
 
   bool _isFavourited = false;
   late TabController _tabController;
 
   @override
   void initState() {
+    isEditable = false;
     _isFavourited = widget.outfit.isFavourite;
-    controllerNome.text = widget.outfit.name;
-    controllerCosto.text = widget.outfit.cost;
+
+    controllerName.text = widget.outfit.name;
+    controllerCost.text = widget.outfit.cost;
+
+    dropdownCategoryValue = widget.outfit.category;
   }
 
   @override
@@ -57,10 +64,27 @@ class _OutfitDetailState extends State<OutfitDetail>
         ),
       ),
 
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Colors.tealAccent,
-        label: Text("Modifica",style: TextStyle(color: Colors.black,fontSize: 20),),
-        onPressed: () => {},
+      floatingActionButton: Visibility(
+        visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+        child: FloatingActionButton.extended(
+          backgroundColor: isEditable ? Colors.red : Colors.tealAccent,
+          label: Text(
+            isEditable ? "Salva" : "Modifica",
+            style: TextStyle(color: Colors.black, fontSize: 20),
+          ),
+          onPressed: () => {
+            setState(() {
+              if (isEditable) {
+                widget.outfit.name = controllerName.text;
+                widget.outfit.cost = controllerCost.text;
+
+                widget.outfit.category = dropdownCategoryValue;
+              }
+
+              isEditable = !isEditable;
+            })
+          },
+        ),
       ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -125,12 +149,14 @@ class _OutfitDetailState extends State<OutfitDetail>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
-                        child: TextField(
-                          style: TextStyle(fontSize: 18),
-                          readOnly: true,
-                          controller: controllerNome,
-                          decoration: InputDecoration(
-                            labelText: 'Nome',
+                        child: IgnorePointer(
+                          ignoring: !isEditable,
+                          child: TextField(
+                            style: TextStyle(fontSize: 18),
+                            controller: controllerName,
+                            decoration: InputDecoration(
+                              labelText: 'Nome',
+                            ),
                           ),
                         ),
                       ),
@@ -140,12 +166,14 @@ class _OutfitDetailState extends State<OutfitDetail>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
-                        child: TextField(
-                          controller: controllerCosto,
-                          style: TextStyle(fontSize: 18),
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            labelText: 'Costo',
+                        child: IgnorePointer(
+                          ignoring: !isEditable,
+                          child: TextField(
+                            style: TextStyle(fontSize: 18),
+                            controller: controllerCost,
+                            decoration: InputDecoration(
+                              labelText: 'Costo',
+                            ),
                           ),
                         ),
                       ),
@@ -155,18 +183,27 @@ class _OutfitDetailState extends State<OutfitDetail>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
-                        child: DropdownMenu<String>(
-                          inputDecorationTheme: InputDecorationTheme(),
-                          label: const Text("Categoria"),
-                          textStyle: TextStyle(fontSize: 18),
-                          width: computeWidth() / 1.1,
-                          dropdownMenuEntries: DataManager.getAllCategories()
-                              .map<DropdownMenuEntry<String>>((Category value) {
-                            return DropdownMenuEntry<String>(
-                              value: value.name,
-                              label: value.name,
-                            );
-                          }).toList(),
+                        child: IgnorePointer(
+                          ignoring: !isEditable,
+                          child: DropdownButton<Category>(
+                            value: dropdownCategoryValue,
+                            //label: const Text("Colore"),
+                            //textStyle: TextStyle(fontSize: 18),
+                            //width: computeWidth() / 1.1,
+                            items: categoryItems
+                                .map(
+                                  (map) => DropdownMenuItem<Category>(
+                                child: Text(map.name),
+                                value: map,
+                              ),
+                            )
+                                .toList(),
+                            onChanged: (Category? value) {
+                              setState(() {
+                                dropdownCategoryValue = value;
+                              });
+                            },
+                          ),
                         ),
                       ),
                     ],
