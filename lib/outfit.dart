@@ -3,17 +3,20 @@ import 'package:flutter/material.dart';
 import 'item.dart';
 import 'item_card_small.dart';
 import 'outfit_detail.dart';
+import 'category.dart';
 
 class Outfit extends Item {
   String cost = "";
   String name = "";
   bool isFavourite = false;
+  Category? category;
 
   Outfit({
     super.image = "",
     this.cost = "",
     this.name = "",
     this.isFavourite = false,
+    this.category,
   });
 
   @override

@@ -314,24 +314,28 @@ class SampleData {
     name: 'Outfit1',
     image: 'assets/outfits/placeholder_outfit.jpg',
     cost: "999.00 €",
+    category: cat1,
     isFavourite: false,
   );
   static Outfit outfit2 = Outfit(
     name: 'Outfit1',
     image: 'assets/outfits/placeholder_outfit.jpg',
     cost: "999.00 €",
+    category: cat1,
     isFavourite: false,
   );
   static Outfit outfit3 = Outfit(
     name: 'Outfit1',
     image: 'assets/outfits/placeholder_outfit.jpg',
     cost: "99.00 €",
+    category: cat1,
     isFavourite: false,
   );
   static Outfit outfit4 = Outfit(
     name: 'Outfit1',
     image: 'assets/outfits/placeholder_outfit.jpg',
     cost: "999.00 €",
+    category: cat1,
     isFavourite: false,
   );
 
