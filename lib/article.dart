@@ -5,12 +5,14 @@ import 'article_detail.dart';
 import 'item_card_small.dart';
 import 'item.dart';
 import 'article_store_detail.dart';
+import 'category.dart';
 
 class Article extends Item {
   String name = "";
   String cost = "";
   bool isFavourite = false;
   ArticleColor? color;
+  Category? category;
 
   Article({
     super.image = "",
@@ -18,6 +20,7 @@ class Article extends Item {
     this.cost = "",
     this.isFavourite = false,
     this.color,
+    this.category,
   });
 
   @override

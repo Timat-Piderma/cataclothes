@@ -5,14 +5,13 @@ import 'article_color.dart';
 import 'outfit.dart';
 
 class SampleData {
-
   static Article article1 = Article(
-
     name: 'Berretto',
     image: 'assets/articles/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article2 = Article(
@@ -21,6 +20,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article3 = Article(
@@ -29,6 +29,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article4 = Article(
@@ -37,6 +38,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article5 = Article(
@@ -45,6 +47,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article11 = Article(
@@ -53,6 +56,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article12 = Article(
@@ -61,6 +65,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article13 = Article(
@@ -69,6 +74,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article14 = Article(
@@ -77,6 +83,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article15 = Article(
@@ -85,6 +92,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article21 = Article(
@@ -93,6 +101,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article22 = Article(
@@ -101,6 +110,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article23 = Article(
@@ -109,6 +119,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article24 = Article(
@@ -117,6 +128,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article25 = Article(
@@ -125,6 +137,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article31 = Article(
@@ -133,6 +146,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article32 = Article(
@@ -141,6 +155,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article33 = Article(
@@ -149,6 +164,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article34 = Article(
@@ -157,6 +173,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article35 = Article(
@@ -165,6 +182,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article41 = Article(
@@ -173,6 +191,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article42 = Article(
@@ -181,6 +200,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article43 = Article(
@@ -189,6 +209,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article44 = Article(
@@ -197,6 +218,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article45 = Article(
@@ -205,6 +227,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article51 = Article(
@@ -213,6 +236,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article52 = Article(
@@ -221,6 +245,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article53 = Article(
@@ -229,6 +254,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article54 = Article(
@@ -237,6 +263,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
 
   static Article article55 = Article(
@@ -245,8 +272,8 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
+    category: cat1,
   );
-
 
   static List<Article> allArticles = [
     article1,
@@ -281,8 +308,7 @@ class SampleData {
     article55,
   ];
 
-  static List<Article> favouriteArticles = [
-  ];
+  static List<Article> favouriteArticles = [];
 
   static Outfit outfit1 = Outfit(
     name: 'Outfit1',
@@ -309,32 +335,17 @@ class SampleData {
     isFavourite: false,
   );
 
-  static List<Outfit> allOutfits = [
-    outfit1,
-    outfit2,
-    outfit3,
-    outfit4
-  ];
+  static List<Outfit> allOutfits = [outfit1, outfit2, outfit3, outfit4];
 
-  static List<Outfit> favouriteOutfits = [
-  ];
+  static List<Outfit> favouriteOutfits = [];
 
   static List<Article> featuredItems = [
     article1,
   ];
 
-  static Category cat1 = Category(
-      name: 'cat1',
-      id: 1
-  );
-  static Category cat2 = Category(
-      name: 'cat2',
-      id: 2
-  );
-  static Category cat3 = Category(
-      name: 'cat3',
-      id: 3
-  );
+  static Category cat1 = Category(name: 'cat1', id: 1);
+  static Category cat2 = Category(name: 'cat2', id: 2);
+  static Category cat3 = Category(name: 'cat3', id: 3);
 
   static List<Category> allCategories = [
     cat1,
@@ -342,17 +353,9 @@ class SampleData {
     cat3,
   ];
 
-
-  static ArticleColor red = ArticleColor(
-      name: 'red',
-      id: 1
-  );  static ArticleColor blue = ArticleColor(
-      name: 'blue',
-      id: 1
-  );  static ArticleColor yellow = ArticleColor(
-      name: 'yellow',
-      id: 1
-  );
+  static ArticleColor red = ArticleColor(name: 'red', id: 1);
+  static ArticleColor blue = ArticleColor(name: 'blue', id: 1);
+  static ArticleColor yellow = ArticleColor(name: 'yellow', id: 1);
 
   static List<ArticleColor> allColors = [
     red,
