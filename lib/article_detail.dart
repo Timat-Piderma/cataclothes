@@ -18,17 +18,28 @@ class ArticleDetail extends StatefulWidget {
 // SingleTickerProviderStateMixin serve per permettere di inizializzare vsync a this nel TabController
 class _ArticleDetailState extends State<ArticleDetail>
     with SingleTickerProviderStateMixin {
+  bool isEditable = false;
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCost = TextEditingController();
+
+  List<ArticleColor> colorItems = DataManager.getAllColors();
+  String dropdownColorValue = "";
+
+  List<Category> categoryItems = DataManager.getAllCategories();
+  String dropdownCategoryValue = "";
 
   bool _isFavourited = false;
   late TabController _tabController;
 
   @override
   void initState() {
+    isEditable = false;
     _isFavourited = widget.article.isFavourite;
     controllerName.text = widget.article.name;
     controllerCost.text = widget.article.cost;
+
+    dropdownColorValue = widget.article.color!.name;
+    dropdownCategoryValue = widget.article.category!.name;
   }
 
   @override
@@ -56,13 +67,20 @@ class _ArticleDetailState extends State<ArticleDetail>
         ),
       ),
 
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Colors.tealAccent,
-        label: Text(
-          "Modifica",
-          style: TextStyle(color: Colors.black, fontSize: 20),
+      floatingActionButton: Visibility(
+        visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
+        child: FloatingActionButton.extended(
+          backgroundColor: isEditable ? Colors.red : Colors.tealAccent,
+          label: Text(
+            isEditable ? "Salva" : "Modifica",
+            style: TextStyle(color: Colors.black, fontSize: 20),
+          ),
+          onPressed: () => {
+            setState(() {
+              isEditable = !isEditable;
+            })
+          },
         ),
-        onPressed: () => {},
       ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -127,12 +145,14 @@ class _ArticleDetailState extends State<ArticleDetail>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
-                        child: TextField(
-                          style: TextStyle(fontSize: 18),
-                          readOnly: true,
-                          controller: controllerName,
-                          decoration: InputDecoration(
-                            labelText: 'Nome',
+                        child: IgnorePointer(
+                          ignoring: !isEditable,
+                          child: TextField(
+                            style: TextStyle(fontSize: 18),
+                            controller: controllerName,
+                            decoration: InputDecoration(
+                              labelText: 'Nome',
+                            ),
                           ),
                         ),
                       ),
@@ -142,33 +162,26 @@ class _ArticleDetailState extends State<ArticleDetail>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
-                        child: DropdownMenu<String>(
-                          initialSelection: widget.article.color.toString(),
-                          inputDecorationTheme: InputDecorationTheme(),
-                          label: const Text("Colore"),
-                          textStyle: TextStyle(fontSize: 18),
-                          width: computeWidth() / 1.1,
-                          dropdownMenuEntries: DataManager.getAllColors()
-                              .map<DropdownMenuEntry<String>>((ArticleColor value) {
-                            return DropdownMenuEntry<String>(
-                              value: value.name,
-                              label: value.name,
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: TextField(
-                          controller: controllerCost,
-                          style: TextStyle(fontSize: 18),
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            labelText: 'Costo',
+                        child: IgnorePointer(
+                          ignoring: !isEditable,
+                          child: DropdownButton<String>(
+                            value: dropdownColorValue,
+                            //label: const Text("Colore"),
+                            //textStyle: TextStyle(fontSize: 18),
+                            //width: computeWidth() / 1.1,
+                            items: colorItems
+                                .map(
+                                  (map) => DropdownMenuItem<String>(
+                                    child: Text(map.name),
+                                    value: map.name,
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                dropdownColorValue = value.toString();
+                              });
+                            },
                           ),
                         ),
                       ),
@@ -178,18 +191,44 @@ class _ArticleDetailState extends State<ArticleDetail>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
-                        child: DropdownMenu<String>(
-                          inputDecorationTheme: InputDecorationTheme(),
-                          label: const Text("Categoria"),
-                          textStyle: TextStyle(fontSize: 18),
-                          width: computeWidth() / 1.1,
-                          dropdownMenuEntries: DataManager.getAllCategories()
-                              .map<DropdownMenuEntry<String>>((Category value) {
-                            return DropdownMenuEntry<String>(
-                              value: value.name,
-                              label: value.name,
-                            );
-                          }).toList(),
+                        child: IgnorePointer(
+                          ignoring: !isEditable,
+                          child: TextField(
+                            controller: controllerCost,
+                            style: TextStyle(fontSize: 18),
+                            decoration: InputDecoration(
+                              labelText: 'Costo',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: computeWidth() / 1.1,
+                        child: IgnorePointer(
+                          ignoring: !isEditable,
+                          child: DropdownButton<String>(
+                            value: dropdownCategoryValue,
+                            //label: const Text("Colore"),
+                            //textStyle: TextStyle(fontSize: 18),
+                            //width: computeWidth() / 1.1,
+                            items: categoryItems
+                                .map(
+                                  (map) => DropdownMenuItem<String>(
+                                child: Text(map.name),
+                                value: map.name,
+                              ),
+                            )
+                                .toList(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                dropdownCategoryValue = value.toString();
+                              });
+                            },
+                          ),
                         ),
                       ),
                     ],
