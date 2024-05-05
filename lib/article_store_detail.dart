@@ -17,8 +17,9 @@ class ArticleStoreDetail extends StatefulWidget {
 // SingleTickerProviderStateMixin serve per permettere di inizializzare vsync a this nel TabController
 class _ArticleStoreDetailState extends State<ArticleStoreDetail>
     with SingleTickerProviderStateMixin {
-  TextEditingController controllerNome = TextEditingController();
-  TextEditingController controllerCosto = TextEditingController();
+  TextEditingController controllerName = TextEditingController();
+  TextEditingController controllerCost = TextEditingController();
+  TextEditingController controllerCategory = TextEditingController();
 
   bool _isFavourited = false;
   late TabController _tabController;
@@ -26,8 +27,9 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
   @override
   void initState() {
     _isFavourited = widget.article.isFavourite;
-    controllerNome.text = widget.article.name;
-    controllerCosto.text = widget.article.cost;
+    controllerName.text = widget.article.name;
+    controllerCost.text = widget.article.cost;
+    controllerCategory.text = widget.article.category!.name;
   }
 
   @override
@@ -76,8 +78,10 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
                     flex: 1,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        bottom: 10,
-                        top: 10,
+                        bottom: 18,
+                        top: 18,
+                        left: 8,
+                        right: 8
                       ),
                       child: Container(
                         height: computeWidth() / 2,
@@ -105,7 +109,7 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
                           Expanded(
                             flex: 4,
                             child: Padding(
-                              padding: EdgeInsets.only(left: 10,right: 10),
+                              padding: EdgeInsets.only(left: 10, right: 10),
                               child: Text(
                                 "Descrizione dell'articolo selezionatodal negozio dell'applicazione Catà-Clothes XDD",
                                 style: Theme.of(context).textTheme.bodyMedium,
@@ -155,12 +159,15 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
-                        child: TextField(
-                          style: TextStyle(fontSize: 18),
-                          readOnly: true,
-                          controller: controllerNome,
-                          decoration: InputDecoration(
-                            labelText: 'Nome',
+                        child: IgnorePointer(
+                          ignoring: true,
+                          child: TextField(
+                            style: TextStyle(fontSize: 18),
+                            readOnly: true,
+                            controller: controllerName,
+                            decoration: InputDecoration(
+                              labelText: 'Nome',
+                            ),
                           ),
                         ),
                       ),
@@ -170,12 +177,15 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
-                        child: TextField(
-                          controller: controllerCosto,
-                          style: TextStyle(fontSize: 18),
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            labelText: 'Costo',
+                        child: IgnorePointer(
+                          ignoring: true,
+                          child: TextField(
+                            controller: controllerCost,
+                            style: TextStyle(fontSize: 18),
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              labelText: 'Costo',
+                            ),
                           ),
                         ),
                       ),
@@ -185,18 +195,16 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
-                        child: DropdownMenu<String>(
-                          inputDecorationTheme: InputDecorationTheme(),
-                          label: const Text("Categoria"),
-                          textStyle: TextStyle(fontSize: 18),
-                          width: computeWidth() / 1.1,
-                          dropdownMenuEntries: DataManager.getAllCategories()
-                              .map<DropdownMenuEntry<String>>((Category value) {
-                            return DropdownMenuEntry<String>(
-                              value: value.name,
-                              label: value.name,
-                            );
-                          }).toList(),
+                        child: IgnorePointer(
+                          ignoring: true,
+                          child: TextField(
+                            style: TextStyle(fontSize: 18),
+                            readOnly: true,
+                            controller: controllerCategory,
+                            decoration: InputDecoration(
+                              labelText: 'Categoria',
+                            ),
+                          ),
                         ),
                       ),
                     ],
