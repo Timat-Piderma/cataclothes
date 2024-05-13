@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:cataclothes/add_photo_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'data_manager.dart';
 import 'item_grid.dart';
@@ -31,7 +35,7 @@ class _ClosetScreenState extends State<ClosetScreen> {
               shape: const CircleBorder(eccentricity: 1),
               backgroundColor: Colors.amberAccent,
               child: const Icon(Icons.add, color: Colors.black, size: 60),
-              onPressed: () => {},
+              onPressed: () => {_pickImageFromGallery()},
             ),
             body: Column(children: [
               const Expanded(
@@ -40,15 +44,35 @@ class _ClosetScreenState extends State<ClosetScreen> {
               ),
               Expanded(
                 flex: 2,
-                child: ItemHorizontalList(items: DataManager.getAllArticles(), type: 0),
+                child: ItemHorizontalList(
+                    items: DataManager.getAllArticles(), type: 0),
               ),
               const Divider(),
               Expanded(
                 flex: 11,
-                child: ItemGrid(items: DataManager.getAllArticles(),type: 0,),
+                child: ItemGrid(
+                  items: DataManager.getAllArticles(),
+                  type: 0,
+                ),
               ),
             ]));
       },
+    );
+  }
+
+  Future _pickImageFromGallery() async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (returnedImage == null) return;
+
+    return Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return AddPhotoPreview(photo: File(returnedImage!.path));
+        },
+      ),
     );
   }
 }
