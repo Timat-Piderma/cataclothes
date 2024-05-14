@@ -35,6 +35,16 @@ class DataManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _deleteArticle(int index) {
+    _allArticles.removeAt(index);
+    notifyListeners();
+  }
+
+  void addArticle(Article item) {
+    _allArticles.add(item);
+    notifyListeners();
+  }
+
   void updateFavouriteArticlesList(Article item, bool newValue) {
     if (newValue) {
       _addFavouriteArticle(item);

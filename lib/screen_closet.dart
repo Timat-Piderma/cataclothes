@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cataclothes/add_photo_preview.dart';
+import 'package:cataclothes/screen_add_photo_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +70,7 @@ class _ClosetScreenState extends State<ClosetScreen> {
       context,
       MaterialPageRoute(
         builder: (context) {
-          return AddPhotoPreview(photo: File(returnedImage!.path));
+          return ScreenAddPhotoPreview(photo: File(returnedImage!.path));
         },
       ),
     );
