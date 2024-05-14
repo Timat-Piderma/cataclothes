@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'article.dart';
 
@@ -28,7 +30,7 @@ class _ArticleCardHomeState extends State<ArticleCardHome> {
           decoration: BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage(widget.article.image),
+              image: FileImage(File(widget.article.image)),
             ),
           ),
           child: Stack(

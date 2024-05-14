@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:cataclothes/data_manager.dart';
 import 'article.dart';
@@ -107,7 +109,7 @@ class _ArticleDetailState extends State<ArticleDetail>
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: Colors.black, width: 4),
                 image: DecorationImage(
-                  image: AssetImage(widget.article.image),
+                  image: FileImage(File(widget.article.image)),
                 ),
               ),
 

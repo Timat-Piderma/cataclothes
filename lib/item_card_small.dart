@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'item.dart';
 
@@ -24,7 +26,7 @@ class _ItemCardSmallState extends State<ItemCardSmall> {
             border: Border.all(color: Colors.blueAccent, width: 4),
             image: DecorationImage(
               fit: BoxFit.fill,
-              image: AssetImage(widget.item.image),
+              image: FileImage(File(widget.item.image))
             ),
           ),
         ),

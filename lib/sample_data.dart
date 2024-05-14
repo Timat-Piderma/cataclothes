@@ -276,7 +276,7 @@ class SampleData {
   );
 
   static List<Article> allArticles = [
-    article1,
+    /*article1,
     article2,
     article3,
     article4,
@@ -305,7 +305,7 @@ class SampleData {
     article52,
     article53,
     article54,
-    article55,
+    article55,*/
   ];
 
   static List<Article> favouriteArticles = [];
@@ -339,7 +339,7 @@ class SampleData {
     isFavourite: false,
   );
 
-  static List<Outfit> allOutfits = [outfit1, outfit2, outfit3, outfit4];
+  static List<Outfit> allOutfits = [/*outfit1, outfit2, outfit3, outfit4*/];
 
   static List<Outfit> favouriteOutfits = [];
 
