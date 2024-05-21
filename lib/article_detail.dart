@@ -109,7 +109,7 @@ class _ArticleDetailState extends State<ArticleDetail>
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: Colors.black, width: 4),
                 image: DecorationImage(
-                  image: FileImage(File(widget.article.image)),
+                  image: getImage(widget.article.image),
                 ),
               ),
 
@@ -250,5 +250,13 @@ class _ArticleDetailState extends State<ArticleDetail>
         ],
       ),
     );
+  }
+
+  ImageProvider getImage(String path) {
+    if (File(path).existsSync()) {
+      return FileImage(File(path));
+    } else {
+      return AssetImage(path);
+    }
   }
 }

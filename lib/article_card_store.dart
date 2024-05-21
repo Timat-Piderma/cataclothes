@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'article.dart';
 
@@ -29,7 +31,7 @@ class _ArticleCardStore extends State<ArticleCardStore> {
                   border: Border.all(color: Colors.blueAccent, width: 4),
                   image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: AssetImage(widget.article.image),
+                    image: getImage(widget.article.image),
                   ),
                 ),
               ),
@@ -46,5 +48,13 @@ class _ArticleCardStore extends State<ArticleCardStore> {
         )
       ],
     );
+  }
+
+  ImageProvider getImage(String path) {
+    if (File(path).existsSync()) {
+      return FileImage(File(path));
+    } else {
+      return AssetImage(path);
+    }
   }
 }

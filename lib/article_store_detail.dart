@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:cataclothes/data_manager.dart';
 import 'article.dart';
@@ -89,7 +91,7 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: Colors.black, width: 4),
                           image: DecorationImage(
-                            image: AssetImage(widget.article.image),
+                            image: getImage(widget.article.image),
                           ),
                         ),
                       ),
@@ -216,5 +218,13 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
         ],
       ),
     );
+  }
+
+  ImageProvider getImage(String path) {
+    if (File(path).existsSync()) {
+      return FileImage(File(path));
+    } else {
+      return AssetImage(path);
+    }
   }
 }

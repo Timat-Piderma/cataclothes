@@ -26,11 +26,19 @@ class _ItemCardSmallState extends State<ItemCardSmall> {
             border: Border.all(color: Colors.blueAccent, width: 4),
             image: DecorationImage(
               fit: BoxFit.fill,
-              image: FileImage(File(widget.item.image))
+              image: getImage(widget.item.image),
             ),
           ),
         ),
       ),
     );
+  }
+
+  ImageProvider getImage(String path) {
+    if (File(path).existsSync()) {
+      return FileImage(File(path));
+    } else {
+      return AssetImage(path);
+    }
   }
 }
