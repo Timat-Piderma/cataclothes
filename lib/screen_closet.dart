@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:cataclothes/category.dart';
 import 'package:cataclothes/screen_add_photo_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'article.dart';
 import 'data_manager.dart';
 import 'item_grid.dart';
 import 'item_horizontal_list.dart';
@@ -26,6 +28,9 @@ class _ClosetScreenState extends State<ClosetScreen> {
   //   return safeHeight;
   // }
 
+  Category? filter;
+  List<Article> filteredArticles = DataManager().allArticles;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<DataManager>(
@@ -45,19 +50,33 @@ class _ClosetScreenState extends State<ClosetScreen> {
               Expanded(
                 flex: 2,
                 child: ItemHorizontalList(
-                    items: DataManager.getAllArticles(), type: 0),
+                    items: getFilterItems(),
+                    type: 0,
+                    func: (Article art) {
+                      setFilter(art);
+                    }),
               ),
               const Divider(),
               Expanded(
                 flex: 11,
                 child: ItemGrid(
-                  items: DataManager.getAllArticles(),
+                  items: filteredArticles,
                   type: 0,
                 ),
               ),
             ]));
       },
     );
+  }
+
+  List<Article> getFilterItems() {
+    List<Article> res = [];
+    for (var cat in DataManager.getAllCategories()) {
+      if (DataManager.getFilterArticle(cat) != null) {
+        res.add(DataManager.getFilterArticle(cat)!);
+      }
+    }
+    return res;
   }
 
   Future _pickImageFromGallery() async {
@@ -74,5 +93,25 @@ class _ClosetScreenState extends State<ClosetScreen> {
         },
       ),
     );
+  }
+
+  void setFilter(Article art) {
+    if (filter != art.category) {
+      filter = art.category;
+
+      List<Article> res = [];
+      if (filter != null) {
+        res.addAll(DataManager()
+            .allArticles
+            .where((element) => element.category == filter));
+        setState(() {
+          filteredArticles = res;
+        });
+      }
+    } else
+      setState(() {
+        filter = null;
+        filteredArticles = DataManager().allArticles;
+      });
   }
 }

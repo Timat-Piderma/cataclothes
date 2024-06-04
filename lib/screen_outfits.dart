@@ -1,8 +1,10 @@
 import 'package:cataclothes/item_horizontal_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'category.dart';
 import 'data_manager.dart';
 import 'item_grid.dart';
+import 'outfit.dart';
 import 'searchbar.dart';
 
 class OutfitsScreen extends StatefulWidget {
@@ -22,6 +24,9 @@ class _OutfitScreenState extends State<OutfitsScreen> {
   //   return safeHeight;
   // }
 
+  Category? filter;
+  List<Outfit> filteredOutfits = DataManager().allOutfits;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<DataManager>(
@@ -40,15 +45,54 @@ class _OutfitScreenState extends State<OutfitsScreen> {
               ),
               Expanded(
                 flex: 2,
-                child: ItemHorizontalList(items: DataManager.getAllOutfits(), type: 0),
+                child: ItemHorizontalList(
+                    items: getFilterItems(),
+                    type: 0,
+                    func: (Outfit out) {
+                      setFilter(out);
+                    }),
               ),
               const Divider(),
               Expanded(
                 flex: 11,
-                child: ItemGrid(items: DataManager.getAllOutfits(), type: 0,),
+                child: ItemGrid(
+                  items: filteredOutfits,
+                  type: 0,
+                ),
               ),
             ]));
       },
     );
+  }
+
+  List<Outfit> getFilterItems() {
+    List<Outfit> res = [];
+    for (var cat in DataManager.getAllCategories()) {
+      if (DataManager.getFilterOutfit(cat) != null) {
+        res.add(DataManager.getFilterOutfit(cat)!);
+      }
+    }
+    return res;
+  }
+
+  void setFilter(Outfit out) {
+    if (filter != out.category) {
+      filter = out.category;
+
+      List<Outfit> res = [];
+      if (filter != null) {
+        res.addAll(DataManager()
+            .allOutfits
+            .where((element) => element.category == filter));
+        setState(() {
+          filteredOutfits = res;
+        });
+      }
+    } else
+      setState(() {
+        filter = null;
+        filteredOutfits = DataManager().allOutfits;
+      });
+
   }
 }

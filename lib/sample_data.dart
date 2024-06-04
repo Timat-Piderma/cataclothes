@@ -74,7 +74,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
-    category: cat1,
+    category: cat3,
   );
 
   static Article jeans3 = Article(
@@ -128,7 +128,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
-    category: cat1,
+    category: cat2,
   );
 
   static Article scarpe3 = Article(
@@ -172,7 +172,10 @@ class SampleData {
     scarpe2,
     scarpe3,
     shorts1,
-    shorts2
+    shorts2,
+    jeans1,
+    jeans2,
+    jeans3
   ];
 
   static List<Article> favouriteArticles = [];
@@ -188,21 +191,21 @@ class SampleData {
     name: 'Outfit1',
     image: 'assets/outfits/placeholder_outfit.jpg',
     cost: "999.00 €",
-    category: cat1,
+    category: cat2,
     isFavourite: false,
   );
   static Outfit outfit3 = Outfit(
     name: 'Outfit1',
     image: 'assets/outfits/placeholder_outfit.jpg',
     cost: "99.00 €",
-    category: cat1,
+    category: cat2,
     isFavourite: false,
   );
   static Outfit outfit4 = Outfit(
     name: 'Outfit1',
     image: 'assets/outfits/placeholder_outfit.jpg',
     cost: "999.00 €",
-    category: cat1,
+    category: cat3,
     isFavourite: false,
   );
 

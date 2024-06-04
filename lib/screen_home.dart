@@ -1,3 +1,5 @@
+import 'article.dart';
+import 'article_detail.dart';
 import 'item_card_home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +58,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     flex: 9,
                     child: ItemHorizontalList(
-                        items: DataManager.getAllArticles(), type: 1))
+                        items: DataManager.getAllArticles(),
+                        type: 1,
+                        func: (Article art) {
+                          loadDetailPage(art);
+                        }))
               ],
             ),
           ),
@@ -77,7 +83,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     flex: 9,
                     child: ItemHorizontalList(
-                        items: DataManager.getAllArticles(), type: 1))
+                        items: DataManager.getAllArticles(),
+                        type: 1,
+                        func: (Article art) {
+                          loadDetailPage(art);
+                        }))
               ],
             ),
           ),
@@ -98,12 +108,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     flex: 9,
                     child: ItemHorizontalList(
-                        items: DataManager.getAllArticles(), type: 1))
+                        items: DataManager.getAllArticles(),
+                        type: 1,
+                        func: (Article art) {
+                          loadDetailPage(art);
+                        }))
               ],
             ),
           ),
         ]);
       },
+    );
+  }
+
+  void loadDetailPage(Article art) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return ArticleDetail(article: art);
+        },
+      ),
     );
   }
 }

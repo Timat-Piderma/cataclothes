@@ -129,4 +129,22 @@ class DataManager extends ChangeNotifier {
 
     return List.unmodifiable(SampleData.allColors);
   }
+
+  static Article? getFilterArticle(Category cat) {
+    for (var element in SampleData.allArticles) {
+      if (element.category == cat){
+        return element;
+      }
+    }
+    return null;
+  }
+
+  static Outfit? getFilterOutfit(Category cat) {
+    for (var element in SampleData.allOutfits) {
+      if (element.category == cat){
+        return element;
+      }
+    }
+    return null;
+  }
 }
