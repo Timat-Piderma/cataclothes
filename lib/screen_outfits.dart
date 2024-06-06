@@ -1,10 +1,12 @@
 import 'package:cataclothes/item_horizontal_list.dart';
+import 'package:cataclothes/screen_outfit_article_select.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'category.dart';
 import 'data_manager.dart';
 import 'item_grid.dart';
 import 'outfit.dart';
+import 'outfit_detail.dart';
 import 'searchbar.dart';
 
 class OutfitsScreen extends StatefulWidget {
@@ -36,7 +38,16 @@ class _OutfitScreenState extends State<OutfitsScreen> {
               shape: const CircleBorder(eccentricity: 1),
               backgroundColor: Colors.amberAccent,
               child: const Icon(Icons.add, color: Colors.black, size: 60),
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return ScreenOutfitArticleSelect();
+                    },
+                  ),
+                )
+              },
             ),
             body: Column(children: [
               const Expanded(
@@ -58,6 +69,16 @@ class _OutfitScreenState extends State<OutfitsScreen> {
                 child: ItemGrid(
                   items: filteredOutfits,
                   type: 0,
+                  func: (Outfit out) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return OutfitDetail(outfit: out);
+                        },
+                      ),
+                    );
+                  },
                 ),
               ),
             ]));
@@ -93,6 +114,5 @@ class _OutfitScreenState extends State<OutfitsScreen> {
         filter = null;
         filteredOutfits = DataManager().allOutfits;
       });
-
   }
 }

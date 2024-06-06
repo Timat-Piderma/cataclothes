@@ -1,11 +1,12 @@
 import 'dart:io';
 
 import 'package:cataclothes/category.dart';
-import 'package:cataclothes/screen_add_photo_preview.dart';
+import 'package:cataclothes/screen_add_photo_article_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'article.dart';
+import 'article_detail.dart';
 import 'data_manager.dart';
 import 'item_grid.dart';
 import 'item_horizontal_list.dart';
@@ -62,6 +63,16 @@ class _ClosetScreenState extends State<ClosetScreen> {
                 child: ItemGrid(
                   items: filteredArticles,
                   type: 0,
+                  func: (Article art) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return ArticleDetail(article: art);
+                        },
+                      ),
+                    );
+                  },
                 ),
               ),
             ]));
@@ -77,22 +88,6 @@ class _ClosetScreenState extends State<ClosetScreen> {
       }
     }
     return res;
-  }
-
-  Future _pickImageFromGallery() async {
-    final returnedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    if (returnedImage == null) return;
-
-    return Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) {
-          return ScreenAddPhotoPreview(photo: File(returnedImage!.path));
-        },
-      ),
-    );
   }
 
   void setFilter(Article art) {
@@ -113,5 +108,21 @@ class _ClosetScreenState extends State<ClosetScreen> {
         filter = null;
         filteredArticles = DataManager().allArticles;
       });
+  }
+
+  Future _pickImageFromGallery() async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (returnedImage == null) return;
+
+    return Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return ScreenAddPhotoArticlePreview(photo: File(returnedImage!.path));
+        },
+      ),
+    );
   }
 }

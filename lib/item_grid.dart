@@ -4,8 +4,10 @@ import 'item.dart';
 class ItemGrid extends StatefulWidget {
   final List<Item> items;
   final int type;
+  final Function func;
 
-  const ItemGrid({required this.items, required this.type, Key? key})
+  const ItemGrid(
+      {required this.items, required this.type, Key? key, required this.func})
       : super(key: key);
 
   @override
@@ -28,7 +30,13 @@ class _ItemGridState extends State<ItemGrid> {
           crossAxisCount: 3,
         ),
         itemBuilder: (BuildContext context, int index) {
-          return widget.items[index].itemCardSmall(context);
+
+          return GestureDetector(
+            onTap: () {
+              widget.func(widget.items[index]);
+            },
+            child: widget.items[index].itemCardSmall(context),
+          );
         },
       );
     } else {
@@ -40,7 +48,12 @@ class _ItemGridState extends State<ItemGrid> {
           mainAxisExtent: 180,
         ),
         itemBuilder: (BuildContext context, int index) {
-          return widget.items[index].itemCardStore(context);
+          return GestureDetector(
+            onTap: () {
+              widget.func(widget.items[index]);
+            },
+            child: widget.items[index].itemCardStore(context),
+          );
         },
       );
     }

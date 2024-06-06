@@ -3,18 +3,18 @@ import 'dart:io';
 import 'package:cataclothes/screen_add_item.dart';
 import 'package:flutter/material.dart';
 
-class ScreenAddPhotoPreview extends StatefulWidget {
+class ScreenAddPhotoArticlePreview extends StatefulWidget {
   final File photo;
 
-  const ScreenAddPhotoPreview({required this.photo});
+  const ScreenAddPhotoArticlePreview({required this.photo});
 
   @override
-  State<ScreenAddPhotoPreview> createState() {
-    return ScreenAddPhotoPreviewState();
+  State<ScreenAddPhotoArticlePreview> createState() {
+    return ScreenAddPhotoArticlePreviewState();
   }
 }
 
-class ScreenAddPhotoPreviewState extends State<ScreenAddPhotoPreview>
+class ScreenAddPhotoArticlePreviewState extends State<ScreenAddPhotoArticlePreview>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {}

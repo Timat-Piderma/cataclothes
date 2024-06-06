@@ -15,22 +15,24 @@ class ItemCardSmall extends StatefulWidget {
 }
 
 class _ItemCardSmallState extends State<ItemCardSmall> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(4),
       child: ClipRRect(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.blueAccent, width: 4),
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: getImage(widget.item.image),
+          child: Container(
+            padding: const EdgeInsets.all(4),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.blueAccent, width: 4),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: getImage(widget.item.image),
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 

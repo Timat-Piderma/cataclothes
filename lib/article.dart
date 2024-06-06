@@ -27,16 +27,6 @@ class Article extends Item {
   GestureDetector itemCardSmall(BuildContext context) {
     return GestureDetector(
       child: ItemCardSmall(item: this),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return ArticleDetail(article: this);
-            },
-          ),
-        );
-      },
     );
   }
 
@@ -44,16 +34,6 @@ class Article extends Item {
   GestureDetector itemCardStore(BuildContext context) {
     return GestureDetector(
       child: ArticleCardStore(article: this),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return ArticleStoreDetail(article: this);
-            },
-          ),
-        );
-      },
     );
   }
 }

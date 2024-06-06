@@ -1,51 +1,39 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:cataclothes/data_manager.dart';
-import 'outfit.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+
+import 'article.dart';
+import 'article_color.dart';
 import 'category.dart';
+import 'data_manager.dart';
+import 'outfit.dart';
 
-class OutfitDetail extends StatefulWidget {
-  final Outfit outfit;
+class ScreenAddOutfit extends StatefulWidget {
+  final File photo;
 
-  const OutfitDetail({required this.outfit});
+  const ScreenAddOutfit({required this.photo});
 
   @override
-  State<OutfitDetail> createState() {
-    return _OutfitDetailState();
+  State<ScreenAddOutfit> createState() {
+    return ScreenAddOutfitState();
   }
 }
 
-// SingleTickerProviderStateMixin serve per permettere di inizializzare vsync a this nel TabController
-class _OutfitDetailState extends State<OutfitDetail>
+class ScreenAddOutfitState extends State<ScreenAddOutfit>
     with SingleTickerProviderStateMixin {
-  bool isEditable = false;
-
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCost = TextEditingController();
+
+  List<ArticleColor> colorItems = DataManager.getAllColors();
+  ArticleColor? dropdownColorValue;
 
   List<Category> categoryItems = DataManager.getAllCategories();
   Category? dropdownCategoryValue;
 
-  bool _isFavourited = false;
-  late TabController _tabController;
-
   @override
-  void initState() {
-    isEditable = false;
-    _isFavourited = widget.outfit.isFavourite;
-
-    controllerName.text = widget.outfit.name;
-    controllerCost.text = widget.outfit.cost;
-
-    dropdownCategoryValue = widget.outfit.category;
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+  void initState() {}
 
   double computeWidth() {
     double width = MediaQuery.of(context).size.width;
@@ -61,7 +49,7 @@ class _OutfitDetailState extends State<OutfitDetail>
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
-          title: Text("Dettagli Outfit"),
+          title: Text("Dettagli"),
           backgroundColor: Colors.tealAccent,
         ),
       ),
@@ -69,21 +57,35 @@ class _OutfitDetailState extends State<OutfitDetail>
       floatingActionButton: Visibility(
         visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
         child: FloatingActionButton.extended(
-          backgroundColor: isEditable ? Colors.red : Colors.tealAccent,
+          backgroundColor: Colors.tealAccent,
           label: Text(
-            isEditable ? "Salva" : "Modifica",
+            "Salva",
             style: TextStyle(color: Colors.black, fontSize: 20),
           ),
           onPressed: () => {
-            setState(() {
-              if (isEditable) {
-                widget.outfit.name = controllerName.text;
-                widget.outfit.cost = controllerCost.text;
+            setState(() async {
+              Directory directory = await getApplicationDocumentsDirectory();
 
-                widget.outfit.category = dropdownCategoryValue;
-              }
+              String path = directory.path;
 
-              isEditable = !isEditable;
+              final String filePath =
+                  '$path/${DateTime.now().microsecondsSinceEpoch.toString()}.png';
+
+              final File itemImage = await widget.photo.copy(filePath);
+              debugPrint(itemImage.path);
+
+              final dataManager =
+                  Provider.of<DataManager>(context, listen: false);
+              dataManager.addOutfit(new Outfit(
+                name: controllerName.text,
+                category: dropdownCategoryValue,
+                cost: controllerCost.text,
+                image: itemImage.path,
+              ));
+
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pop(context);
             })
           },
         ),
@@ -105,7 +107,7 @@ class _OutfitDetailState extends State<OutfitDetail>
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: Colors.black, width: 4),
                 image: DecorationImage(
-                  image: getImage(widget.outfit.image),
+                  image: FileImage(widget.photo),
                 ),
               ),
             ),
@@ -125,14 +127,11 @@ class _OutfitDetailState extends State<OutfitDetail>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
-                        child: IgnorePointer(
-                          ignoring: !isEditable,
-                          child: TextField(
-                            style: TextStyle(fontSize: 18),
-                            controller: controllerName,
-                            decoration: InputDecoration(
-                              labelText: 'Nome',
-                            ),
+                        child: TextField(
+                          style: TextStyle(fontSize: 18),
+                          controller: controllerName,
+                          decoration: InputDecoration(
+                            labelText: 'Nome',
                           ),
                         ),
                       ),
@@ -142,14 +141,11 @@ class _OutfitDetailState extends State<OutfitDetail>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
-                        child: IgnorePointer(
-                          ignoring: !isEditable,
-                          child: TextField(
-                            style: TextStyle(fontSize: 18),
-                            controller: controllerCost,
-                            decoration: InputDecoration(
-                              labelText: 'Costo',
-                            ),
+                        child: TextField(
+                          controller: controllerCost,
+                          style: TextStyle(fontSize: 18),
+                          decoration: InputDecoration(
+                            labelText: 'Costo',
                           ),
                         ),
                       ),
@@ -159,24 +155,21 @@ class _OutfitDetailState extends State<OutfitDetail>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
-                        child: IgnorePointer(
-                          ignoring: !isEditable,
-                          child: DropdownButton<Category>(
-                            value: dropdownCategoryValue,
-                            items: categoryItems
-                                .map(
-                                  (map) => DropdownMenuItem<Category>(
-                                    child: Text(map.name),
-                                    value: map,
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (Category? value) {
-                              setState(() {
-                                dropdownCategoryValue = value;
-                              });
-                            },
-                          ),
+                        child: DropdownButton<Category>(
+                          value: dropdownCategoryValue,
+                          items: categoryItems
+                              .map(
+                                (map) => DropdownMenuItem<Category>(
+                                  child: Text(map.name),
+                                  value: map,
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (Category? value) {
+                            setState(() {
+                              dropdownCategoryValue = value;
+                            });
+                          },
                         ),
                       ),
                     ],

@@ -45,6 +45,11 @@ class DataManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addOutfit(Outfit item) {
+    _allOutfits.add(item);
+    notifyListeners();
+  }
+
   void updateFavouriteArticlesList(Article item, bool newValue) {
     if (newValue) {
       _addFavouriteArticle(item);

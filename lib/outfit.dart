@@ -1,8 +1,8 @@
 import 'package:cataclothes/article_card_store.dart';
 import 'package:flutter/material.dart';
+import 'article.dart';
 import 'item.dart';
 import 'item_card_small.dart';
-import 'outfit_detail.dart';
 import 'category.dart';
 
 class Outfit extends Item {
@@ -10,6 +10,7 @@ class Outfit extends Item {
   String name = "";
   bool isFavourite = false;
   Category? category;
+  List<Article>? articles;
 
   Outfit({
     super.image = "",
@@ -17,21 +18,12 @@ class Outfit extends Item {
     this.name = "",
     this.isFavourite = false,
     this.category,
+    this.articles,
   });
 
   @override
   GestureDetector itemCardSmall(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return OutfitDetail(outfit: this);
-            },
-          ),
-        );
-      },
       child: ItemCardSmall(item: this),
     );
   }
