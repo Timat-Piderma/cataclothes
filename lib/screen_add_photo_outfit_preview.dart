@@ -9,6 +9,9 @@ import 'package:screenshot/screenshot.dart';
 
 import 'article.dart';
 
+import 'package:lindi_sticker_widget/lindi_controller.dart';
+import 'package:lindi_sticker_widget/lindi_sticker_widget.dart';
+
 class ScreenAddPhotoOutfitPreview extends StatefulWidget {
   final List<Article> articles;
 
@@ -23,10 +26,26 @@ class ScreenAddPhotoOutfitPreview extends StatefulWidget {
 class ScreenAddPhotoOutfitPreviewState
     extends State<ScreenAddPhotoOutfitPreview>
     with SingleTickerProviderStateMixin {
+  late LindiController lindiController;
   ScreenshotController screenshotController = ScreenshotController();
 
   @override
-  void initState() {}
+  void initState() {
+    lindiController =
+        LindiController(borderColor: Colors.white, iconColor: Colors.black);
+
+    for (Article art in widget.articles) {
+      lindiController.addWidget(
+        SizedBox(
+            height: 100,
+            width: 100,
+            child: Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(image: getImage(art.image))),
+            )),
+      );
+    }
+  }
 
   double computeWidth() {
     double width = MediaQuery.of(context).size.width;
@@ -42,7 +61,7 @@ class ScreenAddPhotoOutfitPreviewState
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: AppBar(
-            title: Text("Ritaglia Foto"),
+            title: Text("Crea Outfit"),
             backgroundColor: Colors.tealAccent,
           ),
         ),
@@ -69,14 +88,14 @@ class ScreenAddPhotoOutfitPreviewState
               child: Center(
                 child: Screenshot(
                   controller: screenshotController,
-                  child: Container(
-                    height: computeWidth() - (computeWidth() / 10),
-                    width: computeWidth() - (computeWidth() / 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.black, width: 4),
-                      image: DecorationImage(
-                        image: getImage(widget.articles[0].image),
+                  child: LindiStickerWidget(
+                    controller: lindiController,
+                    child: Container(
+                      height: computeWidth() - (computeWidth() / 10),
+                      width: computeWidth() - (computeWidth() / 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.black, width: 4),
                       ),
                     ),
                   ),
@@ -101,13 +120,11 @@ class ScreenAddPhotoOutfitPreviewState
     final Directory temp = await getTemporaryDirectory();
 
     if (i != null) {
-      String path = temp.path +
-          DateTime.now().microsecondsSinceEpoch.toString() +
-          ".png";
+      String path =
+          temp.path + DateTime.now().microsecondsSinceEpoch.toString() + ".png";
 
       XFile x = XFile.fromData(i!);
       x.saveTo(path);
-
 
       File img = File(path);
 
