@@ -86,7 +86,7 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
           ),
           const Divider(),
           Expanded(
-            flex: 11,
+            flex: 12,
             child: ItemGrid(
                 items: filteredArticles,
                 type: 0,

@@ -217,9 +217,9 @@ class SampleData {
     maglietta3,
   ];
 
-  static Category cat1 = Category(name: 'cat1', id: 1);
-  static Category cat2 = Category(name: 'cat2', id: 2);
-  static Category cat3 = Category(name: 'cat3', id: 3);
+  static Category cat1 = Category(name: 'nometroppolungoperunacategoria1234567890', id: 1);
+  static Category cat2 = Category(name: 'Scarpe', id: 2);
+  static Category cat3 = Category(name: 'T-Shirt', id: 3);
 
   static List<Category> allCategories = [
     cat1,

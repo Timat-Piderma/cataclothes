@@ -15,19 +15,28 @@ class ItemBubble extends StatefulWidget {
 class _ItemBubbleState extends State<ItemBubble> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(4),
-      child: ClipRRect(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            border: Border.all(color: Colors.blueAccent, width: 4),
-            image: DecorationImage(
-              image: AssetImage(widget.item.image),
-            ),
-          ),
+    return Column(
+      children: [
+        Expanded(
+          child: LayoutBuilder(builder: (context, constraints) {
+            return ClipRRect(
+              child: Container(
+                width: constraints.maxHeight,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(color: Colors.blueAccent, width: 4),
+                  image: DecorationImage(
+                    image: AssetImage(widget.item.image),
+                  ),
+                ),
+              ),
+            );
+          }),
         ),
-      ),
+        Text(widget.item.category!.name,
+        maxLines: 1,
+        overflow:TextOverflow.ellipsis),
+      ],
     );
   }
 }
