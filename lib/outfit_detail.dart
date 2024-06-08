@@ -166,7 +166,12 @@ class _OutfitDetailState extends State<OutfitDetail>
                             items: categoryItems
                                 .map(
                                   (map) => DropdownMenuItem<Category>(
-                                    child: Text(map.name),
+                                    child: Text(
+                                      map.name.length > 30
+                                          ? map.name.substring(0, 30) + "..."
+                                          : map.name,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                     value: map,
                                   ),
                                 )

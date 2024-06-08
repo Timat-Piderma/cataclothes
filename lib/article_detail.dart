@@ -222,13 +222,15 @@ class _ArticleDetailState extends State<ArticleDetail>
                           ignoring: !isEditable,
                           child: DropdownButton<Category>(
                             value: dropdownCategoryValue,
-                            //label: const Text("Colore"),
-                            //textStyle: TextStyle(fontSize: 18),
-                            //width: computeWidth() / 1.1,
                             items: categoryItems
                                 .map(
                                   (map) => DropdownMenuItem<Category>(
-                                    child: Text(map.name),
+                                    child: Text(
+                                      map.name.length > 30
+                                          ? map.name.substring(0, 30) + "..."
+                                          : map.name,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                     value: map,
                                   ),
                                 )
