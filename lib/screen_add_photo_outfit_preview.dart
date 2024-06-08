@@ -31,8 +31,12 @@ class ScreenAddPhotoOutfitPreviewState
 
   @override
   void initState() {
-    lindiController =
-        LindiController(borderColor: Colors.white, iconColor: Colors.black);
+    lindiController = LindiController(
+      borderColor: Colors.black,
+      iconColor: Colors.white,
+      showClose: false,
+      showDone: false,
+    );
 
     for (Article art in widget.articles) {
       lindiController.addWidget(
@@ -65,7 +69,7 @@ class ScreenAddPhotoOutfitPreviewState
             backgroundColor: Colors.tealAccent,
           ),
         ),
-        body: ListView(
+        body: Column(
           children: [
             Align(
               alignment: Alignment.centerRight,
@@ -88,15 +92,16 @@ class ScreenAddPhotoOutfitPreviewState
               child: Center(
                 child: Screenshot(
                   controller: screenshotController,
-                  child: LindiStickerWidget(
-                    controller: lindiController,
-                    child: Container(
-                      height: computeWidth() - (computeWidth() / 10),
-                      width: computeWidth() - (computeWidth() / 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.black, width: 4),
-                      ),
+                  child: Container(
+                    child: LindiStickerWidget(
+                      controller: lindiController,
+                      child: Container(),
+                    ),
+                    height: computeWidth() - (computeWidth() / 10),
+                    width: computeWidth() - (computeWidth() / 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.black, width: 4),
                     ),
                   ),
                 ),
@@ -115,6 +120,7 @@ class ScreenAddPhotoOutfitPreviewState
   }
 
   void takeScreenShot() async {
+    lindiController.clearAllBorders();
     Uint8List? i = await screenshotController.capture();
 
     final Directory temp = await getTemporaryDirectory();
