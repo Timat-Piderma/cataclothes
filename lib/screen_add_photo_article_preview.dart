@@ -37,7 +37,7 @@ class ScreenAddPhotoArticlePreviewState extends State<ScreenAddPhotoArticlePrevi
             backgroundColor: Colors.tealAccent,
           ),
         ),
-        body: ListView(
+        body: Column(
           children: [
             Align(
               alignment: Alignment.centerRight,

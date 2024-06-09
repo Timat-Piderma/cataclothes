@@ -41,7 +41,14 @@ class _ClosetScreenState extends State<ClosetScreen> {
               shape: const CircleBorder(eccentricity: 1),
               backgroundColor: Colors.amberAccent,
               child: const Icon(Icons.add, color: Colors.black, size: 60),
-              onPressed: () => {_pickImageFromGallery()},
+              onPressed: () => {
+                _pickImageFromGallery().then((value) => {
+                      setState(() {
+                        filter = null;
+                        filteredArticles = DataManager().allArticles;
+                      })
+                    })
+              },
             ),
             body: Column(children: [
               const Expanded(

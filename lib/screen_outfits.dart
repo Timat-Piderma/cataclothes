@@ -19,13 +19,6 @@ class OutfitsScreen extends StatefulWidget {
 }
 
 class _OutfitScreenState extends State<OutfitsScreen> {
-  // double computeHeight() {
-  //   double height = MediaQuery.of(context).size.height;
-  //   var padding = MediaQuery.of(context).viewPadding;
-  //   double safeHeight = height - padding.top - kToolbarHeight;
-  //   return safeHeight;
-  // }
-
   Category? filter;
   List<Outfit> filteredOutfits = DataManager().allOutfits;
 
@@ -46,7 +39,12 @@ class _OutfitScreenState extends State<OutfitsScreen> {
                       return ScreenOutfitArticleSelect();
                     },
                   ),
-                )
+                ).then((value) => {
+                      setState(() {
+                        filter = null;
+                        filteredOutfits = DataManager().allOutfits;
+                      })
+                    })
               },
             ),
             body: Column(children: [
