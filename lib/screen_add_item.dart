@@ -67,7 +67,8 @@ class ScreenAddItemState extends State<ScreenAddItem>
 
               String path = directory.path;
 
-              final String filePath = '$path/image1.png';
+              final String filePath =
+                  '$path/${DateTime.now().microsecondsSinceEpoch.toString()}.png';
 
               final File itemImage = await widget.photo.copy(filePath);
               debugPrint(itemImage.path);
