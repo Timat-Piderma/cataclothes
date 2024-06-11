@@ -1,7 +1,14 @@
+import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'package:image/image.dart' as img;
 
 import 'package:cataclothes/screen_add_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ScreenAddPhotoArticlePreview extends StatefulWidget {
   final File photo;
@@ -14,10 +21,18 @@ class ScreenAddPhotoArticlePreview extends StatefulWidget {
   }
 }
 
-class ScreenAddPhotoArticlePreviewState extends State<ScreenAddPhotoArticlePreview>
+class ScreenAddPhotoArticlePreviewState
+    extends State<ScreenAddPhotoArticlePreview>
     with SingleTickerProviderStateMixin {
+  List<List<Offset?>> _lines = [];
+  bool _showMaskedImage = false;
+
+  File? maskedImage;
+
   @override
-  void initState() {}
+  void initState() {
+    maskedImage = widget.photo;
+  }
 
   double computeWidth() {
     double width = MediaQuery.of(context).size.width;
@@ -53,7 +68,7 @@ class ScreenAddPhotoArticlePreviewState extends State<ScreenAddPhotoArticlePrevi
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return ScreenAddItem(photo: widget.photo);
+                          return ScreenAddItem(photo: maskedImage!);
                         },
                       ),
                     )
@@ -68,45 +83,294 @@ class ScreenAddPhotoArticlePreviewState extends State<ScreenAddPhotoArticlePrevi
               ),
               child: Center(
                 child: Container(
+                  child: Stack(
+                    children: [
+                      _showMaskedImage
+                          ? MaskedImage(_lines, widget.photo!)
+                          : Image.file(maskedImage!),
+                      GestureDetector(
+                        onPanStart: (details) {
+                          setState(() {
+                            RenderBox renderBox =
+                                context.findRenderObject() as RenderBox;
+                            _lines.add([
+                              renderBox.globalToLocal(details.localPosition)
+                            ]);
+                          });
+                        },
+                        onPanUpdate: (details) {
+                          setState(() {
+                            RenderBox renderBox =
+                                context.findRenderObject() as RenderBox;
+                            _lines.last.add(
+                                renderBox.globalToLocal(details.localPosition));
+                          });
+                        },
+                        onPanEnd: (details) {
+                          _lines.last
+                              .add(null); // Separatore per fine della linea
+                        },
+                        child: CustomPaint(
+                          painter: DrawingPainter(_lines),
+                          size: Size.infinite,
+                        ),
+                      ),
+                    ],
+                  ),
                   height: computeWidth() - (computeWidth() / 10),
                   width: computeWidth() - (computeWidth() / 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: Colors.black, width: 4),
-                    image: DecorationImage(
-                      image: FileImage(widget.photo),
-                    ),
                   ),
-
-                  /*     child: Stack(
-                      children: [
-                        Positioned(
-                          bottom: 8,
-                          right: 8,
-                          child: IconButton(
-                              icon: Icon(_isFavourited
-                                  ? Icons.favorite
-                                  : Icons.favorite_border),
-                              iconSize: 28,
-                              color: Colors.orange,
-                              onPressed: () {
-                                setState(() {
-                                  _isFavourited = !_isFavourited;
-                                  final dataManager =
-                                      Provider.of<DataManager>(context, listen: false);
-                                  dataManager.updateFavouriteArticleValue(
-                                      widget.article, _isFavourited);
-                                  dataManager.updateFavouriteArticlesList(
-                                      widget.article, _isFavourited);
-                                });
-                              }),
-                        )
-                      ],
-                    ),*/
                 ),
+              ),
+            ),
+            Positioned(
+              bottom: 30,
+              left: 30,
+              child: FloatingActionButton(
+                onPressed: _undo,
+                child: Icon(Icons.undo),
+                tooltip: 'Annulla Ultimo Tratto',
+              ),
+            ),
+            Positioned(
+              bottom: 30,
+              right: 30,
+              child: FloatingActionButton(
+                onPressed: _createMask,
+                child: Icon(Icons.check),
+                tooltip: 'Applica Maschera',
               ),
             ),
           ],
         ));
   }
+
+  void _createMask() {
+    _saveMaskedImage();
+    setState(() {
+      _showMaskedImage = true;
+    });
+  }
+
+  void _undo() {
+    setState(() {
+      if (_lines.isNotEmpty) {
+        _lines.removeLast();
+      }
+    });
+  }
+
+  Future<void> _saveMaskedImage() async {
+    try {
+      // Carica l'immagine di base
+      final ByteData imageData =
+          ByteData.view(widget.photo.readAsBytesSync().buffer);
+      final Uint8List bytes = imageData.buffer.asUint8List();
+      final img.Image? baseImage = img.decodeImage(bytes);
+
+      // Verifica che l'immagine sia stata caricata
+      if (baseImage == null) {
+        throw Exception("Impossibile caricare l'immagine di base.");
+      }
+
+      // Crea un recorder per catturare il disegno sul canvas
+      final recorder = ui.PictureRecorder();
+      final canvas = Canvas(
+          recorder,
+          Rect.fromPoints(Offset(0, 0),
+              Offset(baseImage.width.toDouble(), baseImage.height.toDouble())));
+
+      // Disegna l'immagine di base
+      final ui.Image baseUiImage = await _loadImage(bytes);
+      final paint = Paint();
+      canvas.drawImage(baseUiImage, Offset.zero, paint);
+
+      // Crea la maschera come path
+      final path = _createClipPath();
+
+      // Applica la maschera cancellando l'area fuori dalla maschera
+      paint.blendMode = BlendMode.clear;
+      canvas.drawRect(
+          Rect.fromLTWH(
+              0, 0, baseImage.width.toDouble(), baseImage.height.toDouble()),
+          paint); // Cancella tutto
+      paint.blendMode = BlendMode.srcOver;
+      canvas.clipPath(path, doAntiAlias: true);
+      canvas.drawImage(baseUiImage, Offset.zero, paint);
+
+      // Converti il canvas in ui.Image
+      final ui.Image maskedUiImage = await recorder
+          .endRecording()
+          .toImage(baseImage.width, baseImage.height);
+
+      // Converti ui.Image in PNG
+      final ByteData? byteData =
+          await maskedUiImage.toByteData(format: ui.ImageByteFormat.png);
+
+      // Verifica che i dati byte siano stati ottenuti
+      if (byteData == null) {
+        throw Exception(
+            "Impossibile ottenere i dati byte dall'immagine mascherata.");
+      }
+
+      final Uint8List maskedBytes = byteData.buffer.asUint8List();
+
+      // Ottieni il percorso temporaneo per salvare l'immagine
+      final Directory tempDir = await getTemporaryDirectory();
+      String maskedPath =
+          '${tempDir.path}/masked_image_${DateTime.now().microsecondsSinceEpoch}.png';
+
+      // Salva l'immagine mascherata come file
+      final File maskedFile = File(maskedPath);
+      await maskedFile.writeAsBytes(maskedBytes);
+
+      await _saveMask(baseImage.width, baseImage.height, path, tempDir);
+
+      setState(() {
+        maskedImage = maskedFile;
+      });
+
+      print("Immagine salvata: $maskedPath");
+    } catch (e) {
+      print('Errore nel salvataggio dell\'immagine: $e');
+    }
+  }
+
+
+
+
+  Future<void> _saveMask(int width, int height, Path maskPath, Directory tempDir) async {
+    try {
+      // Crea un recorder per la maschera
+      final recorder = ui.PictureRecorder();
+      final canvas = Canvas(recorder, Rect.fromPoints(Offset(0, 0), Offset(width.toDouble(), height.toDouble())));
+
+      // Disegna la maschera su un canvas bianco
+      final paint = Paint();
+      paint.color = Colors.black;
+      canvas.drawRect(Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()), Paint()..color = Colors.white);
+      canvas.drawPath(maskPath, paint);
+
+      // Converti il canvas della maschera in ui.Image
+      final ui.Image maskUiImage = await recorder.endRecording().toImage(width, height);
+
+      // Converti ui.Image in PNG
+      final ByteData? byteData = await maskUiImage.toByteData(format: ui.ImageByteFormat.png);
+
+      // Verifica che i dati byte siano stati ottenuti
+      if (byteData == null) {
+        throw Exception("Impossibile ottenere i dati byte dalla maschera.");
+      }
+
+      final Uint8List maskBytes = byteData.buffer.asUint8List();
+
+      // Salva la maschera come file
+      String path = '${tempDir.path}/mask_${DateTime.now().microsecondsSinceEpoch}.png';
+      final File maskFile = File(path);
+      await maskFile.writeAsBytes(maskBytes);
+
+      print("Maschera salvata: $path");
+    } catch (e) {
+      print('Errore nel salvataggio della maschera: $e');
+    }
+  }
+
+
+
+
+
+  Future<ui.Image> _loadImage(Uint8List bytes) async {
+    final Completer<ui.Image> completer = Completer();
+    ui.decodeImageFromList(bytes, completer.complete);
+    return completer.future;
+  }
+
+  Path _createClipPath() {
+    final path = Path();
+    for (var line in _lines) {
+      bool started = false;
+      for (int i = 0; i < line.length - 1; i++) {
+        if (line[i] != null) {
+          if (!started) {
+            path.moveTo(line[i]!.dx, line[i]!.dy);
+            started = true;
+          } else {
+            path.lineTo(line[i]!.dx, line[i]!.dy);
+          }
+        }
+      }
+    }
+    return path;
+  }
+}
+
+class DrawingPainter extends CustomPainter {
+  final List<List<Offset?>> lines;
+
+  DrawingPainter(this.lines);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.red
+      ..strokeCap = StrokeCap.round
+      ..strokeWidth = 5.0;
+
+    for (var line in lines) {
+      for (int i = 0; i < line.length - 1; i++) {
+        if (line[i] != null && line[i + 1] != null) {
+          canvas.drawLine(line[i]!, line[i + 1]!, paint);
+        }
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(DrawingPainter oldDelegate) => true;
+}
+
+class MaskedImage extends StatelessWidget {
+  final List<List<Offset?>> lines;
+  final File image;
+
+  MaskedImage(this.lines, this.image);
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipPath(
+      clipper: DrawingClipper(lines),
+      child: Image.file(image),
+    );
+  }
+}
+
+class DrawingClipper extends CustomClipper<Path> {
+  final List<List<Offset?>> lines;
+
+  DrawingClipper(this.lines);
+
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    for (var line in lines) {
+      bool started = false;
+      for (int i = 0; i < line.length - 1; i++) {
+        if (line[i] != null) {
+          if (!started) {
+            path.moveTo(line[i]!.dx, line[i]!.dy);
+            started = true;
+          } else {
+            path.lineTo(line[i]!.dx, line[i]!.dy);
+          }
+        }
+      }
+    }
+    return path;
+  }
+
+  @override
+  bool shouldReclip(DrawingClipper oldClipper) => true;
 }
