@@ -9,18 +9,18 @@ import 'article_color.dart';
 import 'category.dart';
 import 'data_manager.dart';
 
-class ScreenAddItem extends StatefulWidget {
+class ScreenAddArticle extends StatefulWidget {
   final File photo;
 
-  const ScreenAddItem({required this.photo});
+  const ScreenAddArticle({required this.photo});
 
   @override
-  State<ScreenAddItem> createState() {
-    return ScreenAddItemState();
+  State<ScreenAddArticle> createState() {
+    return ScreenAddArticleState();
   }
 }
 
-class ScreenAddItemState extends State<ScreenAddItem>
+class ScreenAddArticleState extends State<ScreenAddArticle>
     with SingleTickerProviderStateMixin {
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCost = TextEditingController();
