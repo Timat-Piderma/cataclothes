@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cataclothes/category.dart';
 import 'package:cataclothes/screen_add_photo_article_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'article.dart';
@@ -22,15 +23,10 @@ class ClosetScreen extends StatefulWidget {
 }
 
 class _ClosetScreenState extends State<ClosetScreen> {
-  // double computeHeight() {
-  //   double height = MediaQuery.of(context).size.height;
-  //   var padding = MediaQuery.of(context).viewPadding;
-  //   double safeHeight = height - padding.top - kToolbarHeight;
-  //   return safeHeight;
-  // }
-
   Category? filter;
   List<Article> filteredArticles = DataManager().allArticles;
+  XFile? _pickedFile;
+  CroppedFile? _croppedFile;
 
   @override
   Widget build(BuildContext context) {
@@ -123,13 +119,49 @@ class _ClosetScreenState extends State<ClosetScreen> {
 
     if (returnedImage == null) return;
 
-    return Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) {
-          return ScreenAddPhotoArticlePreview(photo: File(returnedImage!.path));
-        },
-      ),
-    );
+    setState(() {
+      _pickedFile = returnedImage;
+    });
+
+    await _cropImage();
+
+    if (_croppedFile != null) {
+      return Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ScreenAddPhotoArticlePreview(
+                photo: File(_croppedFile!.path));
+          },
+        ),
+      );
+    }
+  }
+
+  Future<void> _cropImage() async {
+    if (_pickedFile != null) {
+      final croppedFile = await ImageCropper().cropImage(
+        aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+        sourcePath: _pickedFile!.path,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 100,
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.square,
+            lockAspectRatio: true,
+          ),
+        ],
+      );
+      if (croppedFile != null) {
+        setState(() {
+          _croppedFile = croppedFile;
+        });
+      } else {
+        _croppedFile = null;
+      }
+    }
   }
 }

@@ -4,16 +4,14 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:image/image.dart' as img;
 
-import 'package:cataclothes/screen_add_item.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cataclothes/screen_add_article.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ScreenAddPhotoArticlePreview extends StatefulWidget {
   final File photo;
 
-  const ScreenAddPhotoArticlePreview({required this.photo});
+  const ScreenAddPhotoArticlePreview({super.key, required this.photo});
 
   @override
   State<ScreenAddPhotoArticlePreview> createState() {
@@ -25,7 +23,6 @@ class ScreenAddPhotoArticlePreviewState
     extends State<ScreenAddPhotoArticlePreview>
     with SingleTickerProviderStateMixin {
   List<List<Offset?>> _lines = [];
-  bool _showMaskedImage = false;
 
   File? maskedImage;
 
@@ -48,46 +45,66 @@ class ScreenAddPhotoArticlePreviewState
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: AppBar(
-            title: Text("Ritaglia Foto"),
+            title: const Text("Ritaglia Foto"),
             backgroundColor: Colors.tealAccent,
           ),
         ),
         body: Column(
           children: [
-            Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: EdgeInsets.only(right: 10, top: 20),
-                child: FilledButton(
-                  child: Text(
-                    "Conferma",
-                    style: Theme.of(context).textTheme.bodyLarge,
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, top: 20),
+                  child: FilledButton(
+                    onPressed: _undo,
+                    child: const Icon(Icons.undo, color: Colors.black),
                   ),
-                  onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return ScreenAddItem(photo: maskedImage!);
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10, top: 20),
+                      child: FilledButton(
+                        child: Text(
+                          "Conferma",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        onPressed: () async => {
+                          await _createMask(),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return ScreenAddArticle(photo: maskedImage!);
+                              },
+                            ),
+                          )
                         },
                       ),
-                    )
-                  },
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 bottom: 10,
                 top: 20,
               ),
               child: Center(
                 child: Container(
+                  height: computeWidth() - (computeWidth() / 10),
+                  width: computeWidth() - (computeWidth() / 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.black, width: 4),
+                  ),
                   child: Stack(
                     children: [
-                      _showMaskedImage
-                          ? MaskedImage(_lines, widget.photo!)
-                          : Image.file(maskedImage!),
+                      Positioned.fill(
+                        child: Image.file(widget.photo!, fit: BoxFit.cover),
+                      ),
                       GestureDetector(
                         onPanStart: (details) {
                           setState(() {
@@ -107,8 +124,7 @@ class ScreenAddPhotoArticlePreviewState
                           });
                         },
                         onPanEnd: (details) {
-                          _lines.last
-                              .add(null); // Separatore per fine della linea
+                          _lines.last.add(null);
                         },
                         child: CustomPaint(
                           painter: DrawingPainter(_lines),
@@ -117,42 +133,15 @@ class ScreenAddPhotoArticlePreviewState
                       ),
                     ],
                   ),
-                  height: computeWidth() - (computeWidth() / 10),
-                  width: computeWidth() - (computeWidth() / 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black, width: 4),
-                  ),
                 ),
-              ),
-            ),
-            Positioned(
-              bottom: 30,
-              left: 30,
-              child: FloatingActionButton(
-                onPressed: _undo,
-                child: Icon(Icons.undo),
-                tooltip: 'Annulla Ultimo Tratto',
-              ),
-            ),
-            Positioned(
-              bottom: 30,
-              right: 30,
-              child: FloatingActionButton(
-                onPressed: _createMask,
-                child: Icon(Icons.check),
-                tooltip: 'Applica Maschera',
               ),
             ),
           ],
         ));
   }
 
-  void _createMask() {
-    _saveMaskedImage();
-    setState(() {
-      _showMaskedImage = true;
-    });
+  Future<void> _createMask() async {
+    await _saveMaskedImage();
   }
 
   void _undo() {
@@ -165,9 +154,26 @@ class ScreenAddPhotoArticlePreviewState
 
   Future<void> _saveMaskedImage() async {
     try {
+      // Ridimensiona immagine
+      Uint8List imageBytes = await widget.photo.readAsBytes();
+
+      img.Image? originalImage = img.decodeImage(imageBytes);
+
+      // Ridimensiona l'immagine
+      img.Image resizedImage = img.copyResize(
+        originalImage!,
+        width: (computeWidth() - (computeWidth() / 10)).toInt(),
+        height: (computeWidth() - (computeWidth() / 10)).toInt(),
+      );
+
+      List<int> resizedBytes = img.encodePng(resizedImage);
+
+      File resizedFile =
+          await File(widget.photo.path).writeAsBytes(resizedBytes);
+
       // Carica l'immagine di base
       final ByteData imageData =
-          ByteData.view(widget.photo.readAsBytesSync().buffer);
+          ByteData.view(resizedFile.readAsBytesSync().buffer);
       final Uint8List bytes = imageData.buffer.asUint8List();
       final img.Image? baseImage = img.decodeImage(bytes);
 
@@ -180,8 +186,10 @@ class ScreenAddPhotoArticlePreviewState
       final recorder = ui.PictureRecorder();
       final canvas = Canvas(
           recorder,
-          Rect.fromPoints(Offset(0, 0),
-              Offset(baseImage.width.toDouble(), baseImage.height.toDouble())));
+          Rect.fromPoints(
+              const Offset(0, 0),
+              Offset(computeWidth() - (computeWidth() / 10),
+                  computeWidth() - (computeWidth() / 10))));
 
       // Disegna l'immagine di base
       final ui.Image baseUiImage = await _loadImage(bytes);
@@ -194,17 +202,17 @@ class ScreenAddPhotoArticlePreviewState
       // Applica la maschera cancellando l'area fuori dalla maschera
       paint.blendMode = BlendMode.clear;
       canvas.drawRect(
-          Rect.fromLTWH(
-              0, 0, baseImage.width.toDouble(), baseImage.height.toDouble()),
+          Rect.fromLTWH(0, 0, computeWidth() - (computeWidth() / 10),
+              computeWidth() - (computeWidth() / 10)),
           paint); // Cancella tutto
       paint.blendMode = BlendMode.srcOver;
       canvas.clipPath(path, doAntiAlias: true);
       canvas.drawImage(baseUiImage, Offset.zero, paint);
 
       // Converti il canvas in ui.Image
-      final ui.Image maskedUiImage = await recorder
-          .endRecording()
-          .toImage(baseImage.width, baseImage.height);
+      final ui.Image maskedUiImage = await recorder.endRecording().toImage(
+          (computeWidth() - (computeWidth() / 10)).toInt(),
+          (computeWidth() - (computeWidth() / 10)).toInt());
 
       // Converti ui.Image in PNG
       final ByteData? byteData =
@@ -227,7 +235,8 @@ class ScreenAddPhotoArticlePreviewState
       final File maskedFile = File(maskedPath);
       await maskedFile.writeAsBytes(maskedBytes);
 
-      await _saveMask(baseImage.width, baseImage.height, path, tempDir);
+      await _saveMask((computeWidth() - (computeWidth() / 10)).toInt(),
+          (computeWidth() - (computeWidth() / 10)).toInt(), path, tempDir);
 
       setState(() {
         maskedImage = maskedFile;
@@ -239,26 +248,30 @@ class ScreenAddPhotoArticlePreviewState
     }
   }
 
-
-
-
-  Future<void> _saveMask(int width, int height, Path maskPath, Directory tempDir) async {
+  Future<void> _saveMask(
+      int width, int height, Path maskPath, Directory tempDir) async {
     try {
       // Crea un recorder per la maschera
       final recorder = ui.PictureRecorder();
-      final canvas = Canvas(recorder, Rect.fromPoints(Offset(0, 0), Offset(width.toDouble(), height.toDouble())));
+      final canvas = Canvas(
+          recorder,
+          Rect.fromPoints(
+              const Offset(0, 0), Offset(width.toDouble(), height.toDouble())));
 
       // Disegna la maschera su un canvas bianco
       final paint = Paint();
       paint.color = Colors.black;
-      canvas.drawRect(Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()), Paint()..color = Colors.white);
+      canvas.drawRect(Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()),
+          Paint()..color = Colors.white);
       canvas.drawPath(maskPath, paint);
 
       // Converti il canvas della maschera in ui.Image
-      final ui.Image maskUiImage = await recorder.endRecording().toImage(width, height);
+      final ui.Image maskUiImage =
+          await recorder.endRecording().toImage(width, height);
 
       // Converti ui.Image in PNG
-      final ByteData? byteData = await maskUiImage.toByteData(format: ui.ImageByteFormat.png);
+      final ByteData? byteData =
+          await maskUiImage.toByteData(format: ui.ImageByteFormat.png);
 
       // Verifica che i dati byte siano stati ottenuti
       if (byteData == null) {
@@ -268,7 +281,8 @@ class ScreenAddPhotoArticlePreviewState
       final Uint8List maskBytes = byteData.buffer.asUint8List();
 
       // Salva la maschera come file
-      String path = '${tempDir.path}/mask_${DateTime.now().microsecondsSinceEpoch}.png';
+      String path =
+          '${tempDir.path}/mask_${DateTime.now().microsecondsSinceEpoch}.png';
       final File maskFile = File(path);
       await maskFile.writeAsBytes(maskBytes);
 
@@ -277,10 +291,6 @@ class ScreenAddPhotoArticlePreviewState
       print('Errore nel salvataggio della maschera: $e');
     }
   }
-
-
-
-
 
   Future<ui.Image> _loadImage(Uint8List bytes) async {
     final Completer<ui.Image> completer = Completer();
@@ -342,7 +352,7 @@ class MaskedImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipPath(
       clipper: DrawingClipper(lines),
-      child: Image.file(image),
+      child: Image.file(image, fit: BoxFit.cover),
     );
   }
 }
