@@ -1,5 +1,6 @@
 import 'package:cataclothes/article_store_detail.dart';
 import 'package:cataclothes/item_grid.dart';
+import 'package:cataclothes/sample_data.dart';
 import 'package:cataclothes/searchbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,12 +18,12 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
-  // double computeHeight() {
-  //   double height = MediaQuery.of(context).size.height;
-  //   var padding = MediaQuery.of(context).viewPadding;
-  //   double safeHeight = height - padding.top - kToolbarHeight;
-  //   return safeHeight;
-  // }
+  List<Article> storeArticle = [];
+
+  @override
+  void initState() {
+    getStoreArticles();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,25 +32,42 @@ class _ShopScreenState extends State<ShopScreen> {
         return Column(
           children: [
             SearchBarComponent(),
-            Expanded(
-              child: ItemGrid(
-                items: DataManager.getAllArticles(),
-                type: 1,
-                func: (Article art) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return ArticleStoreDetail(article: art);
+            storeArticle.isEmpty
+                ? const Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 5,
+                      ),
+                    ),
+                  )
+                : Expanded(
+                    child: ItemGrid(
+                      items: storeArticle,
+                      type: 1,
+                      func: (Article art) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ArticleStoreDetail(article: art);
+                            },
+                          ),
+                        );
                       },
                     ),
-                  );
-                },
-              ),
-            ),
+                  ),
           ],
         );
       },
     );
+  }
+
+  Future<void> getStoreArticles() async {
+    List<Article> res = await DataManager.getStoreArticles();
+
+    setState(() {
+      storeArticle = res;
+    });
+    return;
   }
 }
