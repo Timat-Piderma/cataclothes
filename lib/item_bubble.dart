@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'item.dart';
 
@@ -26,7 +28,7 @@ class _ItemBubbleState extends State<ItemBubble> {
                   borderRadius: BorderRadius.circular(100),
                   border: Border.all(color: Colors.blueAccent, width: 4),
                   image: DecorationImage(
-                    image: AssetImage(widget.item.image),
+                    image: getImage(widget.item.image)
                   ),
                 ),
               ),
@@ -38,5 +40,13 @@ class _ItemBubbleState extends State<ItemBubble> {
         overflow:TextOverflow.ellipsis),
       ],
     );
+  }
+
+  ImageProvider getImage(String path) {
+    if (File(path).existsSync()) {
+      return FileImage(File(path));
+    } else {
+      return AssetImage(path);
+    }
   }
 }
