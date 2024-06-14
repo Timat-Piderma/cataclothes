@@ -35,10 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Consumer<DataManager>(
       builder: (context, manager, child) {
         return ListView(children: [
-          SizedBox(
-            height: computeWidth() / 2,
-            child: ItemCardHome(
-              item: DataManager.getFeaturedItem(),
+          Padding(
+            padding: EdgeInsets.only(top: 10, left: 10),
+            child: SizedBox(
+              height: computeWidth() / 2,
+              child: ItemCardHome(
+                item: DataManager.getFeaturedItem(),
+              ),
             ),
           ),
 
