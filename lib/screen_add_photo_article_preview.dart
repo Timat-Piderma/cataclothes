@@ -110,17 +110,24 @@ class ScreenAddPhotoArticlePreviewState
                           setState(() {
                             RenderBox renderBox =
                                 context.findRenderObject() as RenderBox;
-                            _lines.add([
-                              renderBox.globalToLocal(details.localPosition)
-                            ]);
+                            Offset localPosition =
+                                renderBox.globalToLocal(details.localPosition);
+
+                            if (_isWithinBounds(localPosition)) {
+                              _lines.add([localPosition]);
+                            }
                           });
                         },
                         onPanUpdate: (details) {
                           setState(() {
                             RenderBox renderBox =
                                 context.findRenderObject() as RenderBox;
-                            _lines.last.add(
-                                renderBox.globalToLocal(details.localPosition));
+                            Offset localPosition =
+                                renderBox.globalToLocal(details.localPosition);
+
+                            if (_isWithinBounds(localPosition)) {
+                              _lines.last.add(localPosition);
+                            }
                           });
                         },
                         onPanEnd: (details) {
@@ -314,6 +321,15 @@ class ScreenAddPhotoArticlePreviewState
       }
     }
     return path;
+  }
+
+  bool _isWithinBounds(Offset localPosition) {
+    double width = computeWidth() - (computeWidth() / 10);
+    double height = computeWidth() - (computeWidth() / 10);
+    return localPosition.dx >= 0 &&
+        localPosition.dy >= 0 &&
+        localPosition.dx <= width &&
+        localPosition.dy <= height;
   }
 }
 
