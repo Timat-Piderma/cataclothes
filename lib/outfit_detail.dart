@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:cataclothes/data_manager.dart';
+import 'category_outfit.dart';
 import 'outfit.dart';
-import 'category.dart';
 
 class OutfitDetail extends StatefulWidget {
   final Outfit outfit;
@@ -24,8 +24,8 @@ class _OutfitDetailState extends State<OutfitDetail>
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCost = TextEditingController();
 
-  List<Category> categoryItems = DataManager.getAllCategories();
-  Category? dropdownCategoryValue;
+  List<OutfitCategory> categoryItems = DataManager.getAllOutfitsCategories();
+  OutfitCategory? dropdownCategoryValue;
 
   bool _isFavourited = false;
   late TabController _tabController;
@@ -38,7 +38,7 @@ class _OutfitDetailState extends State<OutfitDetail>
     controllerName.text = widget.outfit.name;
     controllerCost.text = widget.outfit.cost;
 
-    dropdownCategoryValue = widget.outfit.category;
+    dropdownCategoryValue = widget.outfit.outfitCategory;
   }
 
   @override
@@ -79,8 +79,7 @@ class _OutfitDetailState extends State<OutfitDetail>
               if (isEditable) {
                 widget.outfit.name = controllerName.text;
                 widget.outfit.cost = controllerCost.text;
-
-                widget.outfit.category = dropdownCategoryValue;
+                widget.outfit.outfitCategory = dropdownCategoryValue;
               }
 
               isEditable = !isEditable;
@@ -161,11 +160,11 @@ class _OutfitDetailState extends State<OutfitDetail>
                         width: computeWidth() / 1.1,
                         child: IgnorePointer(
                           ignoring: !isEditable,
-                          child: DropdownButton<Category>(
+                          child: DropdownButton<OutfitCategory>(
                             value: dropdownCategoryValue,
                             items: categoryItems
                                 .map(
-                                  (map) => DropdownMenuItem<Category>(
+                                  (map) => DropdownMenuItem<OutfitCategory>(
                                     child: Text(
                                       map.name.length > 30
                                           ? map.name.substring(0, 30) + "..."
@@ -176,7 +175,7 @@ class _OutfitDetailState extends State<OutfitDetail>
                                   ),
                                 )
                                 .toList(),
-                            onChanged: (Category? value) {
+                            onChanged: (OutfitCategory? value) {
                               setState(() {
                                 dropdownCategoryValue = value;
                               });

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cataclothes/data_manager.dart';
 import 'article.dart';
 import 'article_color.dart';
-import 'category.dart';
+import 'category_article.dart';
 
 class ArticleDetail extends StatefulWidget {
   final Article article;
@@ -27,8 +27,8 @@ class _ArticleDetailState extends State<ArticleDetail>
   List<ArticleColor> colorItems = DataManager.getAllColors();
   ArticleColor? dropdownColorValue;
 
-  List<Category> categoryItems = DataManager.getAllCategories();
-  Category? dropdownCategoryValue;
+  List<ArticleCategory> categoryItems = DataManager.getAllArticlesCategories();
+  ArticleCategory? dropdownCategoryValue;
 
   bool _isFavourited = false;
   late TabController _tabController;
@@ -42,7 +42,7 @@ class _ArticleDetailState extends State<ArticleDetail>
     controllerCost.text = widget.article.cost;
 
     dropdownColorValue = widget.article.color;
-    dropdownCategoryValue = widget.article.category;
+    dropdownCategoryValue = widget.article.articleCategory;
   }
 
   @override
@@ -84,7 +84,7 @@ class _ArticleDetailState extends State<ArticleDetail>
                 widget.article.name = controllerName.text;
                 widget.article.cost = controllerCost.text;
                 widget.article.color = dropdownColorValue;
-                widget.article.category = dropdownCategoryValue;
+                widget.article.articleCategory = dropdownCategoryValue;
               }
 
               isEditable = !isEditable;
@@ -220,11 +220,11 @@ class _ArticleDetailState extends State<ArticleDetail>
                         width: computeWidth() / 1.1,
                         child: IgnorePointer(
                           ignoring: !isEditable,
-                          child: DropdownButton<Category>(
+                          child: DropdownButton<ArticleCategory>(
                             value: dropdownCategoryValue,
                             items: categoryItems
                                 .map(
-                                  (map) => DropdownMenuItem<Category>(
+                                  (map) => DropdownMenuItem<ArticleCategory>(
                                     child: Text(
                                       map.name.length > 30
                                           ? map.name.substring(0, 30) + "..."
@@ -235,7 +235,7 @@ class _ArticleDetailState extends State<ArticleDetail>
                                   ),
                                 )
                                 .toList(),
-                            onChanged: (Category? value) {
+                            onChanged: (ArticleCategory? value) {
                               setState(() {
                                 dropdownCategoryValue = value;
                               });

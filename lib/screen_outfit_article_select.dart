@@ -3,7 +3,8 @@ import 'package:cataclothes/searchbar.dart';
 import 'package:flutter/material.dart';
 
 import 'article.dart';
-import 'category.dart';
+import 'category_article.dart';
+import 'category_outfit.dart';
 import 'data_manager.dart';
 import 'item_grid.dart';
 import 'item_horizontal_list.dart';
@@ -19,7 +20,7 @@ class ScreenOutfitArticleSelect extends StatefulWidget {
 
 class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
     with SingleTickerProviderStateMixin {
-  Category? filter;
+  ArticleCategory? filter;
   List<Article> filteredArticles = DataManager().allArticles;
   List<Article> selectedArticles = [];
 
@@ -99,7 +100,7 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
 
   List<Article> getFilterItems() {
     List<Article> res = [];
-    for (var cat in DataManager.getAllCategories()) {
+    for (var cat in DataManager.getAllArticlesCategories()) {
       if (DataManager.getFilterArticle(cat) != null) {
         res.add(DataManager.getFilterArticle(cat)!);
       }
@@ -109,7 +110,7 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
 
   void setFilter(Article art) {
     if (filter != art.category) {
-      filter = art.category;
+      filter = art.articleCategory;
 
       List<Article> res = [];
       if (filter != null) {

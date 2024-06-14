@@ -1,8 +1,8 @@
+import 'package:cataclothes/category_outfit.dart';
 import 'package:cataclothes/item_horizontal_list.dart';
 import 'package:cataclothes/screen_outfit_article_select.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'category.dart';
 import 'data_manager.dart';
 import 'item_grid.dart';
 import 'outfit.dart';
@@ -19,8 +19,13 @@ class OutfitsScreen extends StatefulWidget {
 }
 
 class _OutfitScreenState extends State<OutfitsScreen> {
-  Category? filter;
+  OutfitCategory? filter;
   List<Outfit> filteredOutfits = DataManager().allOutfits;
+
+  @override
+  void initState() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +80,7 @@ class _OutfitScreenState extends State<OutfitsScreen> {
                           return OutfitDetail(outfit: out);
                         },
                       ),
-                    );
+                    ).then((value) => setState(() {}));
                   },
                 ),
               ),
@@ -86,7 +91,7 @@ class _OutfitScreenState extends State<OutfitsScreen> {
 
   List<Outfit> getFilterItems() {
     List<Outfit> res = [];
-    for (var cat in DataManager.getAllCategories()) {
+    for (var cat in DataManager.getAllOutfitsCategories()) {
       if (DataManager.getFilterOutfit(cat) != null) {
         res.add(DataManager.getFilterOutfit(cat)!);
       }
@@ -95,14 +100,14 @@ class _OutfitScreenState extends State<OutfitsScreen> {
   }
 
   void setFilter(Outfit out) {
-    if (filter != out.category) {
-      filter = out.category;
+    if (filter != out.outfitCategory) {
+      filter = out.outfitCategory;
 
       List<Outfit> res = [];
       if (filter != null) {
         res.addAll(DataManager()
             .allOutfits
-            .where((element) => element.category == filter));
+            .where((element) => element.outfitCategory == filter));
         setState(() {
           filteredOutfits = res;
         });

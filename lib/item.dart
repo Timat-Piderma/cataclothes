@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'category.dart';
+import 'category_item.dart';
 
 abstract class Item {
-
   String image = "";
-  Category? category;
+  ItemCategory? category;
 
   Item({
-
     this.image = "",
     this.category,
   });
 
   GestureDetector itemCardSmall(BuildContext context);
-  GestureDetector itemCardStore(BuildContext context);
 
+  GestureDetector itemCardStore(BuildContext context);
 }

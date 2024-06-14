@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'article.dart';
+import 'category_outfit.dart';
 import 'item.dart';
 import 'item_card_small.dart';
-import 'category.dart';
 
 class Outfit extends Item {
   String cost = "";
   String name = "";
   bool isFavourite = false;
-  Category? category;
+  OutfitCategory? outfitCategory;
   List<Article>? articles;
 
   Outfit({
@@ -16,7 +16,7 @@ class Outfit extends Item {
     this.cost = "",
     this.name = "",
     this.isFavourite = false,
-    this.category,
+    this.outfitCategory,
     this.articles,
   });
 

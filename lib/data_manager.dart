@@ -1,7 +1,8 @@
 import 'package:cataclothes/article_color.dart';
-import 'package:cataclothes/category.dart';
+import 'package:cataclothes/category_article.dart';
 import 'package:flutter/material.dart';
 import 'article.dart';
+import 'category_outfit.dart';
 import 'sample_data.dart';
 import 'outfit.dart';
 
@@ -10,7 +11,10 @@ class DataManager extends ChangeNotifier {
   final List<Outfit> _allOutfits = SampleData.allOutfits;
   final List<Article> _favouriteArticles = SampleData.favouriteArticles;
   final List<Outfit> _favouriteOutfits = SampleData.favouriteOutfits;
-  final List<Category> _allCategories = SampleData.allCategories;
+  final List<ArticleCategory> _allArticlesCategories =
+      SampleData.allArticlesCategories;
+  final List<OutfitCategory> _allOutfitsCategories =
+      SampleData.allOutfitsCategories;
   final List<ArticleColor> _allColors = SampleData.allColors;
   final List<Article> _storeArticles = SampleData.storeArticle;
 
@@ -22,7 +26,11 @@ class DataManager extends ChangeNotifier {
 
   List<Outfit> get favouriteOutfits => List.unmodifiable(_favouriteOutfits);
 
-  List<Category> get allCategories => List.unmodifiable(_allCategories);
+  List<ArticleCategory> get allArticlesCategories =>
+      List.unmodifiable(_allArticlesCategories);
+
+  List<OutfitCategory> get allOutfitsCategories =>
+      List.unmodifiable(_allOutfitsCategories);
 
   List<ArticleColor> get allColors => List.unmodifiable(_allColors);
 
@@ -118,26 +126,30 @@ class DataManager extends ChangeNotifier {
     return SampleData.featuredItems[0];
   }
 
-  static List<Category> getAllCategories() {
-    return List.unmodifiable(SampleData.allCategories);
+  static List<ArticleCategory> getAllArticlesCategories() {
+    return List.unmodifiable(SampleData.allArticlesCategories);
+  }
+
+  static List<OutfitCategory> getAllOutfitsCategories() {
+    return List.unmodifiable(SampleData.allOutfitsCategories);
   }
 
   static List<ArticleColor> getAllColors() {
     return List.unmodifiable(SampleData.allColors);
   }
 
-  static Article? getFilterArticle(Category cat) {
+  static Article? getFilterArticle(ArticleCategory cat) {
     for (var element in SampleData.allArticles) {
-      if (element.category == cat) {
+      if (element.articleCategory == cat) {
         return element;
       }
     }
     return null;
   }
 
-  static Outfit? getFilterOutfit(Category cat) {
+  static Outfit? getFilterOutfit(OutfitCategory cat) {
     for (var element in SampleData.allOutfits) {
-      if (element.category == cat) {
+      if (element.outfitCategory == cat) {
         return element;
       }
     }

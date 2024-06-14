@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cataclothes/category.dart';
 import 'package:cataclothes/screen_add_photo_article_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -8,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'article.dart';
 import 'article_detail.dart';
+import 'category_article.dart';
 import 'data_manager.dart';
 import 'item_grid.dart';
 import 'item_horizontal_list.dart';
@@ -23,10 +23,15 @@ class ClosetScreen extends StatefulWidget {
 }
 
 class _ClosetScreenState extends State<ClosetScreen> {
-  Category? filter;
+  ArticleCategory? filter;
   List<Article> filteredArticles = DataManager().allArticles;
   XFile? _pickedFile;
   CroppedFile? _croppedFile;
+
+  @override
+  void initState() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +79,7 @@ class _ClosetScreenState extends State<ClosetScreen> {
                           return ArticleDetail(article: art);
                         },
                       ),
-                    );
+                    ).then((value) => setState(() {}));
                   },
                 ),
               ),
@@ -85,7 +90,7 @@ class _ClosetScreenState extends State<ClosetScreen> {
 
   List<Article> getFilterItems() {
     List<Article> res = [];
-    for (var cat in DataManager.getAllCategories()) {
+    for (var cat in DataManager.getAllArticlesCategories()) {
       if (DataManager.getFilterArticle(cat) != null) {
         res.add(DataManager.getFilterArticle(cat)!);
       }
@@ -94,14 +99,14 @@ class _ClosetScreenState extends State<ClosetScreen> {
   }
 
   void setFilter(Article art) {
-    if (filter != art.category) {
-      filter = art.category;
+    if (filter != art.articleCategory) {
+      filter = art.articleCategory;
 
       List<Article> res = [];
       if (filter != null) {
         res.addAll(DataManager()
             .allArticles
-            .where((element) => element.category == filter));
+            .where((element) => element.articleCategory == filter));
         setState(() {
           filteredArticles = res;
         });

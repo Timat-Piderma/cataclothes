@@ -1,18 +1,16 @@
 import 'article_card_store.dart';
 import 'package:flutter/material.dart';
 import 'article_color.dart';
-import 'article_detail.dart';
 import 'item_card_small.dart';
 import 'item.dart';
-import 'article_store_detail.dart';
-import 'category.dart';
+import 'category_article.dart';
 
 class Article extends Item {
   String name = "";
   String cost = "";
   bool isFavourite = false;
   ArticleColor? color;
-  Category? category;
+  ArticleCategory? articleCategory;
 
   Article({
     super.image = "",
@@ -20,7 +18,7 @@ class Article extends Item {
     this.cost = "",
     this.isFavourite = false,
     this.color,
-    this.category,
+    this.articleCategory,
   });
 
   @override

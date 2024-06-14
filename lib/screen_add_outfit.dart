@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
-import 'article.dart';
 import 'article_color.dart';
-import 'category.dart';
+import 'category_outfit.dart';
 import 'data_manager.dart';
 import 'outfit.dart';
 
@@ -29,8 +28,8 @@ class ScreenAddOutfitState extends State<ScreenAddOutfit>
   List<ArticleColor> colorItems = DataManager.getAllColors();
   ArticleColor? dropdownColorValue;
 
-  List<Category> categoryItems = DataManager.getAllCategories();
-  Category? dropdownCategoryValue;
+  List<OutfitCategory> categoryItems = DataManager.getAllOutfitsCategories();
+  OutfitCategory? dropdownCategoryValue;
 
   @override
   void initState() {}
@@ -78,7 +77,7 @@ class ScreenAddOutfitState extends State<ScreenAddOutfit>
                   Provider.of<DataManager>(context, listen: false);
               dataManager.addOutfit(new Outfit(
                 name: controllerName.text,
-                category: dropdownCategoryValue,
+                outfitCategory: dropdownCategoryValue,
                 cost: controllerCost.text,
                 image: itemImage.path,
               ));
@@ -155,11 +154,11 @@ class ScreenAddOutfitState extends State<ScreenAddOutfit>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
-                        child: DropdownButton<Category>(
+                        child: DropdownButton<OutfitCategory>(
                           value: dropdownCategoryValue,
                           items: categoryItems
                               .map(
-                                (map) => DropdownMenuItem<Category>(
+                                (map) => DropdownMenuItem<OutfitCategory>(
                                   child: Text(
                                     map.name.length > 30
                                         ? map.name.substring(0, 30) + "..."
@@ -170,7 +169,7 @@ class ScreenAddOutfitState extends State<ScreenAddOutfit>
                                 ),
                               )
                               .toList(),
-                          onChanged: (Category? value) {
+                          onChanged: (OutfitCategory? value) {
                             setState(() {
                               dropdownCategoryValue = value;
                             });

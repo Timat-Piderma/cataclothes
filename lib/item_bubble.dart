@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'article.dart';
 import 'item.dart';
+import 'outfit.dart';
 
 class ItemBubble extends StatefulWidget {
   final Item item;
@@ -27,17 +29,18 @@ class _ItemBubbleState extends State<ItemBubble> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
                   border: Border.all(color: Colors.blueAccent, width: 4),
-                  image: DecorationImage(
-                    image: getImage(widget.item.image)
-                  ),
+                  image: DecorationImage(image: getImage(widget.item.image)),
                 ),
               ),
             );
           }),
         ),
-        Text(widget.item.category!.name,
-        maxLines: 1,
-        overflow:TextOverflow.ellipsis),
+        Text(
+            widget.item is Article
+                ? (widget.item as Article).articleCategory!.name
+                : (widget.item as Outfit).outfitCategory!.name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis),
       ],
     );
   }

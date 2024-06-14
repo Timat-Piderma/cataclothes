@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:cataclothes/data_manager.dart';
 import 'article.dart';
-import 'category.dart';
 
 class ArticleStoreDetail extends StatefulWidget {
   final Article article;

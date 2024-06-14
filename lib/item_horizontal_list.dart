@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'article.dart';
 import 'item.dart';
 import 'item_card_small.dart';
 import 'item_bubble.dart';
+import 'outfit.dart';
 
 class ItemHorizontalList extends StatefulWidget {
   final List<Item> items;
@@ -33,7 +35,9 @@ class _ItemHorizontalListState extends State<ItemHorizontalList> {
               aspectRatio: 1,
               child: GestureDetector(
                 onTap: () {
-                  widget.func(widget.items[index]);
+                  widget.items[index] is Article
+                      ? widget.func(widget.items[index] as Article)
+                      : widget.func(widget.items[index] as Outfit);
                 },
                 child: Container(
                   width: double.infinity,

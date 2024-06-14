@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'article.dart';
 import 'article_color.dart';
-import 'category.dart';
+import 'category_article.dart';
 import 'data_manager.dart';
 
 class ScreenAddArticle extends StatefulWidget {
@@ -28,8 +28,8 @@ class ScreenAddArticleState extends State<ScreenAddArticle>
   List<ArticleColor> colorItems = DataManager.getAllColors();
   ArticleColor? dropdownColorValue;
 
-  List<Category> categoryItems = DataManager.getAllCategories();
-  Category? dropdownCategoryValue;
+  List<ArticleCategory> categoryItems = DataManager.getAllArticlesCategories();
+  ArticleCategory? dropdownCategoryValue;
 
   @override
   void initState() {}
@@ -77,7 +77,7 @@ class ScreenAddArticleState extends State<ScreenAddArticle>
                   Provider.of<DataManager>(context, listen: false);
               dataManager.addArticle(new Article(
                 name: controllerName.text,
-                category: dropdownCategoryValue,
+                articleCategory: dropdownCategoryValue,
                 color: dropdownColorValue,
                 cost: controllerCost.text,
                 image: itemImage.path,
@@ -177,14 +177,14 @@ class ScreenAddArticleState extends State<ScreenAddArticle>
                     children: [
                       SizedBox(
                         width: computeWidth() / 1.1,
-                        child: DropdownButton<Category>(
+                        child: DropdownButton<ArticleCategory>(
                           value: dropdownCategoryValue,
                           //label: const Text("Colore"),
                           //textStyle: TextStyle(fontSize: 18),
                           //width: computeWidth() / 1.1,
                           items: categoryItems
                               .map(
-                                (map) => DropdownMenuItem<Category>(
+                                (map) => DropdownMenuItem<ArticleCategory>(
                                   child: Text(
                                     map.name.length > 30
                                         ? map.name.substring(0, 30) + "..."
@@ -195,7 +195,7 @@ class ScreenAddArticleState extends State<ScreenAddArticle>
                                 ),
                               )
                               .toList(),
-                          onChanged: (Category? value) {
+                          onChanged: (ArticleCategory? value) {
                             setState(() {
                               dropdownCategoryValue = value;
                             });

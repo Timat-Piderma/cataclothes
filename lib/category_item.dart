@@ -1,10 +1,8 @@
-class Category {
-
+class ItemCategory {
   String name = "";
   int id = 0;
 
-  Category({
-
+  ItemCategory({
     this.name = "",
     this.id = 0,
   });

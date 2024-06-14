@@ -1,7 +1,7 @@
-import 'package:cataclothes/category.dart';
-
 import 'article.dart';
 import 'article_color.dart';
+import 'category_article.dart';
+import 'category_outfit.dart';
 import 'outfit.dart';
 
 class SampleData {
@@ -11,7 +11,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: black,
-    category: c_jeans,
+    articleCategory: ca_jeans,
   );
 
   static Article cyan_shirt = Article(
@@ -20,7 +20,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
-    category: c_camice,
+    articleCategory: ca_camice,
   );
 
   static Article gray_pants = Article(
@@ -29,7 +29,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: gray,
-    category: c_pantaloni,
+    articleCategory: ca_pantaloni,
   );
 
   static Article jeans = Article(
@@ -38,7 +38,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
-    category: c_jeans,
+    articleCategory: ca_jeans,
   );
 
   static Article yellow_tshirt = Article(
@@ -47,7 +47,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: yellow,
-    category: c_tshirt,
+    articleCategory: ca_tshirt,
   );
 
   static List<Article> allArticles = [
@@ -66,7 +66,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: black,
-    category: c_cappelli,
+    articleCategory: ca_cappelli,
   );
 
   static Article cappello2 = Article(
@@ -75,7 +75,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: black,
-    category: c_cappelli,
+    articleCategory: ca_cappelli,
   );
 
   static Article cappello3 = Article(
@@ -84,7 +84,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: gray,
-    category: c_cappelli,
+    articleCategory: ca_cappelli,
   );
 
   static Article gonna1 = Article(
@@ -93,7 +93,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: teal,
-    category: c_gonne,
+    articleCategory: ca_gonne,
   );
 
   static Article gonna2 = Article(
@@ -102,7 +102,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
-    category: c_gonne,
+    articleCategory: ca_gonne,
   );
 
   static Article maglietta4 = Article(
@@ -111,7 +111,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
-    category: c_tshirt,
+    articleCategory: ca_tshirt,
   );
 
   static Article jeans1 = Article(
@@ -120,7 +120,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: gray,
-    category: c_jeans,
+    articleCategory: ca_jeans,
   );
 
   static Article jeans2 = Article(
@@ -129,7 +129,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
-    category: c_jeans,
+    articleCategory: ca_jeans,
   );
 
   static Article jeans3 = Article(
@@ -138,7 +138,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
-    category: c_jeans,
+    articleCategory: ca_jeans,
   );
 
   static Article maglietta1 = Article(
@@ -147,7 +147,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
-    category: c_tshirt,
+    articleCategory: ca_tshirt,
   );
 
   static Article maglietta2 = Article(
@@ -156,7 +156,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: black,
-    category: c_tshirt,
+    articleCategory: ca_tshirt,
   );
 
   static Article maglietta3 = Article(
@@ -165,7 +165,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: black,
-    category: c_tshirt,
+    articleCategory: ca_tshirt,
   );
 
   static Article scarpe1 = Article(
@@ -174,7 +174,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: gray,
-    category: c_scarpe,
+    articleCategory: ca_scarpe,
   );
 
   static Article scarpe2 = Article(
@@ -183,7 +183,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: red,
-    category: c_scarpe,
+    articleCategory: ca_scarpe,
   );
 
   static Article scarpe3 = Article(
@@ -192,7 +192,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
-    category: c_scarpe,
+    articleCategory: ca_scarpe,
   );
 
   static Article shorts1 = Article(
@@ -201,7 +201,7 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
-    category: c_pantaloni,
+    articleCategory: ca_pantaloni,
   );
 
   static Article shorts2 = Article(
@@ -210,39 +210,25 @@ class SampleData {
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
-    category: c_pantaloni,
+    articleCategory: ca_pantaloni,
   );
 
   static Outfit outfit1 = Outfit(
     name: 'Outfit1',
-    image: 'assets/outfits/placeholder_outfit.jpg',
+    image: 'assets/outfits/outfit1.jpg',
     cost: "999.00 €",
-    category: c_pantaloni,
+    outfitCategory: co_casual,
     isFavourite: false,
   );
   static Outfit outfit2 = Outfit(
     name: 'Outfit1',
-    image: 'assets/outfits/placeholder_outfit.jpg',
+    image: 'assets/outfits/outfit2.jpg',
     cost: "999.00 €",
-    category: c_pantaloni,
-    isFavourite: false,
-  );
-  static Outfit outfit3 = Outfit(
-    name: 'Outfit1',
-    image: 'assets/outfits/placeholder_outfit.jpg',
-    cost: "99.00 €",
-    category: c_pantaloni,
-    isFavourite: false,
-  );
-  static Outfit outfit4 = Outfit(
-    name: 'Outfit1',
-    image: 'assets/outfits/placeholder_outfit.jpg',
-    cost: "999.00 €",
-    category: c_pantaloni,
+    outfitCategory: co_casual,
     isFavourite: false,
   );
 
-  static List<Outfit> allOutfits = [outfit1, outfit2, outfit3, outfit4];
+  static List<Outfit> allOutfits = [outfit1, outfit2];
 
   static List<Outfit> favouriteOutfits = [];
 
@@ -270,22 +256,33 @@ class SampleData {
     maglietta3,
   ];
 
-  static Category c_camice = Category(name: 'camice', id: 1);
-  static Category c_scarpe = Category(name: 'Scarpe', id: 2);
-  static Category c_tshirt = Category(name: 'T-Shirt', id: 3);
-  static Category c_jeans = Category(name: 'Jeans', id: 4);
-  static Category c_pantaloni = Category(name: 'Pantaloni', id: 5);
-  static Category c_cappelli = Category(name: 'Cappelli', id: 6);
-  static Category c_gonne = Category(name: 'Gonne', id: 7);
+  static ArticleCategory ca_camice = ArticleCategory(name: 'Camice', id: 1);
+  static ArticleCategory ca_scarpe = ArticleCategory(name: 'Scarpe', id: 2);
+  static ArticleCategory ca_tshirt = ArticleCategory(name: 'T-Shirt', id: 3);
+  static ArticleCategory ca_jeans = ArticleCategory(name: 'Jeans', id: 4);
+  static ArticleCategory ca_pantaloni =
+      ArticleCategory(name: 'Pantaloni', id: 5);
+  static ArticleCategory ca_cappelli = ArticleCategory(name: 'Cappelli', id: 6);
+  static ArticleCategory ca_gonne = ArticleCategory(name: 'Gonne', id: 7);
 
-  static List<Category> allCategories = [
-    c_camice,
-    c_scarpe,
-    c_tshirt,
-    c_jeans,
-    c_pantaloni,
-    c_cappelli,
-    c_gonne
+  static List<ArticleCategory> allArticlesCategories = [
+    ca_camice,
+    ca_scarpe,
+    ca_tshirt,
+    ca_jeans,
+    ca_pantaloni,
+    ca_cappelli,
+    ca_gonne
+  ];
+
+  static OutfitCategory co_casual = OutfitCategory(name: 'Casual', id: 1);
+  static OutfitCategory co_sera = OutfitCategory(name: 'Sera', id: 2);
+  static OutfitCategory co_elegante = OutfitCategory(name: 'Elegante', id: 3);
+
+  static List<OutfitCategory> allOutfitsCategories = [
+    co_casual,
+    co_elegante,
+    co_sera,
   ];
 
   static ArticleColor red = ArticleColor(name: 'red', id: 1);
