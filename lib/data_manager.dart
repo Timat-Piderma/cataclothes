@@ -12,6 +12,7 @@ class DataManager extends ChangeNotifier {
   final List<Outfit> _favouriteOutfits = SampleData.favouriteOutfits;
   final List<Category> _allCategories = SampleData.allCategories;
   final List<ArticleColor> _allColors = SampleData.allColors;
+  final List<Article> _storeArticles = SampleData.storeArticle;
 
   List<Article> get allArticles => List.unmodifiable(_allArticles);
 
@@ -24,6 +25,8 @@ class DataManager extends ChangeNotifier {
   List<Category> get allCategories => List.unmodifiable(_allCategories);
 
   List<ArticleColor> get allColors => List.unmodifiable(_allColors);
+
+  List<Article> get storeArticles => List.unmodifiable(_storeArticles);
 
   void _deleteFavouriteArticle(int index) {
     _favouriteArticles.removeAt(index);
@@ -71,9 +74,6 @@ class DataManager extends ChangeNotifier {
   }
 
   static List<Article> getAllArticles() {
-    // Simulate api request wait time
-    // await Future.delayed(const Duration(milliseconds: 5000));
-
     return List.unmodifiable(SampleData.allArticles);
   }
 
@@ -108,9 +108,6 @@ class DataManager extends ChangeNotifier {
   }
 
   static List<Outfit> getAllOutfits() {
-    // Simulate api request wait time
-    // await Future.delayed(const Duration(milliseconds: 5000));
-
     return List.unmodifiable(SampleData.allOutfits);
   }
 
@@ -122,22 +119,16 @@ class DataManager extends ChangeNotifier {
   }
 
   static List<Category> getAllCategories() {
-    // Simulate api request wait time
-    // await Future.delayed(const Duration(milliseconds: 5000));
-
     return List.unmodifiable(SampleData.allCategories);
   }
 
   static List<ArticleColor> getAllColors() {
-    // Simulate api request wait time
-    // await Future.delayed(const Duration(milliseconds: 5000));
-
     return List.unmodifiable(SampleData.allColors);
   }
 
   static Article? getFilterArticle(Category cat) {
     for (var element in SampleData.allArticles) {
-      if (element.category == cat){
+      if (element.category == cat) {
         return element;
       }
     }
@@ -146,10 +137,17 @@ class DataManager extends ChangeNotifier {
 
   static Outfit? getFilterOutfit(Category cat) {
     for (var element in SampleData.allOutfits) {
-      if (element.category == cat){
+      if (element.category == cat) {
         return element;
       }
     }
     return null;
+  }
+
+  static Future<List<Article>> getStoreArticles() async {
+    // Simulate api request wait time
+    await Future.delayed(const Duration(milliseconds: 5000));
+
+    return List.unmodifiable(SampleData.storeArticle);
   }
 }
