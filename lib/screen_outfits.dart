@@ -27,10 +27,10 @@ class _OutfitScreenState extends State<OutfitsScreen> {
     return Consumer<DataManager>(
       builder: (context, manager, child) {
         return Scaffold(
-            floatingActionButton: FloatingActionButton.large(
+            floatingActionButton: FloatingActionButton(
               shape: const CircleBorder(eccentricity: 1),
               backgroundColor: Colors.amberAccent,
-              child: const Icon(Icons.add, color: Colors.black, size: 60),
+              child: const Icon(Icons.add, color: Colors.black, size: 40),
               onPressed: () => {
                 Navigator.push(
                   context,
