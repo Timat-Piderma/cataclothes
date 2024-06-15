@@ -1,12 +1,12 @@
 import 'package:cataclothes/article_store_detail.dart';
 import 'package:cataclothes/item_grid.dart';
-import 'package:cataclothes/sample_data.dart';
 import 'package:cataclothes/searchbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cataclothes/data_manager.dart';
 
 import 'article.dart';
+import 'article_store.dart';
 
 class ShopScreen extends StatefulWidget {
   const ShopScreen({
@@ -18,7 +18,7 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
-  List<Article> storeArticle = [];
+  List<ArticleStore> storeArticles = [];
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _ShopScreenState extends State<ShopScreen> {
         return Column(
           children: [
             SearchBarComponent(),
-            storeArticle.isEmpty
+            storeArticles.isEmpty
                 ? const Expanded(
                     child: Center(
                       child: CircularProgressIndicator(
@@ -42,9 +42,9 @@ class _ShopScreenState extends State<ShopScreen> {
                   )
                 : Expanded(
                     child: ItemGrid(
-                      items: storeArticle,
+                      items: storeArticles,
                       type: 1,
-                      func: (Article art) {
+                      func: (ArticleStore art) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -63,10 +63,10 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   Future<void> getStoreArticles() async {
-    List<Article> res = await DataManager.getStoreArticles();
+    List<ArticleStore> res = await DataManager.getStoreArticles();
 
     setState(() {
-      storeArticle = res;
+      storeArticles = res;
     });
     return;
   }

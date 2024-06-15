@@ -1,5 +1,6 @@
 import 'article.dart';
 import 'article_color.dart';
+import 'article_store.dart';
 import 'category_article.dart';
 import 'category_outfit.dart';
 import 'outfit.dart';
@@ -60,157 +61,174 @@ class SampleData {
 
   static List<Article> favouriteArticles = [];
 
-  static Article cappello1 = Article(
+  static ArticleStore cappello1 = ArticleStore(
     name: 'Berretto',
     image: 'assets/articles/store/berretto.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: black,
     articleCategory: ca_cappelli,
+    description: "Desrizione base",
   );
 
-  static Article cappello2 = Article(
+  static ArticleStore cappello2 = ArticleStore(
     name: 'Cappello2',
     image: 'assets/articles/store/cappello2.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: black,
     articleCategory: ca_cappelli,
+    description: "Desrizione base",
   );
 
-  static Article cappello3 = Article(
+  static ArticleStore cappello3 = ArticleStore(
     name: 'Cappello3',
     image: 'assets/articles/store/cappello3.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: gray,
     articleCategory: ca_cappelli,
+    description: "Desrizione base",
   );
 
-  static Article gonna1 = Article(
+  static ArticleStore gonna1 = ArticleStore(
     name: 'Gonna1',
     image: 'assets/articles/store/gonna1.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: teal,
     articleCategory: ca_gonne,
+    description: "Desrizione base",
   );
 
-  static Article gonna2 = Article(
+  static ArticleStore gonna2 = ArticleStore(
     name: 'Gonna2',
     image: 'assets/articles/store/gonna2.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: red,
     articleCategory: ca_gonne,
+    description: "Desrizione base",
   );
 
-  static Article maglietta4 = Article(
+  static ArticleStore maglietta4 = ArticleStore(
     name: 'Maglietta4',
     image: 'assets/articles/store/hawaii.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
     articleCategory: ca_tshirt,
+    description: "Desrizione base",
   );
 
-  static Article jeans1 = Article(
+  static ArticleStore jeans1 = ArticleStore(
     name: 'Jeans1',
     image: 'assets/articles/store/jeans1.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: gray,
     articleCategory: ca_jeans,
+    description: "Desrizione base",
   );
 
-  static Article jeans2 = Article(
+  static ArticleStore jeans2 = ArticleStore(
     name: 'Jeans2',
     image: 'assets/articles/store/jeans2.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
     articleCategory: ca_jeans,
+    description: "Desrizione base",
   );
 
-  static Article jeans3 = Article(
+  static ArticleStore jeans3 = ArticleStore(
     name: 'Jeans3',
     image: 'assets/articles/store/jeans3.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
     articleCategory: ca_jeans,
+    description: "Desrizione base",
   );
 
-  static Article maglietta1 = Article(
+  static ArticleStore maglietta1 = ArticleStore(
     name: 'Maglietta1',
     image: 'assets/articles/store/maglietta1.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: red,
     articleCategory: ca_tshirt,
+    description: "Desrizione base",
   );
 
-  static Article maglietta2 = Article(
+  static ArticleStore maglietta2 = ArticleStore(
     name: 'Maglietta2',
     image: 'assets/articles/store/maglietta2.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: black,
     articleCategory: ca_tshirt,
+    description: "Desrizione base",
   );
 
-  static Article maglietta3 = Article(
+  static ArticleStore maglietta3 = ArticleStore(
     name: 'Maglietta3',
     image: 'assets/articles/store/maglietta3.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: black,
     articleCategory: ca_tshirt,
+    description: "Desrizione base",
   );
 
-  static Article scarpe1 = Article(
+  static ArticleStore scarpe1 = ArticleStore(
     name: 'Scarpe1',
     image: 'assets/articles/store/scarpe1.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: gray,
     articleCategory: ca_scarpe,
+    description: "Desrizione base",
   );
 
-  static Article scarpe2 = Article(
+  static ArticleStore scarpe2 = ArticleStore(
     name: 'Scarpe2',
     image: 'assets/articles/store/scarpe2.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: red,
     articleCategory: ca_scarpe,
+    description: "Desrizione base",
   );
 
-  static Article scarpe3 = Article(
+  static ArticleStore scarpe3 = ArticleStore(
     name: 'Scarpe3',
     image: 'assets/articles/store/scarpe3.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
     articleCategory: ca_scarpe,
+    description: "Desrizione base",
   );
 
-  static Article shorts1 = Article(
+  static ArticleStore shorts1 = ArticleStore(
     name: 'Shorts1',
     image: 'assets/articles/store/shorts1.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
     articleCategory: ca_pantaloni,
+    description: "Desrizione base",
   );
 
-  static Article shorts2 = Article(
+  static ArticleStore shorts2 = ArticleStore(
     name: 'Shorts2',
     image: 'assets/articles/store/shorts2.jpg',
     cost: "10.00 €",
     isFavourite: false,
     color: blue,
     articleCategory: ca_pantaloni,
+    description: "Desrizione base",
   );
 
   static Outfit outfit1 = Outfit(
@@ -232,7 +250,7 @@ class SampleData {
 
   static List<Outfit> favouriteOutfits = [];
 
-  static List<Article> storeArticle = [
+  static List<ArticleStore> storeArticle = [
     cappello1,
     cappello2,
     cappello3,
@@ -256,14 +274,14 @@ class SampleData {
     maglietta3,
   ];
 
-  static ArticleCategory ca_camice = ArticleCategory(name: 'Camice', id: 1);
+  static ArticleCategory ca_camice = ArticleCategory(name: 'Camicia', id: 1);
   static ArticleCategory ca_scarpe = ArticleCategory(name: 'Scarpe', id: 2);
   static ArticleCategory ca_tshirt = ArticleCategory(name: 'T-Shirt', id: 3);
   static ArticleCategory ca_jeans = ArticleCategory(name: 'Jeans', id: 4);
   static ArticleCategory ca_pantaloni =
       ArticleCategory(name: 'Pantaloni', id: 5);
-  static ArticleCategory ca_cappelli = ArticleCategory(name: 'Cappelli', id: 6);
-  static ArticleCategory ca_gonne = ArticleCategory(name: 'Gonne', id: 7);
+  static ArticleCategory ca_cappelli = ArticleCategory(name: 'Cappello', id: 6);
+  static ArticleCategory ca_gonne = ArticleCategory(name: 'Gonna', id: 7);
 
   static List<ArticleCategory> allArticlesCategories = [
     ca_camice,

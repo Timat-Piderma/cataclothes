@@ -2,6 +2,7 @@ import 'package:cataclothes/article_color.dart';
 import 'package:cataclothes/category_article.dart';
 import 'package:flutter/material.dart';
 import 'article.dart';
+import 'article_store.dart';
 import 'category_outfit.dart';
 import 'sample_data.dart';
 import 'outfit.dart';
@@ -156,7 +157,7 @@ class DataManager extends ChangeNotifier {
     return null;
   }
 
-  static Future<List<Article>> getStoreArticles() async {
+  static Future<List<ArticleStore>> getStoreArticles() async {
     // Simulate api request wait time
     await Future.delayed(const Duration(milliseconds: 5000));
 

@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'article.dart';
+import 'article_store.dart';
 
 class ArticleStoreDetail extends StatefulWidget {
-  final Article article;
+  final ArticleStore article;
 
   const ArticleStoreDetail({required this.article});
 
@@ -29,7 +30,7 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
     _isFavourited = widget.article.isFavourite;
     controllerName.text = widget.article.name;
     controllerCost.text = widget.article.cost;
-    controllerCategory.text = widget.article.category!.name;
+    controllerCategory.text = widget.article.articleCategory!.name;
   }
 
   @override
@@ -78,11 +79,7 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
                     flex: 1,
                     child: Padding(
                       padding: EdgeInsets.only(
-                        bottom: 18,
-                        top: 18,
-                        left: 8,
-                        right: 8
-                      ),
+                          bottom: 18, top: 18, left: 8, right: 8),
                       child: Container(
                         height: computeWidth() / 2,
                         decoration: BoxDecoration(
@@ -111,7 +108,7 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
                             child: Padding(
                               padding: EdgeInsets.only(left: 10, right: 10),
                               child: Text(
-                                "Descrizione dell'articolo selezionatodal negozio dell'applicazione Catà-Clothes XDD",
+                                widget.article.description,
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
                             ),
