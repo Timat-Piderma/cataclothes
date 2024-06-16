@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:cataclothes/screen_add_photo_article_preview.dart';
+import 'package:cataclothes/custom_searchbar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 import 'package:provider/provider.dart';
 import 'article.dart';
 import 'article_detail.dart';
@@ -59,13 +59,15 @@ class _ClosetScreenState extends State<ClosetScreen> {
               },
             ),
             body: SingleChildScrollView(
+              physics: NeverScrollableScrollPhysics(),
               child: Container(
                 height: computeHeight(),
                 child: Column(children: [
                   Expanded(
-                    flex: 1,
-                    child: buildFloatingSearchBar(),
-                  ),
+                      flex: 1,
+                      child: CustomSearchBar(
+                        func: updateSearchResult,
+                      )),
                   Expanded(
                     flex: 2,
                     child: ItemHorizontalList(
@@ -182,49 +184,17 @@ class _ClosetScreenState extends State<ClosetScreen> {
     }
   }
 
-  Widget buildFloatingSearchBar() {
-    return FloatingSearchBar(
-      hint: 'Cerca...',
-      openAxisAlignment: 0.0,
-      height: 40.0,
-      width: 600,
-      margins: EdgeInsets.fromLTRB(16, 5, 16, 0),
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
-      backdropColor: Colors.transparent,
-      physics: BouncingScrollPhysics(),
-      axisAlignment: 0.0,
-      scrollPadding: EdgeInsets.only(top: 16, bottom: 56),
-      transitionCurve: Curves.easeInOut,
-      transitionDuration: Duration(milliseconds: 500),
-      debounceDelay: Duration(milliseconds: 500),
-      onQueryChanged: (query) {},
-      transition: CircularFloatingSearchBarTransition(),
-      actions: [
-        FloatingSearchBarAction(
-          showIfOpened: false,
-          child: CircularButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              // Azione di ricerca
-            },
-          ),
-        ),
-      ],
-      builder: (context, transition) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Material(
-            color: Colors.white,
-            elevation: 4.0,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: Colors.accents.map((color) {
-                return Container(height: 112, color: color);
-              }).toList(),
-            ),
-          ),
-        );
-      },
-    );
+  void updateSearchResult(String query) {
+    List<Article> result = query.isEmpty
+        ? DataManager().allArticles
+        : DataManager()
+            .allArticles
+            .where((element) =>
+                element.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+
+    setState(() {
+      filteredArticles = result;
+    });
   }
 }

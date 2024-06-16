@@ -17,7 +17,7 @@ class DataManager extends ChangeNotifier {
   final List<OutfitCategory> _allOutfitsCategories =
       SampleData.allOutfitsCategories;
   final List<ArticleColor> _allColors = SampleData.allColors;
-  final List<Article> _storeArticles = SampleData.storeArticle;
+  final List<ArticleStore> _allStoreArticles = SampleData.allStoreArticles;
 
   List<Article> get allArticles => List.unmodifiable(_allArticles);
 
@@ -35,7 +35,7 @@ class DataManager extends ChangeNotifier {
 
   List<ArticleColor> get allColors => List.unmodifiable(_allColors);
 
-  List<Article> get storeArticles => List.unmodifiable(_storeArticles);
+  List<Article> get allStoreArticles => List.unmodifiable(_allStoreArticles);
 
   void _deleteFavouriteArticle(int index) {
     _favouriteArticles.removeAt(index);
@@ -157,10 +157,7 @@ class DataManager extends ChangeNotifier {
     return null;
   }
 
-  static Future<List<ArticleStore>> getStoreArticles() async {
-    // Simulate api request wait time
-    await Future.delayed(const Duration(milliseconds: 5000));
-
-    return List.unmodifiable(SampleData.storeArticle);
+  static List<ArticleStore> getStoreArticles() {
+    return List.unmodifiable(SampleData.allStoreArticles);
   }
 }

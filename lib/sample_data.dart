@@ -43,7 +43,7 @@ class SampleData {
   );
 
   static Article yellow_tshirt = Article(
-    name: 'Black Jeans',
+    name: 'Yellow T-Shirt',
     image: 'assets/articles/closet/yellow_tshirt.jpg',
     cost: "10.00 €",
     isFavourite: false,
@@ -250,7 +250,7 @@ class SampleData {
 
   static List<Outfit> favouriteOutfits = [];
 
-  static List<ArticleStore> storeArticle = [
+  static List<ArticleStore> allStoreArticles = [
     cappello1,
     cappello2,
     cappello3,

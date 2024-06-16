@@ -1,4 +1,5 @@
 import 'package:cataclothes/article_store_detail.dart';
+import 'package:cataclothes/custom_searchbar.dart';
 import 'package:cataclothes/item_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
@@ -17,12 +18,10 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
-  List<ArticleStore> storeArticles = [];
+  List<ArticleStore> storeArticles = DataManager.getStoreArticles();
 
   @override
-  void initState() {
-    getStoreArticles();
-  }
+  void initState() {}
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class _ShopScreenState extends State<ShopScreen> {
         return Column(
           children: [
             Expanded(
-              child: buildFloatingSearchBar(),
+              child: CustomSearchBar(func: updateSearchResult),
             ),
             storeArticles.isEmpty
                 ? const Expanded(
@@ -64,58 +63,16 @@ class _ShopScreenState extends State<ShopScreen> {
     );
   }
 
-  Future<void> getStoreArticles() async {
-    List<ArticleStore> res = await DataManager.getStoreArticles();
+  void updateSearchResult(String query) {
+    List<ArticleStore> result = query.isEmpty
+        ? DataManager.getStoreArticles()
+        : DataManager.getStoreArticles()
+            .where((element) =>
+                element.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
 
     setState(() {
-      storeArticles = res;
+      storeArticles = result;
     });
-    return;
-  }
-
-  Widget buildFloatingSearchBar() {
-    return FloatingSearchBar(
-      hint: 'Cerca...',
-      openAxisAlignment: 0.0,
-      height: 40.0,
-      width: 600,
-      margins: EdgeInsets.fromLTRB(16, 5, 16, 0),
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
-      backdropColor: Colors.transparent,
-      physics: BouncingScrollPhysics(),
-      axisAlignment: 0.0,
-      scrollPadding: EdgeInsets.only(top: 16, bottom: 56),
-      transitionCurve: Curves.easeInOut,
-      transitionDuration: Duration(milliseconds: 500),
-      debounceDelay: Duration(milliseconds: 500),
-      onQueryChanged: (query) {},
-      transition: CircularFloatingSearchBarTransition(),
-      actions: [
-        FloatingSearchBarAction(
-          showIfOpened: false,
-          child: CircularButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              // Azione di ricerca
-            },
-          ),
-        ),
-      ],
-      builder: (context, transition) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Material(
-            color: Colors.white,
-            elevation: 4.0,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: Colors.accents.map((color) {
-                return Container(height: 112, color: color);
-              }).toList(),
-            ),
-          ),
-        );
-      },
-    );
   }
 }
