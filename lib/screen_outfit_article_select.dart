@@ -1,10 +1,8 @@
 import 'package:cataclothes/screen_add_photo_outfit_preview.dart';
-import 'package:cataclothes/searchbar.dart';
 import 'package:flutter/material.dart';
 
 import 'article.dart';
 import 'category_article.dart';
-import 'category_outfit.dart';
 import 'data_manager.dart';
 import 'item_grid.dart';
 import 'item_horizontal_list.dart';
@@ -72,10 +70,10 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
           ),
         ),
         body: Column(children: [
-          const Expanded(
+        /*  const Expanded(
             flex: 1,
             child: SearchBarComponent(),
-          ),
+          ),*/
           Expanded(
             flex: 2,
             child: ItemHorizontalList(

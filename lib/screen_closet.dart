@@ -4,6 +4,7 @@ import 'package:cataclothes/screen_add_photo_article_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:material_floating_search_bar_2/material_floating_search_bar_2.dart';
 import 'package:provider/provider.dart';
 import 'article.dart';
 import 'article_detail.dart';
@@ -11,7 +12,6 @@ import 'category_article.dart';
 import 'data_manager.dart';
 import 'item_grid.dart';
 import 'item_horizontal_list.dart';
-import 'searchbar.dart';
 
 class ClosetScreen extends StatefulWidget {
   const ClosetScreen({
@@ -33,6 +33,13 @@ class _ClosetScreenState extends State<ClosetScreen> {
     setState(() {});
   }
 
+  double computeHeight() {
+    double height = MediaQuery.of(context).size.height;
+    var padding = MediaQuery.of(context).viewPadding;
+    double safeHeight = height - padding.top - kToolbarHeight;
+    return safeHeight;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<DataManager>(
@@ -51,39 +58,44 @@ class _ClosetScreenState extends State<ClosetScreen> {
                     })
               },
             ),
-            body: Column(children: [
-              const Expanded(
-                flex: 1,
-                child: SearchBarComponent(),
+            body: SingleChildScrollView(
+              child: Container(
+                height: computeHeight(),
+                child: Column(children: [
+                  Expanded(
+                    flex: 1,
+                    child: buildFloatingSearchBar(),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: ItemHorizontalList(
+                        items: getFilterItems(),
+                        type: 0,
+                        func: (Article art) {
+                          setFilter(art);
+                        }),
+                  ),
+                  const Divider(),
+                  Expanded(
+                    flex: 11,
+                    child: ItemGrid(
+                      items: filteredArticles,
+                      type: 0,
+                      func: (Article art) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ArticleDetail(article: art);
+                            },
+                          ),
+                        ).then((value) => setState(() {}));
+                      },
+                    ),
+                  ),
+                ]),
               ),
-              Expanded(
-                flex: 2,
-                child: ItemHorizontalList(
-                    items: getFilterItems(),
-                    type: 0,
-                    func: (Article art) {
-                      setFilter(art);
-                    }),
-              ),
-              const Divider(),
-              Expanded(
-                flex: 11,
-                child: ItemGrid(
-                  items: filteredArticles,
-                  type: 0,
-                  func: (Article art) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return ArticleDetail(article: art);
-                        },
-                      ),
-                    ).then((value) => setState(() {}));
-                  },
-                ),
-              ),
-            ]));
+            ));
       },
     );
   }
@@ -168,5 +180,51 @@ class _ClosetScreenState extends State<ClosetScreen> {
         _croppedFile = null;
       }
     }
+  }
+
+  Widget buildFloatingSearchBar() {
+    return FloatingSearchBar(
+      hint: 'Cerca...',
+      openAxisAlignment: 0.0,
+      height: 40.0,
+      width: 600,
+      margins: EdgeInsets.fromLTRB(16, 5, 16, 0),
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      backdropColor: Colors.transparent,
+      physics: BouncingScrollPhysics(),
+      axisAlignment: 0.0,
+      scrollPadding: EdgeInsets.only(top: 16, bottom: 56),
+      transitionCurve: Curves.easeInOut,
+      transitionDuration: Duration(milliseconds: 500),
+      debounceDelay: Duration(milliseconds: 500),
+      onQueryChanged: (query) {},
+      transition: CircularFloatingSearchBarTransition(),
+      actions: [
+        FloatingSearchBarAction(
+          showIfOpened: false,
+          child: CircularButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              // Azione di ricerca
+            },
+          ),
+        ),
+      ],
+      builder: (context, transition) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Material(
+            color: Colors.white,
+            elevation: 4.0,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: Colors.accents.map((color) {
+                return Container(height: 112, color: color);
+              }).toList(),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
