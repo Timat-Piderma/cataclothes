@@ -64,12 +64,12 @@ class _ClosetScreenState extends State<ClosetScreen> {
                 height: computeHeight(),
                 child: Column(children: [
                   Expanded(
-                      flex: 1,
+                      flex: 2,
                       child: CustomSearchBar(
                         func: updateSearchResult,
                       )),
                   Expanded(
-                    flex: 2,
+                    flex: 3,
                     child: ItemHorizontalList(
                         items: getFilterItems(),
                         type: 0,
@@ -79,7 +79,7 @@ class _ClosetScreenState extends State<ClosetScreen> {
                   ),
                   const Divider(),
                   Expanded(
-                    flex: 11,
+                    flex: 28,
                     child: ItemGrid(
                       items: filteredArticles,
                       type: 0,

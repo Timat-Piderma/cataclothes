@@ -64,10 +64,10 @@ class _OutfitScreenState extends State<OutfitsScreen> {
                 height: computeHeight(),
                 child: Column(children: [
                   Expanded(
-                      flex: 1,
+                      flex: 2,
                       child: CustomSearchBar(func: updateSearchResult)),
                   Expanded(
-                    flex: 2,
+                    flex: 3,
                     child: ItemHorizontalList(
                         items: getFilterItems(),
                         type: 0,
@@ -77,7 +77,7 @@ class _OutfitScreenState extends State<OutfitsScreen> {
                   ),
                   const Divider(),
                   Expanded(
-                    flex: 11,
+                    flex: 28,
                     child: ItemGrid(
                       items: filteredOutfits,
                       type: 0,

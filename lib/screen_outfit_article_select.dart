@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'article.dart';
 import 'category_article.dart';
+import 'custom_searchbar.dart';
 import 'data_manager.dart';
 import 'item_grid.dart';
 import 'item_horizontal_list.dart';
@@ -70,12 +71,13 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
           ),
         ),
         body: Column(children: [
-        /*  const Expanded(
-            flex: 1,
-            child: SearchBarComponent(),
-          ),*/
           Expanded(
-            flex: 2,
+              flex: 2,
+              child: CustomSearchBar(
+                func: updateSearchResult,
+              )),
+          Expanded(
+            flex: 3,
             child: ItemHorizontalList(
                 items: getFilterItems(),
                 type: 0,
@@ -85,7 +87,7 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
           ),
           const Divider(),
           Expanded(
-            flex: 12,
+            flex: 28,
             child: ItemGrid(
                 items: filteredArticles,
                 type: 0,
@@ -136,5 +138,19 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
         selectedArticles.add(art);
       });
     }
+  }
+
+  void updateSearchResult(String query) {
+    List<Article> result = query.isEmpty
+        ? DataManager().allArticles
+        : DataManager()
+            .allArticles
+            .where((element) =>
+                element.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+
+    setState(() {
+      filteredArticles = result;
+    });
   }
 }
