@@ -1,8 +1,9 @@
+import 'package:cataclothes/screen_manage_categories.dart';
+import 'package:cataclothes/screen_profile.dart';
+import 'package:cataclothes/screen_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cataclothes/data_manager.dart';
-import 'package:cataclothes/settings_manager.dart';
-import 'package:cataclothes/settings_screen.dart';
 import 'package:cataclothes/app_theme.dart';
 import 'package:cataclothes/screen_home.dart';
 import 'package:cataclothes/screen_closet.dart';
@@ -21,9 +22,7 @@ class CataClothes extends StatefulWidget {
 }
 
 class _CataClothesAppState extends State<CataClothes> {
-
   final DataManager _dataManager = DataManager();
-  final SettingsManager _settingsManager = SettingsManager();
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +31,12 @@ class _CataClothesAppState extends State<CataClothes> {
         ChangeNotifierProvider(
           create: (context) => _dataManager,
         ),
-
-
-        ChangeNotifierProvider(
-          create: (context) => _settingsManager,
-        ),
       ],
-      child: Consumer<SettingsManager>(
+      child: Consumer(
         builder: (context, settingsManager, child) {
           ThemeData maintheme;
-          if (settingsManager.darkMode){
-            maintheme = CataClothesTheme.dark();
-          } else {
-            maintheme = CataClothesTheme.light();
-          }
+
+          maintheme = CataClothesTheme.light();
 
           return MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -78,7 +69,6 @@ class _CataClothesAppHomeState extends State<CataClothesAppHome> {
     OutfitsScreen(),
   ];
 
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedTabIndex = index;
@@ -109,21 +99,57 @@ class _CataClothesAppHomeState extends State<CataClothesAppHome> {
           ),
           actions: [
             Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: GestureDetector(
-                child: const Icon(Icons.settings),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const SettingsScreen();
+                padding: const EdgeInsets.only(right: 16.0),
+                child: PopupMenuButton(
+                  child: const Icon(Icons.more_vert),
+                  itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                    PopupMenuItem(
+                      height: 40,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ManageCategoriesScreen();
+                            },
+                          ),
+                        );
                       },
+                      child: Text("Gestisci Categorie",
+                          style: Theme.of(context).textTheme.bodyMedium),
                     ),
-                  );
-                },
-              ),
-            )
+                    PopupMenuItem(
+                      height: 40,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return SettingsScreen();
+                            },
+                          ),
+                        );
+                      },
+                      child: Text('Impostazioni',
+                          style: Theme.of(context).textTheme.bodyMedium),
+                    ),
+                    PopupMenuItem(
+                      height: 40,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ProfileScreen();
+                            },
+                          ),
+                        );
+                      },
+                      child: Text('Profilo',
+                          style: Theme.of(context).textTheme.bodyMedium),
+                    ),
+                  ],
+                ))
           ],
         ),
       ),
