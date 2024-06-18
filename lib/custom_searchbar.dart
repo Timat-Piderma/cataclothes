@@ -19,6 +19,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   @override
   Widget build(BuildContext context) {
     return FloatingSearchBar(
+      automaticallyImplyBackButton: false,
       hint: 'Cerca...',
       openAxisAlignment: 0.0,
       height: 40.0,
