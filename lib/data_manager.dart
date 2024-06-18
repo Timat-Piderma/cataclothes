@@ -47,7 +47,7 @@ class DataManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _deleteArticle(int index) {
+  void deleteArticle(int index) {
     _allArticles.removeAt(index);
     notifyListeners();
   }
@@ -59,6 +59,28 @@ class DataManager extends ChangeNotifier {
 
   void addOutfit(Outfit item) {
     _allOutfits.add(item);
+    notifyListeners();
+  }
+
+  bool deleteArticleCategory(int index) {
+    _allArticlesCategories.removeAt(index);
+    notifyListeners();
+    return true;
+  }
+
+  bool deleteOutfitCategory(int index) {
+    _allOutfitsCategories.removeAt(index);
+    notifyListeners();
+    return true;
+  }
+
+  void addArticleCategory(ArticleCategory item) {
+    _allArticlesCategories.add(item);
+    notifyListeners();
+  }
+
+  void addOutfitCategory(OutfitCategory item) {
+    _allOutfitsCategories.add(item);
     notifyListeners();
   }
 

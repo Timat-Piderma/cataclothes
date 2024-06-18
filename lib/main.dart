@@ -1,4 +1,5 @@
-import 'package:cataclothes/screen_manage_categories.dart';
+import 'package:cataclothes/screen_manage_article_categories.dart';
+import 'package:cataclothes/screen_manage_outfit_categories.dart';
 import 'package:cataclothes/screen_profile.dart';
 import 'package:cataclothes/screen_settings.dart';
 import 'package:flutter/material.dart';
@@ -103,21 +104,38 @@ class _CataClothesAppHomeState extends State<CataClothesAppHome> {
                 child: PopupMenuButton(
                   child: const Icon(Icons.more_vert),
                   itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                    PopupMenuItem(
-                      height: 40,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return ManageCategoriesScreen();
-                            },
-                          ),
-                        );
-                      },
-                      child: Text("Gestisci Categorie",
-                          style: Theme.of(context).textTheme.bodyMedium),
-                    ),
+                    if (_selectedTabIndex == 3)
+                      PopupMenuItem(
+                        height: 40,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return ManageArticleCategoriesScreen();
+                              },
+                            ),
+                          );
+                        },
+                        child: Text("Gestisci Categorie",
+                            style: Theme.of(context).textTheme.bodyMedium),
+                      ),
+                    if (_selectedTabIndex == 4)
+                      PopupMenuItem(
+                        height: 40,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return ManageOutfitCategoriesScreen();
+                              },
+                            ),
+                          );
+                        },
+                        child: Text("Gestisci Categorie",
+                            style: Theme.of(context).textTheme.bodyMedium),
+                      ),
                     PopupMenuItem(
                       height: 40,
                       onTap: () {

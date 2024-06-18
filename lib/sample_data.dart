@@ -274,14 +274,14 @@ class SampleData {
     maglietta3,
   ];
 
-  static ArticleCategory ca_camice = ArticleCategory(name: 'Camicia', id: 1);
-  static ArticleCategory ca_scarpe = ArticleCategory(name: 'Scarpe', id: 2);
-  static ArticleCategory ca_tshirt = ArticleCategory(name: 'T-Shirt', id: 3);
-  static ArticleCategory ca_jeans = ArticleCategory(name: 'Jeans', id: 4);
+  static ArticleCategory ca_camice = ArticleCategory(name: 'Camicia');
+  static ArticleCategory ca_scarpe = ArticleCategory(name: 'Scarpe');
+  static ArticleCategory ca_tshirt = ArticleCategory(name: 'T-Shirt');
+  static ArticleCategory ca_jeans = ArticleCategory(name: 'Jeans');
   static ArticleCategory ca_pantaloni =
-      ArticleCategory(name: 'Pantaloni', id: 5);
-  static ArticleCategory ca_cappelli = ArticleCategory(name: 'Cappello', id: 6);
-  static ArticleCategory ca_gonne = ArticleCategory(name: 'Gonna', id: 7);
+      ArticleCategory(name: 'Pantaloni');
+  static ArticleCategory ca_cappelli = ArticleCategory(name: 'Cappello');
+  static ArticleCategory ca_gonne = ArticleCategory(name: 'Gonna');
 
   static List<ArticleCategory> allArticlesCategories = [
     ca_camice,
@@ -293,9 +293,9 @@ class SampleData {
     ca_gonne
   ];
 
-  static OutfitCategory co_casual = OutfitCategory(name: 'Casual', id: 1);
-  static OutfitCategory co_sera = OutfitCategory(name: 'Sera', id: 2);
-  static OutfitCategory co_elegante = OutfitCategory(name: 'Elegante', id: 3);
+  static OutfitCategory co_casual = OutfitCategory(name: 'Casual');
+  static OutfitCategory co_sera = OutfitCategory(name: 'Sera');
+  static OutfitCategory co_elegante = OutfitCategory(name: 'Elegante');
 
   static List<OutfitCategory> allOutfitsCategories = [
     co_casual,
