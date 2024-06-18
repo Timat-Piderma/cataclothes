@@ -6,7 +6,6 @@ import 'item_card_small.dart';
 
 class Outfit extends Item {
   String cost = "";
-  String name = "";
   bool isFavourite = false;
   OutfitCategory? outfitCategory;
   List<Article>? articles;
@@ -14,7 +13,7 @@ class Outfit extends Item {
   Outfit({
     super.image = "",
     this.cost = "",
-    this.name = "",
+    super.name = "",
     this.isFavourite = false,
     this.outfitCategory,
     this.articles,

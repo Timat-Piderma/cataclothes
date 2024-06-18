@@ -6,7 +6,6 @@ import 'item.dart';
 import 'category_article.dart';
 
 class Article extends Item {
-  String name = "";
   String cost = "";
   bool isFavourite = false;
   ArticleColor? color;
@@ -14,7 +13,7 @@ class Article extends Item {
 
   Article({
     super.image = "",
-    this.name = "",
+    super.name = "",
     this.cost = "",
     this.isFavourite = false,
     this.color,

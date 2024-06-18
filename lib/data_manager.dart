@@ -87,6 +87,14 @@ class DataManager extends ChangeNotifier {
     return res;
   }
 
+  int countOutfitOfCategory(OutfitCategory item) {
+    int res = 0;
+    for (Outfit o in _allOutfits) {
+      if (o.outfitCategory == item) res++;
+    }
+    return res;
+  }
+
   void addOutfitCategory(OutfitCategory item) {
     _allOutfitsCategories.add(item);
     notifyListeners();

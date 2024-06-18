@@ -5,7 +5,11 @@ import 'package:cataclothes/data_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 
+import 'category_outfit.dart';
+
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
   State<ProfileScreen> createState() {
     return _ProfileScreenState();
@@ -18,14 +22,23 @@ class _ProfileScreenState extends State<ProfileScreen>
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerBackup = TextEditingController();
 
-  Map<String, double> dataMap = {};
+  Map<String, double> articleData = {};
+  Map<String, double> outfitData = {};
 
   @override
   void initState() {
+
     for (ArticleCategory ac in DataManager.getAllArticlesCategories()) {
       if (DataManager().countArticleOfCategory(ac).toDouble() > 0) {
-        dataMap.putIfAbsent(
+        articleData.putIfAbsent(
             ac.name, () => DataManager().countArticleOfCategory(ac).toDouble());
+      }
+    }
+
+    for (OutfitCategory oc in DataManager.getAllOutfitsCategories()) {
+      if (DataManager().countOutfitOfCategory(oc).toDouble() > 0) {
+        outfitData.putIfAbsent(
+            oc.name, () => DataManager().countOutfitOfCategory(oc).toDouble());
       }
     }
 
@@ -106,6 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     ))
               ],
             ),
+            const Divider(),
             Row(children: [
               Padding(
                 padding: const EdgeInsets.only(
@@ -119,19 +133,35 @@ class _ProfileScreenState extends State<ProfileScreen>
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 20),
               child: PieChart(
-                dataMap: dataMap,
+                dataMap: articleData,
                 chartType: ChartType.ring,
                 ringStrokeWidth: 30,
                 centerWidget: Text(
                   "${DataManager.getAllArticles().length} Vestiti",
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                legendOptions: LegendOptions(
+                legendOptions: const LegendOptions(
                   legendPosition: LegendPosition.bottom,
                 ),
-                chartValuesOptions: ChartValuesOptions(showChartValues: false),
+                chartValuesOptions: const ChartValuesOptions(showChartValues: false),
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 20),
+              child: PieChart(
+                dataMap: outfitData,
+                chartType: ChartType.ring,
+                ringStrokeWidth: 30,
+                centerWidget: Text(
+                  "${DataManager.getAllOutfits().length} Outfit",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                legendOptions: const LegendOptions(
+                  legendPosition: LegendPosition.bottom,
+                ),
+                chartValuesOptions: const ChartValuesOptions(showChartValues: false),
+              ),
+            ),
           ],
         ),
       ),

@@ -59,7 +59,7 @@ class _ClosetScreenState extends State<ClosetScreen> {
               },
             ),
             body: SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               child: Container(
                 height: computeHeight(),
                 child: Column(children: [
