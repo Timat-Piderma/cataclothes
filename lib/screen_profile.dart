@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:cataclothes/category_article.dart';
+import 'package:cataclothes/data_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -11,8 +14,24 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen>
     with SingleTickerProviderStateMixin {
+  bool isEditing = true;
+  TextEditingController controllerName = TextEditingController();
+  TextEditingController controllerBackup = TextEditingController();
+
+  Map<String, double> dataMap = {};
+
   @override
-  void initState() {}
+  void initState() {
+    for (ArticleCategory ac in DataManager.getAllArticlesCategories()) {
+      if (DataManager().countArticleOfCategory(ac).toDouble() > 0) {
+        dataMap.putIfAbsent(
+            ac.name, () => DataManager().countArticleOfCategory(ac).toDouble());
+      }
+    }
+
+    controllerName.text = "John Doe";
+    controllerBackup.text = "18/06/2024 15:30";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +40,101 @@ class _ProfileScreenState extends State<ProfileScreen>
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
-          title: Text("Profilo"),
+          title: const Text("Profilo"),
           backgroundColor: Colors.tealAccent,
         ),
       ),
-      body: ListView(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                const Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 8, left: 15),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.lightBlueAccent,
+                      foregroundImage: AssetImage("assets/pfp.png"),
+                      radius: 80,
+                    ),
+                  ),
+                ),
+                Expanded(
+                    flex: 3,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 8, right: 15, bottom: 8, left: 15),
+                      child: Column(
+                        children: [
+                          TextField(
+                            readOnly: isEditing,
+                            style: const TextStyle(fontSize: 18),
+                            controller: controllerName,
+                            decoration: InputDecoration(
+                              suffixIcon: isEditing
+                                  ? IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isEditing = false;
+                                        });
+                                      },
+                                      icon: const Icon(Icons.mode),
+                                    )
+                                  : IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isEditing = true;
+                                        });
+                                      },
+                                      icon: const Icon(Icons.check),
+                                    ),
+                              labelText: 'Nome',
+                            ),
+                          ),
+                          IgnorePointer(
+                            child: TextField(
+                              style: const TextStyle(fontSize: 18),
+                              controller: controllerBackup,
+                              decoration: const InputDecoration(
+                                labelText: 'Ultimo Backup',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ))
+              ],
+            ),
+            Row(children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 15, left: 8, right: 8, bottom: 8),
+                child: Text(
+                  "Dettagli Armadio",
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+              )
+            ]),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 20),
+              child: PieChart(
+                dataMap: dataMap,
+                chartType: ChartType.ring,
+                ringStrokeWidth: 30,
+                centerWidget: Text(
+                  "${DataManager.getAllArticles().length} Vestiti",
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                legendOptions: LegendOptions(
+                  legendPosition: LegendPosition.bottom,
+                ),
+                chartValuesOptions: ChartValuesOptions(showChartValues: false),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
