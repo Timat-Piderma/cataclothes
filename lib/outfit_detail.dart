@@ -185,6 +185,24 @@ class _OutfitDetailState extends State<OutfitDetail>
                       ),
                     ],
                   ),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: FilledButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateColor.resolveWith(
+                              (states) => Colors.red),
+                        ),
+                        onPressed: () {
+                          openDeleteDialog();
+                        },
+                        child: Text(
+                          "Elimina",
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ],
@@ -200,5 +218,29 @@ class _OutfitDetailState extends State<OutfitDetail>
     } else {
       return AssetImage(path);
     }
+  }
+
+  Future openDeleteDialog() => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: const Text("Sicuro di voler eliminare questo outfit?"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Annulla")),
+              TextButton(
+                  onPressed: () {
+                    deleteOutfit(widget.outfit);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Conferma"))
+            ],
+          ));
+
+  void deleteOutfit(Outfit o) {
+    DataManager().deleteOutfit(DataManager.getAllOutfits().indexOf(o));
   }
 }

@@ -52,6 +52,11 @@ class DataManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteOutfit(int index) {
+    _allOutfits.removeAt(index);
+    notifyListeners();
+  }
+
   void addArticle(Article item) {
     _allArticles.add(item);
     notifyListeners();

@@ -91,7 +91,9 @@ class _OutfitScreenState extends State<OutfitsScreen> {
                               return OutfitDetail(outfit: out);
                             },
                           ),
-                        ).then((value) => setState(() {}));
+                        ).then((value) => setState(() {
+                          filteredOutfits = getFilterItems();
+                        }));
                       },
                     ),
                   ),

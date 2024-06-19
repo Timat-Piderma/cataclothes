@@ -9,7 +9,7 @@ import 'category_article.dart';
 class ArticleDetail extends StatefulWidget {
   final Article article;
 
-  const ArticleDetail({required this.article});
+  const ArticleDetail({super.key, required this.article});
 
   @override
   State<ArticleDetail> createState() {
@@ -17,7 +17,6 @@ class ArticleDetail extends StatefulWidget {
   }
 }
 
-// SingleTickerProviderStateMixin serve per permettere di inizializzare vsync a this nel TabController
 class _ArticleDetailState extends State<ArticleDetail>
     with SingleTickerProviderStateMixin {
   bool isEditable = false;
@@ -61,22 +60,20 @@ class _ArticleDetailState extends State<ArticleDetail>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //extendBodyBehindAppBar: true,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
-          title: Text("Dettagli"),
+          title: const Text("Dettagli"),
           backgroundColor: Colors.tealAccent,
         ),
       ),
-
       floatingActionButton: Visibility(
         visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
         child: FloatingActionButton.extended(
           backgroundColor: isEditable ? Colors.red : Colors.tealAccent,
           label: Text(
             isEditable ? "Salva" : "Modifica",
-            style: TextStyle(color: Colors.black, fontSize: 20),
+            style: const TextStyle(color: Colors.black, fontSize: 20),
           ),
           onPressed: () => {
             setState(() {
@@ -92,164 +89,153 @@ class _ArticleDetailState extends State<ArticleDetail>
           },
         ),
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-
-      body: ListView(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-                bottom: 10,
-                top: 8,
-                left: computeWidth() / 4,
-                right: computeWidth() / 4),
-            child: Container(
-              height: computeWidth() / 2,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.black, width: 4),
-                image: DecorationImage(
-                  image: getImage(widget.article.image),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: 10,
+                  top: 8,
+                  left: computeWidth() / 4,
+                  right: computeWidth() / 4),
+              child: Container(
+                height: computeWidth() / 2,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.black, width: 4),
+                  image: DecorationImage(
+                    image: getImage(widget.article.image),
+                  ),
                 ),
               ),
-
-              /*     child: Stack(
-                children: [
-                  Positioned(
-                    bottom: 8,
-                    right: 8,
-                    child: IconButton(
-                        icon: Icon(_isFavourited
-                            ? Icons.favorite
-                            : Icons.favorite_border),
-                        iconSize: 28,
-                        color: Colors.orange,
-                        onPressed: () {
-                          setState(() {
-                            _isFavourited = !_isFavourited;
-                            final dataManager =
-                                Provider.of<DataManager>(context, listen: false);
-                            dataManager.updateFavouriteArticleValue(
-                                widget.article, _isFavourited);
-                            dataManager.updateFavouriteArticlesList(
-                                widget.article, _isFavourited);
-                          });
-                        }),
-                  )
-                ],
-              ),*/
             ),
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 8,
-              ),
-              ListView(
-                primary: false,
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: IgnorePointer(
-                          ignoring: !isEditable,
-                          child: TextField(
-                            style: TextStyle(fontSize: 18),
-                            controller: controllerName,
-                            decoration: InputDecoration(
-                              labelText: 'Nome',
+            Column(
+              children: [
+                const SizedBox(
+                  height: 8,
+                ),
+                ListView(
+                  primary: false,
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: computeWidth() / 1.1,
+                          child: IgnorePointer(
+                            ignoring: !isEditable,
+                            child: TextField(
+                              style: const TextStyle(fontSize: 18),
+                              controller: controllerName,
+                              decoration: const InputDecoration(
+                                labelText: 'Nome',
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: IgnorePointer(
-                          ignoring: !isEditable,
-                          child: DropdownButton<ArticleColor>(
-                            value: dropdownColorValue,
-                            //label: const Text("Colore"),
-                            //textStyle: TextStyle(fontSize: 18),
-                            //width: computeWidth() / 1.1,
-                            items: colorItems
-                                .map(
-                                  (map) => DropdownMenuItem<ArticleColor>(
-                                    child: Text(map.name),
-                                    value: map,
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (ArticleColor? value) {
-                              setState(() {
-                                dropdownColorValue = value;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: IgnorePointer(
-                          ignoring: !isEditable,
-                          child: TextField(
-                            controller: controllerCost,
-                            style: TextStyle(fontSize: 18),
-                            decoration: InputDecoration(
-                              labelText: 'Costo',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: IgnorePointer(
-                          ignoring: !isEditable,
-                          child: DropdownButton<ArticleCategory>(
-                            value: dropdownCategoryValue,
-                            items: categoryItems
-                                .map(
-                                  (map) => DropdownMenuItem<ArticleCategory>(
-                                    child: Text(
-                                      map.name.length > 30
-                                          ? map.name.substring(0, 30) + "..."
-                                          : map.name,
-                                      overflow: TextOverflow.ellipsis,
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: computeWidth() / 1.1,
+                          child: IgnorePointer(
+                            ignoring: !isEditable,
+                            child: DropdownButton<ArticleColor>(
+                              value: dropdownColorValue,
+                              items: colorItems
+                                  .map(
+                                    (map) => DropdownMenuItem<ArticleColor>(
+                                      value: map,
+                                      child: Text(map.name),
                                     ),
-                                    value: map,
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (ArticleCategory? value) {
-                              setState(() {
-                                dropdownCategoryValue = value;
-                              });
-                            },
+                                  )
+                                  .toList(),
+                              onChanged: (ArticleColor? value) {
+                                setState(() {
+                                  dropdownColorValue = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: computeWidth() / 1.1,
+                          child: IgnorePointer(
+                            ignoring: !isEditable,
+                            child: TextField(
+                              controller: controllerCost,
+                              style: const TextStyle(fontSize: 18),
+                              decoration: const InputDecoration(
+                                labelText: 'Costo',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: computeWidth() / 1.1,
+                          child: IgnorePointer(
+                            ignoring: !isEditable,
+                            child: DropdownButton<ArticleCategory>(
+                              value: dropdownCategoryValue,
+                              items: categoryItems
+                                  .map(
+                                    (map) => DropdownMenuItem<ArticleCategory>(
+                                      value: map,
+                                      child: Text(
+                                        map.name.length > 30
+                                            ? "${map.name.substring(0, 30)}..."
+                                            : map.name,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (ArticleCategory? value) {
+                                setState(() {
+                                  dropdownCategoryValue = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: FilledButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (states) => Colors.red),
+                          ),
+                          onPressed: () {
+                            openDeleteDialog();
+                          },
+                          child: Text(
+                            "Elimina",
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          )
-        ],
+                    )
+                  ],
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -260,5 +246,29 @@ class _ArticleDetailState extends State<ArticleDetail>
     } else {
       return AssetImage(path);
     }
+  }
+
+  Future openDeleteDialog() => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: const Text("Sicuro di voler eliminare questo articolo?"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Annulla")),
+              TextButton(
+                  onPressed: () {
+                    deleteArticle(widget.article);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Conferma"))
+            ],
+          ));
+
+  void deleteArticle(Article a) {
+    DataManager().deleteArticle(DataManager.getAllArticles().indexOf(a));
   }
 }

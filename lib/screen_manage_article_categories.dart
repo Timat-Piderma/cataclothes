@@ -38,7 +38,7 @@ class _ManageArticleCategoriesScreenState
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: AppBar(
-            title: Text("Gestisci Categorie Vestiti"),
+            title: const Text("Gestisci Categorie Vestiti"),
             backgroundColor: Colors.tealAccent,
           ),
         ),
@@ -49,7 +49,7 @@ class _ManageArticleCategoriesScreenState
           onPressed: () => {openDialog()},
         ),
         body: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           child: Container(
             height: computeHeight(),
             child: Column(children: [
@@ -94,7 +94,7 @@ class _ManageArticleCategoriesScreenState
         res.add(const Divider());
       }
       res.add(Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             children: [
               Text(c.name, style: Theme.of(context).textTheme.bodyLarge),

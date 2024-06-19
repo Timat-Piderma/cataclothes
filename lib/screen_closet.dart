@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cataclothes/screen_add_photo_article_preview.dart';
 import 'package:cataclothes/custom_searchbar.dart';
-import 'package:cataclothes/screen_manage_article_categories.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -93,7 +92,9 @@ class _ClosetScreenState extends State<ClosetScreen> {
                               return ArticleDetail(article: art);
                             },
                           ),
-                        ).then((value) => setState(() {}));
+                        ).then((value) => setState(() {
+                              filteredArticles = getFilterItems();
+                            }));
                       },
                     ),
                   ),

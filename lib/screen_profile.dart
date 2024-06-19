@@ -27,7 +27,6 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   void initState() {
-
     for (ArticleCategory ac in DataManager.getAllArticlesCategories()) {
       if (DataManager().countArticleOfCategory(ac).toDouble() > 0) {
         articleData.putIfAbsent(
@@ -132,35 +131,41 @@ class _ProfileScreenState extends State<ProfileScreen>
             ]),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 20),
-              child: PieChart(
-                dataMap: articleData,
-                chartType: ChartType.ring,
-                ringStrokeWidth: 30,
-                centerWidget: Text(
-                  "${DataManager.getAllArticles().length} Vestiti",
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                legendOptions: const LegendOptions(
-                  legendPosition: LegendPosition.bottom,
-                ),
-                chartValuesOptions: const ChartValuesOptions(showChartValues: false),
-              ),
+              child: articleData.isEmpty
+                  ? Text("Nessun articolo nell'armadio")
+                  : PieChart(
+                      dataMap: articleData,
+                      chartType: ChartType.ring,
+                      ringStrokeWidth: 30,
+                      centerWidget: Text(
+                        "${DataManager.getAllArticles().length} Vestiti",
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      legendOptions: const LegendOptions(
+                        legendPosition: LegendPosition.bottom,
+                      ),
+                      chartValuesOptions:
+                          const ChartValuesOptions(showChartValues: false),
+                    ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 20),
-              child: PieChart(
-                dataMap: outfitData,
-                chartType: ChartType.ring,
-                ringStrokeWidth: 30,
-                centerWidget: Text(
-                  "${DataManager.getAllOutfits().length} Outfit",
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                legendOptions: const LegendOptions(
-                  legendPosition: LegendPosition.bottom,
-                ),
-                chartValuesOptions: const ChartValuesOptions(showChartValues: false),
-              ),
+              child: outfitData.isEmpty
+                  ? Text("Nessun outfit nell'armadio")
+                  : PieChart(
+                      dataMap: outfitData,
+                      chartType: ChartType.ring,
+                      ringStrokeWidth: 30,
+                      centerWidget: Text(
+                        "${DataManager.getAllOutfits().length} Outfit",
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      legendOptions: const LegendOptions(
+                        legendPosition: LegendPosition.bottom,
+                      ),
+                      chartValuesOptions:
+                          const ChartValuesOptions(showChartValues: false),
+                    ),
             ),
           ],
         ),
