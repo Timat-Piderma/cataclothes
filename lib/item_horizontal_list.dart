@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'article.dart';
-import 'item.dart';
-import 'item_card_small.dart';
-import 'item_bubble.dart';
-import 'outfit.dart';
 
 class ItemHorizontalList extends StatefulWidget {
-  final List<Item> items;
+  final List<Widget> items;
   final int type;
   final Function func;
 
@@ -26,38 +21,9 @@ class _ItemHorizontalListState extends State<ItemHorizontalList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView(
       scrollDirection: Axis.horizontal,
-      itemCount: widget.items.length,
-      itemBuilder: (BuildContext context, int index) {
-        if (widget.type == 0) {
-          return AspectRatio(
-              aspectRatio: 1,
-              child: GestureDetector(
-                onTap: () {
-                  widget.items[index] is Article
-                      ? widget.func(widget.items[index] as Article)
-                      : widget.func(widget.items[index] as Outfit);
-                },
-                child: Container(
-                  width: double.infinity,
-                  child: ItemBubble(item: widget.items[index]),
-                ),
-              ));
-        } else {
-          return AspectRatio(
-              aspectRatio: 1,
-              child: GestureDetector(
-                onTap: () {
-                  widget.func(widget.items[index]);
-                },
-                child: Container(
-                  width: double.infinity,
-                  child: ItemCardSmall(item: widget.items[index]),
-                ),
-              ));
-        }
-      },
+      children: widget.items,
     );
   }
 }

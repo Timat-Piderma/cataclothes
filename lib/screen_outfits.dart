@@ -1,10 +1,12 @@
 import 'package:cataclothes/category_outfit.dart';
 import 'package:cataclothes/custom_searchbar.dart';
 import 'package:cataclothes/item_horizontal_list.dart';
+import 'package:cataclothes/screen_manage_outfit_categories.dart';
 import 'package:cataclothes/screen_outfit_article_select.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'data_manager.dart';
+import 'item_bubble.dart';
 import 'item_grid.dart';
 import 'outfit.dart';
 import 'outfit_detail.dart';
@@ -69,7 +71,7 @@ class _OutfitScreenState extends State<OutfitsScreen> {
                   Expanded(
                     flex: 3,
                     child: ItemHorizontalList(
-                        items: getFilterItems(),
+                        items: buildWidgets(getFilterItems()),
                         type: 0,
                         func: (Outfit out) {
                           setFilter(out);
@@ -98,6 +100,27 @@ class _OutfitScreenState extends State<OutfitsScreen> {
             ));
       },
     );
+  }
+
+  List<Widget> buildWidgets(List<Outfit> items) {
+    List<Widget> res = [];
+
+    for (Outfit o in items) {
+      res.add(AspectRatio(
+        aspectRatio: 1,
+        child: GestureDetector(
+          onTap: () {
+            setFilter(o);
+          },
+          child: Container(
+            width: double.infinity,
+            child: ItemBubble(item: o),
+          ),
+        ),
+      ));
+    }
+
+    return res;
   }
 
   List<Outfit> getFilterItems() {

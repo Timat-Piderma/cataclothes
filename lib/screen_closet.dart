@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cataclothes/screen_add_photo_article_preview.dart';
 import 'package:cataclothes/custom_searchbar.dart';
+import 'package:cataclothes/screen_manage_article_categories.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,6 +11,7 @@ import 'article.dart';
 import 'article_detail.dart';
 import 'category_article.dart';
 import 'data_manager.dart';
+import 'item_bubble.dart';
 import 'item_grid.dart';
 import 'item_horizontal_list.dart';
 
@@ -71,7 +73,7 @@ class _ClosetScreenState extends State<ClosetScreen> {
                   Expanded(
                     flex: 3,
                     child: ItemHorizontalList(
-                        items: getFilterItems(),
+                        items: buildWidgets(getFilterItems()),
                         type: 0,
                         func: (Article art) {
                           setFilter(art);
@@ -102,6 +104,26 @@ class _ClosetScreenState extends State<ClosetScreen> {
     );
   }
 
+  List<Widget> buildWidgets(List<Article> items) {
+    List<Widget> res = [];
+
+    for (Article a in items) {
+      res.add(AspectRatio(
+        aspectRatio: 1,
+        child: GestureDetector(
+          onTap: () {
+            setFilter(a);
+          },
+          child: Container(
+            width: double.infinity,
+            child: ItemBubble(item: a),
+          ),
+        ),
+      ));
+    }
+    return res;
+  }
+
   List<Article> getFilterItems() {
     List<Article> res = [];
     for (var cat in DataManager.getAllArticlesCategories()) {
@@ -125,11 +147,12 @@ class _ClosetScreenState extends State<ClosetScreen> {
           filteredArticles = res;
         });
       }
-    } else
+    } else {
       setState(() {
         filter = null;
         filteredArticles = DataManager().allArticles;
       });
+    }
   }
 
   Future _pickImageFromGallery() async {

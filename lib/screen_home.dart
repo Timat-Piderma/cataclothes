@@ -4,6 +4,7 @@ import 'item_card_home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'data_manager.dart';
+import 'item_card_small.dart';
 import 'item_horizontal_list.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     flex: 9,
                     child: ItemHorizontalList(
-                        items: DataManager.getAllArticles(),
+                        items: buildWidgets(DataManager.getAllArticles()),
                         type: 1,
                         func: (Article art) {
                           loadDetailPage(art);
@@ -86,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     flex: 9,
                     child: ItemHorizontalList(
-                        items: DataManager.getAllArticles(),
+                        items: buildWidgets(DataManager.getAllArticles()),
                         type: 1,
                         func: (Article art) {
                           loadDetailPage(art);
@@ -111,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     flex: 9,
                     child: ItemHorizontalList(
-                        items: DataManager.getAllArticles(),
+                        items: buildWidgets(DataManager.getAllArticles()),
                         type: 1,
                         func: (Article art) {
                           loadDetailPage(art);
@@ -122,6 +123,22 @@ class _HomeScreenState extends State<HomeScreen> {
         ]);
       },
     );
+  }
+
+  List<Widget> buildWidgets(List<Article> items) {
+    List<Widget> res = [];
+
+    for (Article a in items) {
+      res.add(AspectRatio(
+        aspectRatio: 1,
+        child: Container(
+          width: double.infinity,
+          child: ItemCardSmall(item: a),
+        ),
+      ));
+    }
+
+    return res;
   }
 
   void loadDetailPage(Article art) {
