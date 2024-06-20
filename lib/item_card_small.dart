@@ -22,9 +22,9 @@ class _ItemCardSmallState extends State<ItemCardSmall> {
     return Card(
       color: cardColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(15.0),
           side: const BorderSide(
-            color: Colors.blue,
+            color: Colors.blueGrey,
             width: 3.0,
           ),
         ),

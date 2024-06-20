@@ -28,7 +28,7 @@ class _ItemBubbleState extends State<ItemBubble> {
                 width: constraints.maxHeight,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
-                  border: Border.all(color: Colors.blueAccent, width: 4),
+                  border: Border.all(color: Colors.blueGrey, width: 3),
                   image: DecorationImage(image: getImage(widget.item.image)),
                 ),
               ),

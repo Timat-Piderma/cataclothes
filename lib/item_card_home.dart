@@ -13,6 +13,8 @@ class ItemCardHome extends StatefulWidget {
 }
 
 class _ItemCardHomeState extends State<ItemCardHome> {
+  Color cardColor = Colors.white;
+
   @override
   void initState() {
     super.initState();
@@ -23,16 +25,20 @@ class _ItemCardHomeState extends State<ItemCardHome> {
     return Row(
       children: <Widget>[
         Expanded(
-            child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.blueAccent, width: 4),
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage(widget.item.image),
-            ),
-          ),
-        )),
+            child: Card(
+                color: cardColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  side: const BorderSide(
+                    color: Colors.blueGrey,
+                    width: 4.0,
+                  ),
+                ),
+                child: ClipRect(
+                  child: Image(
+                    image: AssetImage(widget.item.image),
+                  ),
+                ))),
         Expanded(
             child: Container(
           child: Column(
@@ -57,8 +63,11 @@ class _ItemCardHomeState extends State<ItemCardHome> {
               Row(
                 children: [
                   Expanded(
-                    child: Center(child: Text("9.99 €",
-                    style: Theme.of(context).textTheme.bodySmall,)),
+                    child: Center(
+                        child: Text(
+                      "9.99 €",
+                      style: Theme.of(context).textTheme.bodySmall,
+                    )),
                   ),
                   Expanded(
                       child: FilledButton(

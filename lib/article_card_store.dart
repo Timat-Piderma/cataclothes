@@ -15,28 +15,28 @@ class ArticleCardStore extends StatefulWidget {
 }
 
 class _ArticleCardStore extends State<ArticleCardStore> {
+  Color cardColor = Colors.white;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         AspectRatio(
           aspectRatio: 1,
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(4),
-            child: ClipRRect(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.blueAccent, width: 4),
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: getImage(widget.article.image),
-                  ),
+          child: Card(
+              color: cardColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+                side: const BorderSide(
+                  color: Colors.blueGrey,
+                  width: 3.0,
                 ),
               ),
-            ),
-          ),
+              child: ClipRect(
+                child: Image(
+                  image: getImage(widget.article.image),
+                ),
+              )),
         ),
         Text(
           widget.article.name,
