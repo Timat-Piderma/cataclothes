@@ -69,148 +69,150 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
-      body: ListView(
-        children: <Widget>[
-          Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          bottom: 18, top: 18, left: 8, right: 8),
-                      child: Container(
-                        height: computeWidth() / 2,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.black, width: 4),
-                          image: DecorationImage(
-                            image: getImage(widget.article.image),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            bottom: 18, top: 18, left: 8, right: 8),
+                        child: Container(
+                          height: computeWidth() / 2,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: Colors.black, width: 4),
+                            image: DecorationImage(
+                              image: getImage(widget.article.image),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: computeWidth() / 2,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              widget.article.name,
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 10, right: 10),
+                    Expanded(
+                      child: Container(
+                        height: computeWidth() / 2,
+                        child: Column(
+                          children: [
+                            Expanded(
                               child: Text(
-                                widget.article.description,
-                                style: Theme.of(context).textTheme.bodyMedium,
+                                widget.article.name,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 10, right: 10),
+                                child: Text(
+                                  widget.article.description,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      flex: 1,
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: Text(
+                      widget.article.cost,
+                      textAlign: TextAlign.right,
+                    )),
+                    Padding(
+                      padding: EdgeInsets.only(right: 20, left: 20),
+                      child: FilledButton(
+                        onPressed: () => {},
+                        child: Text(
+                          "Visita il Negozio",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 8,
+                ),
+                ListView(
+                  primary: false,
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: computeWidth() / 1.1,
+                          child: IgnorePointer(
+                            ignoring: true,
+                            child: TextField(
+                              style: TextStyle(fontSize: 18),
+                              readOnly: true,
+                              controller: controllerName,
+                              decoration: InputDecoration(
+                                labelText: 'Nome',
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    flex: 1,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                      child: Text(
-                    widget.article.cost,
-                    textAlign: TextAlign.right,
-                  )),
-                  Padding(
-                    padding: EdgeInsets.only(right: 20, left: 20),
-                    child: FilledButton(
-                      onPressed: () => {},
-                      child: Text(
-                        "Visita il Negozio",
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: computeWidth() / 1.1,
+                          child: IgnorePointer(
+                            ignoring: true,
+                            child: TextField(
+                              controller: controllerCost,
+                              style: TextStyle(fontSize: 18),
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                labelText: 'Costo',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              )
-            ],
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 8,
-              ),
-              ListView(
-                primary: false,
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: IgnorePointer(
-                          ignoring: true,
-                          child: TextField(
-                            style: TextStyle(fontSize: 18),
-                            readOnly: true,
-                            controller: controllerName,
-                            decoration: InputDecoration(
-                              labelText: 'Nome',
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: computeWidth() / 1.1,
+                          child: IgnorePointer(
+                            ignoring: true,
+                            child: TextField(
+                              style: TextStyle(fontSize: 18),
+                              readOnly: true,
+                              controller: controllerCategory,
+                              decoration: InputDecoration(
+                                labelText: 'Categoria',
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: IgnorePointer(
-                          ignoring: true,
-                          child: TextField(
-                            controller: controllerCost,
-                            style: TextStyle(fontSize: 18),
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              labelText: 'Costo',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: IgnorePointer(
-                          ignoring: true,
-                          child: TextField(
-                            style: TextStyle(fontSize: 18),
-                            readOnly: true,
-                            controller: controllerCategory,
-                            decoration: InputDecoration(
-                              labelText: 'Categoria',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          )
-        ],
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

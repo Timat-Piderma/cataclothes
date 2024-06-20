@@ -145,6 +145,7 @@ class _ArticleDetailState extends State<ArticleDetail>
                           child: IgnorePointer(
                             ignoring: !isEditable,
                             child: DropdownButton<ArticleColor>(
+                              menuMaxHeight: 250,
                               value: dropdownColorValue,
                               items: colorItems
                                   .map(
@@ -188,6 +189,7 @@ class _ArticleDetailState extends State<ArticleDetail>
                           child: IgnorePointer(
                             ignoring: !isEditable,
                             child: DropdownButton<ArticleCategory>(
+                              menuMaxHeight: 250,
                               value: dropdownCategoryValue,
                               items: categoryItems
                                   .map(

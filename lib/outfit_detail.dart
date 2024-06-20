@@ -90,124 +90,127 @@ class _OutfitDetailState extends State<OutfitDetail>
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
-      body: ListView(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-                bottom: 10,
-                top: 8,
-                left: computeWidth() / 4,
-                right: computeWidth() / 4),
-            child: Container(
-              height: computeWidth() / 2,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.black, width: 4),
-                image: DecorationImage(
-                  image: getImage(widget.outfit.image),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: 10,
+                  top: 8,
+                  left: computeWidth() / 4,
+                  right: computeWidth() / 4),
+              child: Container(
+                height: computeWidth() / 2,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.black, width: 4),
+                  image: DecorationImage(
+                    image: getImage(widget.outfit.image),
+                  ),
                 ),
               ),
             ),
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 8,
-              ),
-              ListView(
-                primary: false,
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: IgnorePointer(
-                          ignoring: !isEditable,
-                          child: TextField(
-                            style: TextStyle(fontSize: 18),
-                            controller: controllerName,
-                            decoration: InputDecoration(
-                              labelText: 'Nome',
+            Column(
+              children: [
+                SizedBox(
+                  height: 8,
+                ),
+                ListView(
+                  primary: false,
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: computeWidth() / 1.1,
+                          child: IgnorePointer(
+                            ignoring: !isEditable,
+                            child: TextField(
+                              style: TextStyle(fontSize: 18),
+                              controller: controllerName,
+                              decoration: InputDecoration(
+                                labelText: 'Nome',
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: IgnorePointer(
-                          ignoring: !isEditable,
-                          child: TextField(
-                            style: TextStyle(fontSize: 18),
-                            controller: controllerCost,
-                            decoration: InputDecoration(
-                              labelText: 'Costo',
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: IgnorePointer(
-                          ignoring: !isEditable,
-                          child: DropdownButton<OutfitCategory>(
-                            value: dropdownCategoryValue,
-                            items: categoryItems
-                                .map(
-                                  (map) => DropdownMenuItem<OutfitCategory>(
-                                    child: Text(
-                                      map.name.length > 30
-                                          ? map.name.substring(0, 30) + "..."
-                                          : map.name,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    value: map,
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (OutfitCategory? value) {
-                              setState(() {
-                                dropdownCategoryValue = value;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: FilledButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateColor.resolveWith(
-                              (states) => Colors.red),
-                        ),
-                        onPressed: () {
-                          openDeleteDialog();
-                        },
-                        child: Text(
-                          "Elimina",
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
+                      ],
                     ),
-                  )
-                ],
-              ),
-            ],
-          )
-        ],
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: computeWidth() / 1.1,
+                          child: IgnorePointer(
+                            ignoring: !isEditable,
+                            child: TextField(
+                              style: TextStyle(fontSize: 18),
+                              controller: controllerCost,
+                              decoration: InputDecoration(
+                                labelText: 'Costo',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: computeWidth() / 1.1,
+                          child: IgnorePointer(
+                            ignoring: !isEditable,
+                            child: DropdownButton<OutfitCategory>(
+                              menuMaxHeight: 250,
+                              value: dropdownCategoryValue,
+                              items: categoryItems
+                                  .map(
+                                    (map) => DropdownMenuItem<OutfitCategory>(
+                                      child: Text(
+                                        map.name.length > 30
+                                            ? map.name.substring(0, 30) + "..."
+                                            : map.name,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      value: map,
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (OutfitCategory? value) {
+                                setState(() {
+                                  dropdownCategoryValue = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: FilledButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (states) => Colors.red),
+                          ),
+                          onPressed: () {
+                            openDeleteDialog();
+                          },
+                          child: Text(
+                            "Elimina",
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

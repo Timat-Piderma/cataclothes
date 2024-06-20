@@ -29,7 +29,7 @@ class SampleData {
     image: 'assets/articles/closet/gray_pants.jpg',
     cost: "10.00 €",
     isFavourite: false,
-    color: gray,
+    color: grey,
     articleCategory: ca_pantaloni,
   );
 
@@ -86,7 +86,7 @@ class SampleData {
     image: 'assets/articles/store/cappello3.jpg',
     cost: "10.00 €",
     isFavourite: false,
-    color: gray,
+    color: grey,
     articleCategory: ca_cappelli,
     description: "Desrizione base",
   );
@@ -126,7 +126,7 @@ class SampleData {
     image: 'assets/articles/store/jeans1.jpg',
     cost: "10.00 €",
     isFavourite: false,
-    color: gray,
+    color: grey,
     articleCategory: ca_jeans,
     description: "Desrizione base",
   );
@@ -186,7 +186,7 @@ class SampleData {
     image: 'assets/articles/store/scarpe1.jpg',
     cost: "10.00 €",
     isFavourite: false,
-    color: gray,
+    color: grey,
     articleCategory: ca_scarpe,
     description: "Desrizione base",
   );
@@ -278,8 +278,7 @@ class SampleData {
   static ArticleCategory ca_scarpe = ArticleCategory(name: 'Scarpe');
   static ArticleCategory ca_tshirt = ArticleCategory(name: 'T-Shirt');
   static ArticleCategory ca_jeans = ArticleCategory(name: 'Jeans');
-  static ArticleCategory ca_pantaloni =
-      ArticleCategory(name: 'Pantaloni');
+  static ArticleCategory ca_pantaloni = ArticleCategory(name: 'Pantaloni');
   static ArticleCategory ca_cappelli = ArticleCategory(name: 'Cappello');
   static ArticleCategory ca_gonne = ArticleCategory(name: 'Gonna');
 
@@ -303,19 +302,37 @@ class SampleData {
     co_sera,
   ];
 
-  static ArticleColor red = ArticleColor(name: 'red', id: 1);
-  static ArticleColor blue = ArticleColor(name: 'blue', id: 2);
-  static ArticleColor yellow = ArticleColor(name: 'yellow', id: 3);
-  static ArticleColor black = ArticleColor(name: 'black', id: 4);
-  static ArticleColor gray = ArticleColor(name: 'gray', id: 5);
-  static ArticleColor teal = ArticleColor(name: 'teal', id: 6);
+  static ArticleColor red = ArticleColor(name: 'Rosso', id: 1);
+  static ArticleColor blue = ArticleColor(name: 'Blu', id: 2);
+  static ArticleColor yellow = ArticleColor(name: 'Giallo', id: 3);
+  static ArticleColor black = ArticleColor(name: 'Nero', id: 4);
+  static ArticleColor grey = ArticleColor(name: 'Grigio', id: 5);
+  static ArticleColor teal = ArticleColor(name: 'Turchese', id: 7);
+  static ArticleColor green = ArticleColor(name: 'Verde', id: 8);
+  static ArticleColor orange = ArticleColor(name: 'Arancione', id: 9);
+  static ArticleColor beige = ArticleColor(name: 'Beige', id: 10);
+  static ArticleColor purple = ArticleColor(name: 'Viola', id: 11);
+  static ArticleColor brown = ArticleColor(name: 'Marrone', id: 12);
+  static ArticleColor white = ArticleColor(name: 'Bianco', id: 13);
+  static ArticleColor lightBlue = ArticleColor(name: 'Azzurro', id: 14);
+  static ArticleColor gold = ArticleColor(name: 'Oro', id: 15);
+  static ArticleColor silver = ArticleColor(name: 'Argento', id: 16);
 
   static List<ArticleColor> allColors = [
-    red,
+    orange,
+    silver,
+    lightBlue,
+    beige,
+    white,
     blue,
     yellow,
+    grey,
+    brown,
     black,
-    gray,
+    gold,
+    red,
     teal,
+    green,
+    purple
   ];
 }
