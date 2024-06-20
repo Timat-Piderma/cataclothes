@@ -85,23 +85,23 @@ class ScreenAddPhotoOutfitPreviewState
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 bottom: 10,
                 top: 20,
               ),
               child: Center(
-                child: Screenshot(
-                  controller: screenshotController,
-                  child: Container(
+                child: Container(
+                  height: computeWidth() - (computeWidth() / 10),
+                  width: computeWidth() - (computeWidth() / 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.black, width: 4),
+                  ),
+                  child: Screenshot(
+                    controller: screenshotController,
                     child: LindiStickerWidget(
                       controller: lindiController,
                       child: Container(),
-                    ),
-                    height: computeWidth() - (computeWidth() / 10),
-                    width: computeWidth() - (computeWidth() / 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.black, width: 4),
                     ),
                   ),
                 ),

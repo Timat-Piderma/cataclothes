@@ -6,7 +6,7 @@ import 'item.dart';
 class ItemCardSmall extends StatefulWidget {
   final Item item;
 
-  const ItemCardSmall({required this.item});
+  const ItemCardSmall({super.key, required this.item});
 
   @override
   State<ItemCardSmall> createState() {
@@ -15,25 +15,24 @@ class ItemCardSmall extends StatefulWidget {
 }
 
 class _ItemCardSmallState extends State<ItemCardSmall> {
+  Color cardColor = Colors.white;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ClipRRect(
-          child: Container(
-            padding: const EdgeInsets.all(4),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.blueAccent, width: 4),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: getImage(widget.item.image),
-                ),
-              ),
-            ),
-          )),
-    );
+    return Card(
+      color: cardColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          side: const BorderSide(
+            color: Colors.blue,
+            width: 3.0,
+          ),
+        ),
+        child: ClipRect(
+          child: Image(
+            image: getImage(widget.item.image),
+          ),
+        ));
   }
 
   ImageProvider getImage(String path) {

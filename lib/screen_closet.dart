@@ -93,7 +93,7 @@ class _ClosetScreenState extends State<ClosetScreen> {
                             },
                           ),
                         ).then((value) => setState(() {
-                              filteredArticles = getFilterItems();
+                              updateSearchResult("");
                             }));
                       },
                     ),

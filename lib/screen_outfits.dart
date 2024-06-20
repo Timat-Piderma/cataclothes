@@ -92,7 +92,7 @@ class _OutfitScreenState extends State<OutfitsScreen> {
                             },
                           ),
                         ).then((value) => setState(() {
-                          filteredOutfits = getFilterItems();
+                          updateSearchResult("");
                         }));
                       },
                     ),
