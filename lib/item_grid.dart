@@ -31,7 +31,7 @@ class _ItemGridState extends State<ItemGrid> {
           crossAxisCount: 3,
         ),
         itemBuilder: (BuildContext context, int index) {
-          return widget.items[index].itemCardSmall(context, widget.func, widget.selectable);
+          return widget.items[index].itemCardSmall(context, widget.func);
         },
       );
     } else {

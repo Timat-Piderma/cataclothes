@@ -13,7 +13,7 @@ abstract class Item {
     this.name = "",
   });
 
-  GestureDetector itemCardSmall(BuildContext context, Function func, bool selectable);
+  GestureDetector itemCardSmall(BuildContext context, Function func);
 
   GestureDetector itemCardStore(BuildContext context, Function func);
 }

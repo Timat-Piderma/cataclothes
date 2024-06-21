@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
         aspectRatio: 1,
         child: Container(
           width: double.infinity,
-          child: ItemCardSmall(item: a, func: () {},selectable: false),
+          child: ItemCardSmall(item: a, func: () {}),
         ),
       ));
     }

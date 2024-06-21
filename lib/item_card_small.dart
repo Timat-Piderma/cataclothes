@@ -6,9 +6,8 @@ import 'item.dart';
 class ItemCardSmall extends StatefulWidget {
   final Item item;
   final Function func;
-  final bool selectable;
 
-  const ItemCardSmall({super.key, required this.item, required this.func, required this.selectable});
+  const ItemCardSmall({super.key, required this.item, required this.func});
 
   @override
   State<ItemCardSmall> createState() {
@@ -25,7 +24,6 @@ class _ItemCardSmallState extends State<ItemCardSmall> {
     return GestureDetector(
       onTap: () {
         widget.func(widget.item);
-        if(widget.selectable) isSelected = !isSelected;
       },
       child: Stack(children: [
         Card(

@@ -21,13 +21,11 @@ class Article extends Item {
   });
 
   @override
-  GestureDetector itemCardSmall(
-      BuildContext context, Function func, bool select) {
+  GestureDetector itemCardSmall(BuildContext context, Function func) {
     return GestureDetector(
       child: ItemCardSmall(
         item: this,
         func: func,
-        selectable: select,
       ),
     );
   }

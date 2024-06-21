@@ -1,12 +1,12 @@
 import 'package:cataclothes/screen_add_photo_outfit_preview.dart';
 import 'package:flutter/material.dart';
 
+import 'ItemGridArticleSelect.dart';
 import 'article.dart';
 import 'category_article.dart';
 import 'custom_searchbar.dart';
 import 'data_manager.dart';
 import 'item_bubble.dart';
-import 'item_grid.dart';
 import 'item_horizontal_list.dart';
 
 class ScreenOutfitArticleSelect extends StatefulWidget {
@@ -28,11 +28,11 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
   @override
   void initState() {}
 
-  double computeWidth() {
-    double width = MediaQuery.of(context).size.width;
+  double computeHeight() {
+    double height = MediaQuery.of(context).size.height;
     var padding = MediaQuery.of(context).viewPadding;
-    double safeWidth = width - padding.left - padding.right;
-    return safeWidth;
+    double safeHeight = height - padding.top - kToolbarHeight;
+    return safeHeight;
   }
 
   @override
@@ -72,31 +72,36 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
             },
           ),
         ),
-        body: Column(children: [
-          Expanded(
-              flex: 2,
-              child: CustomSearchBar(
-                func: updateSearchResult,
-              )),
-          Expanded(
-            flex: 3,
-            child: ItemHorizontalList(
-              items: buildWidgets(getFilterItems()),
-              type: 0,
-            ),
+        body: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          child: Container(
+            height: computeHeight(),
+            child: Column(children: [
+              Expanded(
+                  flex: 2,
+                  child: CustomSearchBar(
+                    func: updateSearchResult,
+                  )),
+              Expanded(
+                flex: 3,
+                child: ItemHorizontalList(
+                  items: buildWidgets(getFilterItems()),
+                  type: 0,
+                ),
+              ),
+              const Divider(),
+              Expanded(
+                flex: 27,
+                child: ItemGridArticleSelect(
+                    selectedItems: selectedArticles,
+                    allItems: filteredArticles,
+                    func: (Article art) {
+                      select(art);
+                    }),
+              ),
+            ]),
           ),
-          const Divider(),
-          Expanded(
-            flex: 28,
-            child: ItemGrid(
-                selectable: true,
-                items: filteredArticles,
-                type: 0,
-                func: (Article art) {
-                  select(art);
-                }),
-          ),
-        ]));
+        ));
   }
 
   List<Article> getFilterItems() {
@@ -119,7 +124,7 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
           onTap: () {
             setFilter(a.articleCategory!);
           },
-          child: Container(
+          child: SizedBox(
             width: double.infinity,
             child: ItemBubble(item: a),
           ),
