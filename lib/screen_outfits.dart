@@ -73,14 +73,13 @@ class _OutfitScreenState extends State<OutfitsScreen> {
                     child: ItemHorizontalList(
                         items: buildWidgets(getFilterItems()),
                         type: 0,
-                        func: (Outfit out) {
-                          setFilter(out.outfitCategory!);
-                        }),
+                        ),
                   ),
                   const Divider(),
                   Expanded(
                     flex: 28,
                     child: ItemGrid(
+                      selectable: false,
                       items: filteredOutfits,
                       type: 0,
                       func: (Outfit out) {

@@ -43,6 +43,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 : Expanded(
                     flex: 9,
                     child: ItemGrid(
+                      selectable: false,
                       items: storeArticles,
                       type: 1,
                       func: (ArticleStore art) {

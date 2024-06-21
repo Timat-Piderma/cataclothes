@@ -73,16 +73,15 @@ class _ClosetScreenState extends State<ClosetScreen> {
                   Expanded(
                     flex: 3,
                     child: ItemHorizontalList(
-                        items: buildWidgets(getFilterItems()),
-                        type: 0,
-                        func: (Article art) {
-                          setFilter(art.articleCategory!);
-                        }),
+                      items: buildWidgets(getFilterItems()),
+                      type: 0,
+                    ),
                   ),
                   const Divider(),
                   Expanded(
                     flex: 28,
                     child: ItemGrid(
+                      selectable: false,
                       items: filteredArticles,
                       type: 0,
                       func: (Article art) {

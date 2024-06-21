@@ -20,14 +20,14 @@ class Outfit extends Item {
   });
 
   @override
-  GestureDetector itemCardSmall(BuildContext context) {
+  GestureDetector itemCardSmall(BuildContext context, Function func, bool select) {
     return GestureDetector(
-      child: ItemCardSmall(item: this),
+      child: ItemCardSmall(item: this, func: func, selectable: select,),
     );
   }
 
   @override
-  GestureDetector itemCardStore(BuildContext context) {
+  GestureDetector itemCardStore(BuildContext context, Function func) {
     return GestureDetector();
   }
 }

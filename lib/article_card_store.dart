@@ -5,8 +5,9 @@ import 'article.dart';
 
 class ArticleCardStore extends StatefulWidget {
   final Article article;
+  final Function func;
 
-  const ArticleCardStore({required this.article});
+  const ArticleCardStore({required this.article, required this.func});
 
   @override
   State<ArticleCardStore> createState() {
@@ -19,34 +20,39 @@ class _ArticleCardStore extends State<ArticleCardStore> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AspectRatio(
-          aspectRatio: 1,
-          child: Card(
-              color: cardColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-                side: const BorderSide(
-                  color: Colors.blueGrey,
-                  width: 3.0,
+    return GestureDetector(
+      onTap: (){
+        widget.func(widget.article);
+      },
+      child: Column(
+        children: [
+          AspectRatio(
+            aspectRatio: 1,
+            child: Card(
+                color: cardColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  side: const BorderSide(
+                    color: Colors.blueGrey,
+                    width: 3.0,
+                  ),
                 ),
-              ),
-              child: ClipRect(
-                child: Image(
-                  image: getImage(widget.article.image),
-                ),
-              )),
-        ),
-        Text(
-          widget.article.name,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        Text(
-          widget.article.cost,
-          style: Theme.of(context).textTheme.bodySmall,
-        )
-      ],
+                child: ClipRect(
+                  child: Image(
+                    image: getImage(widget.article.image),
+                  ),
+                )),
+          ),
+          Text(
+            widget.article.name,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          Text(
+            widget.article.cost,
+            style: Theme.of(context).textTheme.bodySmall,
+          )
+        ],
+      ),
     );
   }
 

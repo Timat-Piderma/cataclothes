@@ -64,9 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ItemHorizontalList(
                         items: buildWidgets(DataManager.getAllArticles()),
                         type: 1,
-                        func: (Article art) {
-                          loadDetailPage(art);
-                        }))
+                        ))
               ],
             ),
           ),
@@ -89,9 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ItemHorizontalList(
                         items: buildWidgets(DataManager.getAllArticles()),
                         type: 1,
-                        func: (Article art) {
-                          loadDetailPage(art);
-                        }))
+                        ))
               ],
             ),
           ),
@@ -114,9 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ItemHorizontalList(
                         items: buildWidgets(DataManager.getAllArticles()),
                         type: 1,
-                        func: (Article art) {
-                          loadDetailPage(art);
-                        }))
+                    ))
               ],
             ),
           ),
@@ -133,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
         aspectRatio: 1,
         child: Container(
           width: double.infinity,
-          child: ItemCardSmall(item: a),
+          child: ItemCardSmall(item: a, func: () {},selectable: false),
         ),
       ));
     }

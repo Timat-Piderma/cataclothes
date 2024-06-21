@@ -5,9 +5,10 @@ class ItemGrid extends StatefulWidget {
   final List<Item> items;
   final int type;
   final Function func;
+  final bool selectable;
 
   const ItemGrid(
-      {required this.items, required this.type, Key? key, required this.func})
+      {required this.items, required this.type, Key? key, required this.func, required this.selectable})
       : super(key: key);
 
   @override
@@ -30,13 +31,7 @@ class _ItemGridState extends State<ItemGrid> {
           crossAxisCount: 3,
         ),
         itemBuilder: (BuildContext context, int index) {
-
-          return GestureDetector(
-            onTap: () {
-              widget.func(widget.items[index]);
-            },
-            child: widget.items[index].itemCardSmall(context),
-          );
+          return widget.items[index].itemCardSmall(context, widget.func, widget.selectable);
         },
       );
     } else {
@@ -48,12 +43,7 @@ class _ItemGridState extends State<ItemGrid> {
           mainAxisExtent: 180,
         ),
         itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
-            onTap: () {
-              widget.func(widget.items[index]);
-            },
-            child: widget.items[index].itemCardStore(context),
-          );
+          return widget.items[index].itemCardStore(context, widget.func);
         },
       );
     }
