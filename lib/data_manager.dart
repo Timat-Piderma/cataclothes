@@ -109,18 +109,17 @@ class DataManager extends ChangeNotifier {
     if (newValue) {
       _addFavouriteArticle(item);
     } else {
-      final int _favouriteArticleIndex =
+      final int favouriteArticleIndex =
           _favouriteArticles.indexWhere((element) => element.name == item.name);
-      _deleteFavouriteArticle(_favouriteArticleIndex);
+      _deleteFavouriteArticle(favouriteArticleIndex);
     }
   }
 
   void updateFavouriteArticleValue(Article item, bool newValue) {
-    final int _allArticlesIndex =
-        _allArticles.indexWhere((element) => element.name == item.name);
+    final int allArticlesIndex = _allArticles.indexOf(item);
 
-    if (_allArticlesIndex != -1) {
-      _allArticles[_allArticlesIndex].isFavourite = newValue;
+    if (allArticlesIndex != -1) {
+      _allArticles[allArticlesIndex].isFavourite = newValue;
     }
     notifyListeners();
   }
@@ -150,11 +149,9 @@ class DataManager extends ChangeNotifier {
   }
 
   void updateFavouriteOutfitValue(Outfit item, bool newValue) {
-    final int _allOutfitsIndex =
-        _allOutfits.indexWhere((element) => element.name == item.name);
-
-    if (_allOutfitsIndex != -1) {
-      _allOutfits[_allOutfitsIndex].isFavourite = newValue;
+    final int allOutfitsIndex = _allOutfits.indexOf(item);
+    if (allOutfitsIndex != -1) {
+      _allOutfits[allOutfitsIndex].isFavourite = newValue;
     }
     notifyListeners();
   }

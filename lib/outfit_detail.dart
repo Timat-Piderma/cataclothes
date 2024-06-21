@@ -92,24 +92,41 @@ class _OutfitDetailState extends State<OutfitDetail>
 
       body: SingleChildScrollView(
         child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(
-                  bottom: 10,
-                  top: 8,
-                  left: computeWidth() / 4,
-                  right: computeWidth() / 4),
-              child: Container(
-                height: computeWidth() / 2,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.black, width: 4),
-                  image: DecorationImage(
-                    image: getImage(widget.outfit.image),
+          children: [
+            Stack(children: [
+              Positioned(
+                  bottom: 8,
+                  right: 8,
+                  child: IconButton(
+                      icon: Icon(_isFavourited
+                          ? Icons.favorite
+                          : Icons.favorite_border),
+                      color: Colors.orange,
+                      onPressed: () {
+                        setState(() {
+                          _isFavourited = !_isFavourited;
+                          DataManager().updateFavouriteOutfitValue(
+                              widget.outfit, _isFavourited);
+                        });
+                      })),
+              Padding(
+                padding: EdgeInsets.only(
+                    bottom: 10,
+                    top: 8,
+                    left: computeWidth() / 4,
+                    right: computeWidth() / 4),
+                child: Container(
+                  height: computeWidth() / 2,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.black, width: 4),
+                    image: DecorationImage(
+                      image: getImage(widget.outfit.image),
+                    ),
                   ),
                 ),
               ),
-            ),
+            ]),
             Column(
               children: [
                 SizedBox(

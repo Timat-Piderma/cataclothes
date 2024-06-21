@@ -42,6 +42,8 @@ class _ArticleDetailState extends State<ArticleDetail>
 
     dropdownColorValue = widget.article.color;
     dropdownCategoryValue = widget.article.articleCategory;
+
+    _isFavourited = widget.article.isFavourite;
   }
 
   @override
@@ -93,23 +95,40 @@ class _ArticleDetailState extends State<ArticleDetail>
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                  bottom: 10,
-                  top: 8,
-                  left: computeWidth() / 4,
-                  right: computeWidth() / 4),
-              child: Container(
-                height: computeWidth() / 2,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.black, width: 4),
-                  image: DecorationImage(
-                    image: getImage(widget.article.image),
+            Stack(children: [
+              Positioned(
+                  bottom: 8,
+                  right: 8,
+                  child: IconButton(
+                      icon: Icon(_isFavourited
+                          ? Icons.favorite
+                          : Icons.favorite_border),
+                      color: Colors.orange,
+                      onPressed: () {
+                        setState(() {
+                          _isFavourited = !_isFavourited;
+                          DataManager().updateFavouriteArticleValue(
+                              widget.article, _isFavourited);
+                        });
+                      })),
+              Padding(
+                padding: EdgeInsets.only(
+                    bottom: 10,
+                    top: 8,
+                    left: computeWidth() / 4,
+                    right: computeWidth() / 4),
+                child: Container(
+                  height: computeWidth() / 2,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.black, width: 4),
+                    image: DecorationImage(
+                      image: getImage(widget.article.image),
+                    ),
                   ),
                 ),
               ),
-            ),
+            ]),
             Column(
               children: [
                 const SizedBox(

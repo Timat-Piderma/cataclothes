@@ -25,6 +25,7 @@ class ClosetScreen extends StatefulWidget {
 
 class _ClosetScreenState extends State<ClosetScreen> {
   ArticleCategory? filter;
+  ArticleCategory favouriteFilter = ArticleCategory(name: "fav");
   List<Article> filteredArticles = DataManager().allArticles;
   XFile? _pickedFile;
   CroppedFile? _croppedFile;
@@ -75,7 +76,7 @@ class _ClosetScreenState extends State<ClosetScreen> {
                         items: buildWidgets(getFilterItems()),
                         type: 0,
                         func: (Article art) {
-                          setFilter(art);
+                          setFilter(art.articleCategory!);
                         }),
                   ),
                   const Divider(),
@@ -113,15 +114,46 @@ class _ClosetScreenState extends State<ClosetScreen> {
         aspectRatio: 1,
         child: GestureDetector(
           onTap: () {
-            setFilter(a);
+            setFilter(a.articleCategory!);
           },
-          child: Container(
+          child: SizedBox(
             width: double.infinity,
             child: ItemBubble(item: a),
           ),
         ),
       ));
     }
+
+    res.add(AspectRatio(
+      aspectRatio: 1,
+      child: GestureDetector(
+        onTap: () {
+          setFilter(favouriteFilter);
+        },
+        child: Container(
+            width: double.infinity,
+            child: Column(
+              children: [
+                Expanded(
+                  child: LayoutBuilder(builder: (context, constraints) {
+                    return ClipRRect(
+                      child: Container(
+                        width: constraints.maxHeight,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(color: Colors.blueGrey, width: 3),
+                        ),
+                        child: const Icon(Icons.favorite),
+                      ),
+                    );
+                  }),
+                ),
+                const Text("Preferiti",
+                    maxLines: 1, overflow: TextOverflow.ellipsis),
+              ],
+            )),
+      ),
+    ));
     return res;
   }
 
@@ -135,15 +167,21 @@ class _ClosetScreenState extends State<ClosetScreen> {
     return res;
   }
 
-  void setFilter(Article art) {
-    if (filter != art.articleCategory) {
-      filter = art.articleCategory;
+  void setFilter(ArticleCategory cat) {
+    if (filter != cat) {
+      filter = cat;
 
       List<Article> res = [];
       if (filter != null) {
-        res.addAll(DataManager()
-            .allArticles
-            .where((element) => element.articleCategory == filter));
+        if (filter!.name != "fav") {
+          res.addAll(DataManager()
+              .allArticles
+              .where((element) => element.articleCategory == filter));
+        } else {
+          res.addAll(DataManager()
+              .allArticles
+              .where((element) => element.isFavourite));
+        }
         setState(() {
           filteredArticles = res;
         });

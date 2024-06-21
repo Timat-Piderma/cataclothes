@@ -1,7 +1,6 @@
 import 'package:cataclothes/category_outfit.dart';
 import 'package:cataclothes/custom_searchbar.dart';
 import 'package:cataclothes/item_horizontal_list.dart';
-import 'package:cataclothes/screen_manage_outfit_categories.dart';
 import 'package:cataclothes/screen_outfit_article_select.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +21,7 @@ class OutfitsScreen extends StatefulWidget {
 
 class _OutfitScreenState extends State<OutfitsScreen> {
   OutfitCategory? filter;
+  OutfitCategory favouriteFilter = OutfitCategory(name: "fav");
   List<Outfit> filteredOutfits = DataManager().allOutfits;
 
   @override
@@ -74,7 +74,7 @@ class _OutfitScreenState extends State<OutfitsScreen> {
                         items: buildWidgets(getFilterItems()),
                         type: 0,
                         func: (Outfit out) {
-                          setFilter(out);
+                          setFilter(out.outfitCategory!);
                         }),
                   ),
                   const Divider(),
@@ -92,8 +92,8 @@ class _OutfitScreenState extends State<OutfitsScreen> {
                             },
                           ),
                         ).then((value) => setState(() {
-                          updateSearchResult("");
-                        }));
+                              updateSearchResult("");
+                            }));
                       },
                     ),
                   ),
@@ -112,7 +112,7 @@ class _OutfitScreenState extends State<OutfitsScreen> {
         aspectRatio: 1,
         child: GestureDetector(
           onTap: () {
-            setFilter(o);
+            setFilter(o.outfitCategory!);
           },
           child: Container(
             width: double.infinity,
@@ -121,6 +121,37 @@ class _OutfitScreenState extends State<OutfitsScreen> {
         ),
       ));
     }
+
+    res.add(AspectRatio(
+      aspectRatio: 1,
+      child: GestureDetector(
+        onTap: () {
+          setFilter(favouriteFilter);
+        },
+        child: Container(
+            width: double.infinity,
+            child: Column(
+              children: [
+                Expanded(
+                  child: LayoutBuilder(builder: (context, constraints) {
+                    return ClipRRect(
+                      child: Container(
+                        width: constraints.maxHeight,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(color: Colors.blueGrey, width: 3),
+                        ),
+                        child: const Icon(Icons.favorite),
+                      ),
+                    );
+                  }),
+                ),
+                const Text("Preferiti",
+                    maxLines: 1, overflow: TextOverflow.ellipsis),
+              ],
+            )),
+      ),
+    ));
 
     return res;
   }
@@ -135,24 +166,30 @@ class _OutfitScreenState extends State<OutfitsScreen> {
     return res;
   }
 
-  void setFilter(Outfit out) {
-    if (filter != out.outfitCategory) {
-      filter = out.outfitCategory;
+  void setFilter(OutfitCategory cat) {
+    if (filter != cat) {
+      filter = cat;
 
       List<Outfit> res = [];
       if (filter != null) {
-        res.addAll(DataManager()
-            .allOutfits
-            .where((element) => element.outfitCategory == filter));
+        if (filter!.name != "fav") {
+          res.addAll(DataManager()
+              .allOutfits
+              .where((element) => element.outfitCategory == filter));
+        } else {
+          res.addAll(
+              DataManager().allOutfits.where((element) => element.isFavourite));
+        }
         setState(() {
           filteredOutfits = res;
         });
       }
-    } else
+    } else {
       setState(() {
         filter = null;
         filteredOutfits = DataManager().allOutfits;
       });
+    }
   }
 
   void updateSearchResult(String query) {
