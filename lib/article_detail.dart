@@ -140,98 +140,215 @@ class _ArticleDetailState extends State<ArticleDetail>
                   shrinkWrap: true,
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                   children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: computeWidth() / 1.1,
-                          child: IgnorePointer(
-                            ignoring: !isEditable,
-                            child: TextField(
-                              style: const TextStyle(fontSize: 18),
-                              controller: controllerName,
-                              decoration: const InputDecoration(
-                                labelText: 'Nome',
-                              ),
-                            ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Nome",
+                            style: TextStyle(
+                                fontSize: 14.0, color: Colors.grey[600]),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: computeWidth() / 1.1,
-                          child: IgnorePointer(
-                            ignoring: !isEditable,
-                            child: DropdownButton<ArticleColor>(
-                              menuMaxHeight: 250,
-                              value: dropdownColorValue,
-                              items: colorItems
-                                  .map(
-                                    (map) => DropdownMenuItem<ArticleColor>(
-                                      value: map,
-                                      child: Text(map.name),
-                                    ),
-                                  )
-                                  .toList(),
-                              onChanged: (ArticleColor? value) {
-                                setState(() {
-                                  dropdownColorValue = value;
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: computeWidth() / 1.1,
-                          child: IgnorePointer(
-                            ignoring: !isEditable,
-                            child: TextField(
-                              controller: controllerCost,
-                              style: const TextStyle(fontSize: 18),
-                              decoration: const InputDecoration(
-                                labelText: 'Costo',
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: computeWidth() / 1.1,
-                          child: IgnorePointer(
-                            ignoring: !isEditable,
-                            child: DropdownButton<ArticleCategory>(
-                              menuMaxHeight: 250,
-                              value: dropdownCategoryValue,
-                              items: categoryItems
-                                  .map(
-                                    (map) => DropdownMenuItem<ArticleCategory>(
-                                      value: map,
-                                      child: Text(
-                                        map.name.length > 30
-                                            ? "${map.name.substring(0, 30)}..."
-                                            : map.name,
-                                        overflow: TextOverflow.ellipsis,
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: computeWidth() / 1.1,
+                                child: IgnorePointer(
+                                  ignoring: !isEditable,
+                                  child: TextField(
+                                    style: const TextStyle(fontSize: 18),
+                                    controller: controllerName,
+                                    decoration: const InputDecoration(
+                                      hintText: 'Inserisci testo',
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.orange),
                                       ),
                                     ),
-                                  )
-                                  .toList(),
-                              onChanged: (ArticleCategory? value) {
-                                setState(() {
-                                  dropdownCategoryValue = value;
-                                });
-                              },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 4.0),
+                            child: Text(
+                              "Colore",
+                              style: TextStyle(
+                                  fontSize: 14.0, color: Colors.grey[600]),
                             ),
                           ),
-                        ),
-                      ],
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: computeWidth() / 1.1,
+                                child: IgnorePointer(
+                                  ignoring: !isEditable,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: DropdownButtonHideUnderline(
+                                              child:
+                                                  DropdownButton<ArticleColor>(
+                                                menuMaxHeight: 200,
+                                                value: dropdownColorValue,
+                                                items: colorItems
+                                                    .map(
+                                                      (map) => DropdownMenuItem<
+                                                          ArticleColor>(
+                                                        value: map,
+                                                        child: Text(map.name),
+                                                      ),
+                                                    )
+                                                    .toList(),
+                                                onChanged:
+                                                    (ArticleColor? value) {
+                                                  setState(() {
+                                                    dropdownColorValue = value;
+                                                  });
+                                                },
+                                                hint: Text(
+                                                    'Seleziona un\'opzione'),
+                                                isExpanded: true,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Divider(
+                                          color: Colors.black, height: 1.0),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 4.0),
+                            child: Text(
+                              "Costo",
+                              style: TextStyle(
+                                  fontSize: 14.0, color: Colors.grey[600]),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: computeWidth() / 1.1,
+                                child: IgnorePointer(
+                                  ignoring: !isEditable,
+                                  child: TextField(
+                                    controller: controllerCost,
+                                    style: const TextStyle(fontSize: 18),
+                                    decoration: const InputDecoration(
+                                      hintText: 'Inserisci testo',
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.orange),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 4.0),
+                            child: Text(
+                              "Categoria",
+                              style: TextStyle(
+                                  fontSize: 14.0, color: Colors.grey[600]),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: computeWidth() / 1.1,
+                                child: IgnorePointer(
+                                  ignoring: !isEditable,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: DropdownButtonHideUnderline(
+                                              child: DropdownButton<
+                                                  ArticleCategory>(
+                                                menuMaxHeight: 200,
+                                                value: dropdownCategoryValue,
+                                                items: categoryItems
+                                                    .map(
+                                                      (map) => DropdownMenuItem<
+                                                          ArticleCategory>(
+                                                        value: map,
+                                                        child: Text(map.name),
+                                                      ),
+                                                    )
+                                                    .toList(),
+                                                onChanged:
+                                                    (ArticleCategory? value) {
+                                                  setState(() {
+                                                    dropdownCategoryValue =
+                                                        value;
+                                                  });
+                                                },
+                                                hint: Text(
+                                                    'Seleziona un\'opzione'),
+                                                isExpanded: true,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Divider(
+                                          color: Colors.black, height: 1.0),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     Center(
                       child: Padding(

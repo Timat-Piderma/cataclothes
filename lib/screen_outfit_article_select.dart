@@ -1,7 +1,7 @@
 import 'package:cataclothes/screen_add_photo_outfit_preview.dart';
 import 'package:flutter/material.dart';
 
-import 'ItemGridArticleSelect.dart';
+import 'item_grid_article_select.dart';
 import 'article.dart';
 import 'category_article.dart';
 import 'custom_searchbar.dart';
