@@ -57,6 +57,10 @@ class DataManager extends ChangeNotifier {
 
   void _addWishlistArticle(Article item) {
     _wishlistArticles.add(item);
+
+    if (!allArticlesCategories.contains(item.articleCategory)) {
+      _allArticlesCategories.add(item.articleCategory!);
+    }
     notifyListeners();
   }
 
