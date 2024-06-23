@@ -77,12 +77,12 @@ class _ManageArticleCategoriesScreenState
       categories.add(a);
     }
 
-    categories.sort((a, b) => a.name.compareTo(b.name));
+    categories.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
     String prec = '';
 
     for (ArticleCategory c in categories) {
-      if (res.isEmpty || c.name[0] != prec) {
+      if (res.isEmpty || c.name[0].toLowerCase() != prec) {
         res.add(const Divider());
         res.add(Padding(
           padding: const EdgeInsets.only(left: 10),
@@ -107,9 +107,12 @@ class _ManageArticleCategoriesScreenState
               ),
             ],
           )));
-      prec = c.name[0];
+      prec = c.name[0].toLowerCase();
     }
 
+    res.add(const SizedBox(
+      height: 100,
+    ));
     return res;
   }
 

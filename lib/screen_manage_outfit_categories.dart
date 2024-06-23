@@ -40,7 +40,7 @@ class _ManageOutfitCategoriesScreenState
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: AppBar(
-            title: Text("Gestisci Categorie Outfit"),
+            title: const Text("Gestisci Categorie Outfit"),
             backgroundColor: Colors.tealAccent,
           ),
         ),
@@ -52,7 +52,7 @@ class _ManageOutfitCategoriesScreenState
         ),
         body: SingleChildScrollView(
           physics: NeverScrollableScrollPhysics(),
-          child: Container(
+          child: SizedBox(
             height: computeHeight(),
             child: Column(children: [
               Expanded(
@@ -79,12 +79,12 @@ class _ManageOutfitCategoriesScreenState
       categories.add(o);
     }
 
-    categories.sort((a, b) => a.name.compareTo(b.name));
+    categories.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
     String prec = '';
 
     for (OutfitCategory c in categories) {
-      if (res.isEmpty || c.name[0] != prec) {
+      if (res.isEmpty || c.name[0].toLowerCase() != prec) {
         res.add(const Divider());
         res.add(Padding(
           padding: const EdgeInsets.only(left: 10),
@@ -96,7 +96,7 @@ class _ManageOutfitCategoriesScreenState
         res.add(const Divider());
       }
       res.add(Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             children: [
               Text(c.name, style: Theme.of(context).textTheme.bodyLarge),
@@ -109,8 +109,12 @@ class _ManageOutfitCategoriesScreenState
               ),
             ],
           )));
-      prec = c.name[0];
+      prec = c.name[0].toLowerCase();
     }
+
+    res.add(const SizedBox(
+      height: 100,
+    ));
 
     return res;
   }
@@ -161,8 +165,8 @@ class _ManageOutfitCategoriesScreenState
     DataManager().addOutfitCategory(OutfitCategory(name: name));
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('Categoria aggiunta con successo'),
+      const SnackBar(
+        content: Text('Categoria aggiunta con successo'),
       ),
     );
   }
@@ -173,9 +177,8 @@ class _ManageOutfitCategoriesScreenState
     for (Outfit o in DataManager.getAllOutfits()) {
       if (o.outfitCategory == toDelete) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content:
-                const Text('Impossibile eliminare una categoria non vuota'),
+          const SnackBar(
+            content: Text('Impossibile eliminare una categoria non vuota'),
           ),
         );
         return;
