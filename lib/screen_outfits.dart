@@ -40,65 +40,72 @@ class _OutfitScreenState extends State<OutfitsScreen> {
   Widget build(BuildContext context) {
     return Consumer<DataManager>(
       builder: (context, manager, child) {
-        return Scaffold(
-            floatingActionButton: FloatingActionButton(
-              shape: const CircleBorder(eccentricity: 1),
-              backgroundColor: Colors.amberAccent,
-              child: const Icon(Icons.add, color: Colors.black, size: 40),
-              onPressed: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return ScreenOutfitArticleSelect();
-                    },
-                  ),
-                ).then((value) => {
-                      setState(() {
-                        filter = null;
-                        filteredOutfits = DataManager().allOutfits;
-                      })
-                    })
-              },
-            ),
-            body: SingleChildScrollView(
-              child: Container(
-                height: computeHeight(),
-                child: Column(children: [
-                  Expanded(
-                      flex: 2,
-                      child: CustomSearchBar(func: updateSearchResult)),
-                  Expanded(
-                    flex: 3,
-                    child: ItemHorizontalList(
-                        items: buildWidgets(getFilterItems()),
-                        type: 0,
-                        ),
-                  ),
-                  const Divider(),
-                  Expanded(
-                    flex: 28,
-                    child: ItemGrid(
-                      selectable: false,
-                      items: filteredOutfits,
-                      type: 0,
-                      func: (Outfit out) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return OutfitDetail(outfit: out);
-                            },
-                          ),
-                        ).then((value) => setState(() {
-                              updateSearchResult("");
-                            }));
-                      },
-                    ),
-                  ),
-                ]),
+        return Stack(
+          children: [
+            Column(children: [
+              Expanded(
+                  flex: 1, child: CustomSearchBar(func: updateSearchResult)),
+              Expanded(
+                flex: 1,
+                child: ItemHorizontalList(
+                  items: buildWidgets(getFilterItems()),
+                  type: 0,
+                ),
               ),
-            ));
+              const Divider(),
+              Expanded(
+                flex: 8,
+                child: ItemGrid(
+                  selectable: false,
+                  items: filteredOutfits,
+                  type: 0,
+                  func: (Outfit out) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return OutfitDetail(outfit: out);
+                        },
+                      ),
+                    ).then((value) => setState(() {
+                          updateSearchResult("");
+                        }));
+                  },
+                ),
+              ),
+            ]),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const ScreenOutfitArticleSelect();
+                        },
+                      ),
+                    ).then((value) => {
+                          setState(() {
+                            filter = null;
+                            filteredOutfits = DataManager().allOutfits;
+                          })
+                        });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: const CircleBorder(),
+                    padding: EdgeInsets.all(15),
+                    backgroundColor: Colors.amberAccent, // <-- Button color
+                    foregroundColor: Colors.grey, // <-- Splash color
+                  ),
+                  child: const Icon(Icons.add, color: Colors.black),
+                ),
+              ),
+            ),
+          ],
+        );
       },
     );
   }
