@@ -9,14 +9,14 @@ class Outfit extends Item {
   bool isFavourite = false;
   OutfitCategory? outfitCategory;
   List<Article>? articles;
-  String stagione = "";
-  String occasione = "";
+  String season = "";
+  String occasion = "";
 
   Outfit({
     super.image = "",
     this.cost = "",
-    this.stagione = "",
-    this.occasione = "",
+    this.season = "",
+    this.occasion = "",
     super.name = "",
     this.isFavourite = false,
     this.outfitCategory,
