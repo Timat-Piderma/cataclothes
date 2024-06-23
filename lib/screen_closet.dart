@@ -26,7 +26,10 @@ class ClosetScreen extends StatefulWidget {
 class _ClosetScreenState extends State<ClosetScreen> {
   ArticleCategory? filter;
   ArticleCategory favouriteFilter = ArticleCategory(name: "fav");
-  List<Article> filteredArticles = DataManager().allArticles;
+  ArticleCategory wishlistFilter = ArticleCategory(name: "wish");
+  List<Article> filteredArticles =
+      DataManager().wishlistArticles + DataManager().allArticles;
+
   XFile? _pickedFile;
   CroppedFile? _croppedFile;
 
@@ -55,14 +58,15 @@ class _ClosetScreenState extends State<ClosetScreen> {
                 _pickImageFromGallery().then((value) => {
                       setState(() {
                         filter = null;
-                        filteredArticles = DataManager().allArticles;
+                        filteredArticles = DataManager().allArticles +
+                            DataManager().wishlistArticles;
                       })
                     })
               },
             ),
             body: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
-              child: Container(
+              child: SizedBox(
                 height: computeHeight(),
                 child: Column(children: [
                   Expanded(
@@ -153,6 +157,37 @@ class _ClosetScreenState extends State<ClosetScreen> {
             )),
       ),
     ));
+    res.add(AspectRatio(
+      aspectRatio: 1,
+      child: GestureDetector(
+        onTap: () {
+          setFilter(wishlistFilter);
+        },
+        child: Container(
+            width: double.infinity,
+            child: Column(
+              children: [
+                Expanded(
+                  child: LayoutBuilder(builder: (context, constraints) {
+                    return ClipRRect(
+                      child: Container(
+                        width: constraints.maxHeight,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(color: Colors.blueGrey, width: 3),
+                        ),
+                        child: const Icon(Icons.star),
+                      ),
+                    );
+                  }),
+                ),
+                const Text("Wishlist",
+                    maxLines: 1, overflow: TextOverflow.ellipsis),
+              ],
+            )),
+      ),
+    ));
+
     return res;
   }
 
@@ -172,14 +207,18 @@ class _ClosetScreenState extends State<ClosetScreen> {
 
       List<Article> res = [];
       if (filter != null) {
-        if (filter!.name != "fav") {
-          res.addAll(DataManager()
-              .allArticles
-              .where((element) => element.articleCategory == filter));
-        } else {
+        if (filter!.name == "fav") {
           res.addAll(DataManager()
               .allArticles
               .where((element) => element.isFavourite));
+        } else {
+          if (filter!.name == "wish") {
+            res.addAll(DataManager().wishlistArticles);
+          } else {
+            res.addAll(
+                (DataManager().allArticles + DataManager().wishlistArticles)
+                    .where((element) => element.articleCategory == filter));
+          }
         }
         setState(() {
           filteredArticles = res;
@@ -188,7 +227,8 @@ class _ClosetScreenState extends State<ClosetScreen> {
     } else {
       setState(() {
         filter = null;
-        filteredArticles = DataManager().allArticles;
+        filteredArticles =
+            DataManager().allArticles + DataManager().wishlistArticles;
       });
     }
   }
@@ -247,9 +287,8 @@ class _ClosetScreenState extends State<ClosetScreen> {
 
   void updateSearchResult(String query) {
     List<Article> result = query.isEmpty
-        ? DataManager().allArticles
-        : DataManager()
-            .allArticles
+        ? DataManager().allArticles + DataManager().wishlistArticles
+        : (DataManager().allArticles + DataManager().wishlistArticles)
             .where((element) =>
                 element.name.toLowerCase().contains(query.toLowerCase()))
             .toList();

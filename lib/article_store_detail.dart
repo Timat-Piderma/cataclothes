@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cataclothes/data_manager.dart';
 import 'package:flutter/material.dart';
 import 'article.dart';
 import 'article_store.dart';
@@ -58,14 +59,49 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
         ),
       ),
 
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Colors.tealAccent,
-        label: Text(
-          "Aggiungi alla wishlist",
-          style: TextStyle(color: Colors.black, fontSize: 20),
-        ),
-        onPressed: () => {},
-      ),
+      floatingActionButton: widget.article.isWishlist
+          ? FloatingActionButton.extended(
+              backgroundColor: Colors.redAccent,
+              label: Text(
+                "Rimuovi dalla wishlist",
+                style: TextStyle(color: Colors.black, fontSize: 20),
+              ),
+              onPressed: () => {
+                DataManager().updateWishlistArticlesList(
+                    Article(
+                      name: widget.article.name,
+                    ),
+                    false),
+                setState(() {
+                  DataManager()
+                      .updateWishlistArticleValue(widget.article, false);
+                })
+              },
+            )
+          : FloatingActionButton.extended(
+              backgroundColor: Colors.tealAccent,
+              label: Text(
+                "Aggiungi alla wishlist",
+                style: TextStyle(color: Colors.black, fontSize: 20),
+              ),
+              onPressed: () => {
+                DataManager().updateWishlistArticlesList(
+                    Article(
+                      name: widget.article.name,
+                      color: widget.article.color,
+                      image: widget.article.image,
+                      cost: widget.article.cost,
+                      articleCategory: widget.article.articleCategory,
+                      brand: widget.article.brand,
+                      taglia: widget.article.taglia,
+                    ),
+                    true),
+                setState(() {
+                  DataManager()
+                      .updateWishlistArticleValue(widget.article, true);
+                })
+              },
+            ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 

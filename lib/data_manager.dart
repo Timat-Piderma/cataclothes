@@ -11,6 +11,7 @@ class DataManager extends ChangeNotifier {
   final List<Article> _allArticles = SampleData.allArticles;
   final List<Outfit> _allOutfits = SampleData.allOutfits;
   final List<Article> _favouriteArticles = SampleData.favouriteArticles;
+  final List<Article> _wishlistArticles = SampleData.wishlistArticles;
   final List<Outfit> _favouriteOutfits = SampleData.favouriteOutfits;
   final List<ArticleCategory> _allArticlesCategories =
       SampleData.allArticlesCategories;
@@ -24,6 +25,8 @@ class DataManager extends ChangeNotifier {
   List<Outfit> get allOutfits => List.unmodifiable(_allOutfits);
 
   List<Article> get favouriteArticles => List.unmodifiable(_favouriteArticles);
+
+  List<Article> get wishlistArticles => List.unmodifiable(_wishlistArticles);
 
   List<Outfit> get favouriteOutfits => List.unmodifiable(_favouriteOutfits);
 
@@ -44,6 +47,16 @@ class DataManager extends ChangeNotifier {
 
   void _addFavouriteArticle(Article item) {
     _favouriteArticles.add(item);
+    notifyListeners();
+  }
+
+  void _deleteWishlistArticle(int index) {
+    _wishlistArticles.removeAt(index);
+    notifyListeners();
+  }
+
+  void _addWishlistArticle(Article item) {
+    _wishlistArticles.add(item);
     notifyListeners();
   }
 
@@ -105,21 +118,30 @@ class DataManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateFavouriteArticlesList(Article item, bool newValue) {
-    if (newValue) {
-      _addFavouriteArticle(item);
-    } else {
-      final int favouriteArticleIndex =
-          _favouriteArticles.indexWhere((element) => element.name == item.name);
-      _deleteFavouriteArticle(favouriteArticleIndex);
-    }
-  }
-
   void updateFavouriteArticleValue(Article item, bool newValue) {
     final int allArticlesIndex = _allArticles.indexOf(item);
 
     if (allArticlesIndex != -1) {
       _allArticles[allArticlesIndex].isFavourite = newValue;
+    }
+    notifyListeners();
+  }
+
+  void updateWishlistArticlesList(Article item, bool newValue) {
+    if (newValue) {
+      _addWishlistArticle(item);
+    } else {
+      final int wishlistArticleIndex =
+          _wishlistArticles.indexWhere((element) => element.name == item.name);
+      _deleteWishlistArticle(wishlistArticleIndex);
+    }
+  }
+
+  void updateWishlistArticleValue(ArticleStore item, bool newValue) {
+    final int allArticlesIndex = _allStoreArticles.indexOf(item);
+
+    if (allArticlesIndex != -1) {
+      _allStoreArticles[allArticlesIndex].isWishlist = newValue;
     }
     notifyListeners();
   }

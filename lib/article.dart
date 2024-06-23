@@ -10,11 +10,15 @@ class Article extends Item {
   bool isFavourite = false;
   ArticleColor? color;
   ArticleCategory? articleCategory;
+  String brand = "";
+  String taglia = "";
 
   Article({
     super.image = "",
     super.name = "",
     this.cost = "",
+    this.taglia = "",
+    this.brand = "",
     this.isFavourite = false,
     this.color,
     this.articleCategory,

@@ -61,6 +61,8 @@ class SampleData {
 
   static List<Article> favouriteArticles = [];
 
+  static List<Article> wishlistArticles = [];
+
   static ArticleStore cappello1 = ArticleStore(
     name: 'Berretto',
     image: 'assets/articles/store/berretto.jpg',
