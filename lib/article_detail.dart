@@ -32,7 +32,6 @@ class _ArticleDetailState extends State<ArticleDetail>
   ArticleCategory? dropdownCategoryValue;
 
   bool _isFavourited = false;
-  late TabController _tabController;
 
   @override
   void initState() {
@@ -48,12 +47,6 @@ class _ArticleDetailState extends State<ArticleDetail>
     dropdownCategoryValue = widget.article.articleCategory;
 
     _isFavourited = widget.article.isFavourite;
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   double computeWidth() {

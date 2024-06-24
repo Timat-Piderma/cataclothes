@@ -10,9 +10,8 @@ import 'article.dart';
 import 'article_detail.dart';
 import 'category_article.dart';
 import 'data_manager.dart';
-import 'item_bubble.dart';
+import 'filter_horizontal_list.dart';
 import 'item_grid.dart';
-import 'item_horizontal_list.dart';
 
 class ClosetScreen extends StatefulWidget {
   const ClosetScreen({
@@ -25,8 +24,8 @@ class ClosetScreen extends StatefulWidget {
 
 class _ClosetScreenState extends State<ClosetScreen> {
   ArticleCategory? filter;
-  ArticleCategory favouriteFilter = ArticleCategory(name: "fav");
-  ArticleCategory wishlistFilter = ArticleCategory(name: "wish");
+  ArticleCategory favouriteFilter = ArticleCategory(name: "Preferiti");
+  ArticleCategory wishlistFilter = ArticleCategory(name: "Wishlist");
   List<Article> filteredArticles =
       DataManager().wishlistArticles + DataManager().allArticles;
 
@@ -58,7 +57,7 @@ class _ClosetScreenState extends State<ClosetScreen> {
                 )),
             Expanded(
               flex: 1,
-              child: ItemHorizontalList(
+              child: FilterHorizontalList(
                 items: buildWidgets(getFilterItems()),
                 type: 0,
               ),
@@ -113,84 +112,23 @@ class _ClosetScreenState extends State<ClosetScreen> {
     );
   }
 
-  List<Widget> buildWidgets(List<Article> items) {
-    List<Widget> res = [];
+  List<ItemBubble> buildWidgets(List<Article> items) {
+    List<ItemBubble> res = [];
 
     for (Article a in items) {
-      res.add(AspectRatio(
-        aspectRatio: 1,
-        child: GestureDetector(
-          onTap: () {
-            setFilter(a.articleCategory!);
-          },
-          child: SizedBox(
-            width: double.infinity,
-            child: ItemBubble(item: a),
-          ),
-        ),
-      ));
+      res.add(ItemBubble(item: a, func: setFilter));
     }
 
-    res.add(AspectRatio(
-      aspectRatio: 1,
-      child: GestureDetector(
-        onTap: () {
-          setFilter(favouriteFilter);
-        },
-        child: Container(
-            width: double.infinity,
-            child: Column(
-              children: [
-                Expanded(
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    return ClipRRect(
-                      child: Container(
-                        width: constraints.maxHeight,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          border: Border.all(color: Colors.blueGrey, width: 3),
-                        ),
-                        child: const Icon(Icons.favorite),
-                      ),
-                    );
-                  }),
-                ),
-                const Text("Preferiti",
-                    maxLines: 1, overflow: TextOverflow.ellipsis),
-              ],
-            )),
-      ),
-    ));
-    res.add(AspectRatio(
-      aspectRatio: 1,
-      child: GestureDetector(
-        onTap: () {
-          setFilter(wishlistFilter);
-        },
-        child: Container(
-            width: double.infinity,
-            child: Column(
-              children: [
-                Expanded(
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    return ClipRRect(
-                      child: Container(
-                        width: constraints.maxHeight,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          border: Border.all(color: Colors.blueGrey, width: 3),
-                        ),
-                        child: const Icon(Icons.star),
-                      ),
-                    );
-                  }),
-                ),
-                const Text("Wishlist",
-                    maxLines: 1, overflow: TextOverflow.ellipsis),
-              ],
-            )),
-      ),
-    ));
+    res.add(ItemBubble(
+        item: Article(
+            articleCategory: favouriteFilter,
+            image: "assets/icons/favourite_icon.png"),
+        func: setFilter));
+    res.add(ItemBubble(
+        item: Article(
+            articleCategory: wishlistFilter,
+            image: "assets/icons/wishlist_icon.png"),
+        func: setFilter));
 
     return res;
   }
@@ -211,12 +149,12 @@ class _ClosetScreenState extends State<ClosetScreen> {
 
       List<Article> res = [];
       if (filter != null) {
-        if (filter!.name == "fav") {
+        if (filter!.name == "Preferiti") {
           res.addAll(DataManager()
               .allArticles
               .where((element) => element.isFavourite));
         } else {
-          if (filter!.name == "wish") {
+          if (filter!.name == "Wishlist") {
             res.addAll(DataManager().wishlistArticles);
           } else {
             res.addAll(

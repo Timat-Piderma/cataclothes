@@ -120,14 +120,9 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
     for (Article a in items) {
       res.add(AspectRatio(
         aspectRatio: 1,
-        child: GestureDetector(
-          onTap: () {
-            setFilter(a.articleCategory!);
-          },
-          child: SizedBox(
-            width: double.infinity,
-            child: ItemBubble(item: a),
-          ),
+        child: SizedBox(
+          width: double.infinity,
+          child: ItemBubble(item: a ,func: setFilter),
         ),
       ));
     }

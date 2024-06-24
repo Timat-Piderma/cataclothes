@@ -206,7 +206,11 @@ class DataManager extends ChangeNotifier {
   }
 
   static Article? getFilterArticle(ArticleCategory cat) {
-    for (var element in SampleData.allArticles) {
+    List<Article> userArticles =
+        SampleData.allArticles + SampleData.wishlistArticles;
+    userArticles
+        .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+    for (var element in (userArticles)) {
       if (element.articleCategory == cat) {
         return element;
       }

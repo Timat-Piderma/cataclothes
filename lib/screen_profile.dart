@@ -67,7 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                     padding: EdgeInsets.only(top: 8, left: 15),
                     child: CircleAvatar(
                       backgroundColor: Colors.lightBlueAccent,
-                      foregroundImage: AssetImage("assets/pfp.png"),
+                      foregroundImage: AssetImage("assets/icons/pfp.png"),
                       radius: 80,
                     ),
                   ),

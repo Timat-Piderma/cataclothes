@@ -1,11 +1,10 @@
 import 'package:cataclothes/category_outfit.dart';
 import 'package:cataclothes/custom_searchbar.dart';
-import 'package:cataclothes/item_horizontal_list.dart';
 import 'package:cataclothes/screen_outfit_article_select.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'data_manager.dart';
-import 'item_bubble.dart';
+import 'filter_horizontal_list.dart';
 import 'item_grid.dart';
 import 'outfit.dart';
 import 'outfit_detail.dart';
@@ -21,7 +20,7 @@ class OutfitsScreen extends StatefulWidget {
 
 class _OutfitScreenState extends State<OutfitsScreen> {
   OutfitCategory? filter;
-  OutfitCategory favouriteFilter = OutfitCategory(name: "fav");
+  OutfitCategory favouriteFilter = OutfitCategory(name: "Preferiti");
   List<Outfit> filteredOutfits = DataManager().allOutfits;
 
   @override
@@ -47,7 +46,7 @@ class _OutfitScreenState extends State<OutfitsScreen> {
                   flex: 1, child: CustomSearchBar(func: updateSearchResult)),
               Expanded(
                 flex: 1,
-                child: ItemHorizontalList(
+                child: FilterHorizontalList(
                   items: buildWidgets(getFilterItems()),
                   type: 0,
                 ),
@@ -110,55 +109,16 @@ class _OutfitScreenState extends State<OutfitsScreen> {
     );
   }
 
-  List<Widget> buildWidgets(List<Outfit> items) {
-    List<Widget> res = [];
+  List<ItemBubble> buildWidgets(List<Outfit> items) {
+    List<ItemBubble> res = [];
 
     for (Outfit o in items) {
-      res.add(AspectRatio(
-        aspectRatio: 1,
-        child: GestureDetector(
-          onTap: () {
-            setFilter(o.outfitCategory!);
-          },
-          child: Container(
-            width: double.infinity,
-            child: ItemBubble(item: o),
-          ),
-        ),
-      ));
+      res.add(ItemBubble(item: o, func: setFilter));
     }
 
-    res.add(AspectRatio(
-      aspectRatio: 1,
-      child: GestureDetector(
-        onTap: () {
-          setFilter(favouriteFilter);
-        },
-        child: Container(
-            width: double.infinity,
-            child: Column(
-              children: [
-                Expanded(
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    return ClipRRect(
-                      child: Container(
-                        width: constraints.maxHeight,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          border: Border.all(color: Colors.blueGrey, width: 3),
-                        ),
-                        child: const Icon(Icons.favorite),
-                      ),
-                    );
-                  }),
-                ),
-                const Text("Preferiti",
-                    maxLines: 1, overflow: TextOverflow.ellipsis),
-              ],
-            )),
-      ),
-    ));
-
+    res.add(ItemBubble(
+        item: Outfit(outfitCategory: favouriteFilter, image: "assets/icons/favourite_icon.png"),
+        func: setFilter));
     return res;
   }
 
