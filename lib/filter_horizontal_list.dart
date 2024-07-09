@@ -32,31 +32,34 @@ class _FilterHorizontalListState extends State<FilterHorizontalList> {
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         final isSelected = selectedIndex == index;
-        return GestureDetector(
-          onTap: () {
-            widget.items[index].func(widget.items[index].item is Article
-                ? (widget.items[index].item as Article).articleCategory!
-                : (widget.items[index].item as Outfit).outfitCategory!);
-            if (selectedIndex == index) {
-              setState(() {
-                selectedIndex = -1;
-              });
-            } else {
-              setState(() {
-                selectedIndex = index;
-              });
-            }
-          },
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: Stack(
-              children: [
-                widget.items[index],
-                if (isSelected)
-                  Positioned.fill(
-                    child: ColoredBox(color: Colors.black.withOpacity(0.4)),
-                  ),
-              ],
+        return SizedBox(
+          width: 65,
+          child: GestureDetector(
+            onTap: () {
+              widget.items[index].func(widget.items[index].item is Article
+                  ? (widget.items[index].item as Article).articleCategory!
+                  : (widget.items[index].item as Outfit).outfitCategory!);
+              if (selectedIndex == index) {
+                setState(() {
+                  selectedIndex = -1;
+                });
+              } else {
+                setState(() {
+                  selectedIndex = index;
+                });
+              }
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: Stack(
+                children: [
+                  widget.items[index],
+                  if (isSelected)
+                    Positioned.fill(
+                      child: ColoredBox(color: Colors.black.withOpacity(0.4)),
+                    ),
+                ],
+              ),
             ),
           ),
         );

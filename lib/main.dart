@@ -178,31 +178,52 @@ class _CataClothesAppHomeState extends State<CataClothesAppHome> {
       ),
 
       bottomNavigationBar: NavigationBar(
+
         selectedIndex: _selectedTabIndex,
         onDestinationSelected: _onItemTapped,
-        destinations: const [
+        destinations:  [
           NavigationDestination(
-            icon: Icon(Icons.shopping_cart),
-            label: "Shop",
+            icon: _selectedTabIndex == 0
+                ? _buildSelectedIcon(Icons.shopping_cart)
+                : Icon(Icons.shopping_cart),
+            label: 'Shop',
           ),
           NavigationDestination(
-            icon: Icon(Icons.calendar_month),
+            icon: _selectedTabIndex == 1
+                ? _buildSelectedIcon(Icons.calendar_month)
+                : Icon(Icons.calendar_month),
             label: "Planner",
           ),
-          NavigationDestination(
-            icon: Icon(Icons.home),
+          NavigationDestination(            icon: _selectedTabIndex == 2
+              ? _buildSelectedIcon(Icons.home)
+              : Icon(Icons.home),
             label: "Home",
           ),
-          NavigationDestination(
-            icon: Icon(Icons.warehouse),
+          NavigationDestination(            icon: _selectedTabIndex == 3
+              ? _buildSelectedIcon(Icons.warehouse)
+              : Icon(Icons.warehouse),
             label: "Armadio",
           ),
-          NavigationDestination(
-            icon: Icon(Icons.hail),
+          NavigationDestination(            icon: _selectedTabIndex == 4
+              ? _buildSelectedIcon(Icons.hail)
+              : Icon(Icons.hail),
             label: "Outfits",
           ),
         ],
+
       ),
+    );
+  }
+
+
+  Widget _buildSelectedIcon(IconData icon) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: EdgeInsets.all(8),
+      child: Icon(icon, color: Colors.white),
     );
   }
 }

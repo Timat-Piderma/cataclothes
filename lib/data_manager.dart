@@ -186,7 +186,7 @@ class DataManager extends ChangeNotifier {
     return List.unmodifiable(SampleData.allOutfits);
   }
 
-  static Article getFeaturedItem() {
+  static ArticleStore getFeaturedItem() {
     // Simulate api request wait time
     // await Future.delayed(const Duration(milliseconds: 5000));
 
@@ -208,8 +208,6 @@ class DataManager extends ChangeNotifier {
   static Article? getFilterArticle(ArticleCategory cat) {
     List<Article> userArticles =
         SampleData.allArticles + SampleData.wishlistArticles;
-    userArticles
-        .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
     for (var element in (userArticles)) {
       if (element.articleCategory == cat) {
         return element;

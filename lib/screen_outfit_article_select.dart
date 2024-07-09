@@ -1,13 +1,12 @@
 import 'package:cataclothes/screen_add_photo_outfit_preview.dart';
 import 'package:flutter/material.dart';
 
+import 'filter_horizontal_list.dart';
 import 'item_grid_article_select.dart';
 import 'article.dart';
 import 'category_article.dart';
 import 'custom_searchbar.dart';
 import 'data_manager.dart';
-import 'item_bubble.dart';
-import 'item_horizontal_list.dart';
 
 class ScreenOutfitArticleSelect extends StatefulWidget {
   const ScreenOutfitArticleSelect();
@@ -78,20 +77,20 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
             height: computeHeight(),
             child: Column(children: [
               Expanded(
-                  flex: 2,
+                  flex: 1,
                   child: CustomSearchBar(
                     func: updateSearchResult,
                   )),
               Expanded(
-                flex: 3,
-                child: ItemHorizontalList(
+                flex: 1,
+                child: FilterHorizontalList(
                   items: buildWidgets(getFilterItems()),
                   type: 0,
                 ),
               ),
               const Divider(),
               Expanded(
-                flex: 27,
+                flex: 8,
                 child: ItemGridArticleSelect(
                     selectedItems: selectedArticles,
                     allItems: filteredArticles,
@@ -114,49 +113,18 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
     return res;
   }
 
-  List<Widget> buildWidgets(List<Article> items) {
-    List<Widget> res = [];
+  List<ItemBubble> buildWidgets(List<Article> items) {
+    List<ItemBubble> res = [];
 
     for (Article a in items) {
-      res.add(AspectRatio(
-        aspectRatio: 1,
-        child: SizedBox(
-          width: double.infinity,
-          child: ItemBubble(item: a ,func: setFilter),
-        ),
-      ));
+      res.add(ItemBubble(item: a, func: setFilter));
     }
 
-    res.add(AspectRatio(
-      aspectRatio: 1,
-      child: GestureDetector(
-        onTap: () {
-          setFilter(favouriteFilter);
-        },
-        child: Container(
-            width: double.infinity,
-            child: Column(
-              children: [
-                Expanded(
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    return ClipRRect(
-                      child: Container(
-                        width: constraints.maxHeight,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          border: Border.all(color: Colors.blueGrey, width: 3),
-                        ),
-                        child: const Icon(Icons.favorite),
-                      ),
-                    );
-                  }),
-                ),
-                const Text("Preferiti",
-                    maxLines: 1, overflow: TextOverflow.ellipsis),
-              ],
-            )),
-      ),
-    ));
+    res.add(ItemBubble(
+        item: Article(
+            articleCategory: favouriteFilter,
+            image: "assets/icons/favourite_icon.png"),
+        func: setFilter));
 
     return res;
   }

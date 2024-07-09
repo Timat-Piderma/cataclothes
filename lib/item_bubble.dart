@@ -23,6 +23,7 @@ class _ItemBubbleState extends State<ItemBubble> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+
       onTap: () {
         widget.func(widget.item is Article
             ? (widget.item as Article).articleCategory!

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'item.dart';
-import 'item_card_small.dart';
-import 'item_bubble.dart';
+
+import 'article_store.dart';
 
 class ItemCardHome extends StatefulWidget {
-  final Item item;
+  final ArticleStore item;
 
   const ItemCardHome({required this.item, Key? key}) : super(key: key);
 
@@ -53,7 +52,7 @@ class _ItemCardHomeState extends State<ItemCardHome> {
                   padding: EdgeInsets.all(8.0),
                   color: Colors.blue,
                   child: Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    widget.item.description,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 5,
                     style: Theme.of(context).textTheme.bodyMedium,
@@ -65,7 +64,7 @@ class _ItemCardHomeState extends State<ItemCardHome> {
                   Expanded(
                     child: Center(
                         child: Text(
-                      "9.99 €",
+                      widget.item.cost,
                       style: Theme.of(context).textTheme.bodySmall,
                     )),
                   ),

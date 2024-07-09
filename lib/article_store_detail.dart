@@ -62,7 +62,7 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
       floatingActionButton: widget.article.isWishlist
           ? FloatingActionButton.extended(
               backgroundColor: Colors.redAccent,
-              label: Text(
+              label: const Text(
                 "Rimuovi dalla wishlist",
                 style: TextStyle(color: Colors.black, fontSize: 20),
               ),
@@ -80,7 +80,7 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
             )
           : FloatingActionButton.extended(
               backgroundColor: Colors.tealAccent,
-              label: Text(
+              label: const Text(
                 "Aggiungi alla wishlist",
                 style: TextStyle(color: Colors.black, fontSize: 20),
               ),

@@ -494,6 +494,8 @@ class _ArticleDetailState extends State<ArticleDetail>
           ));
 
   void deleteArticle(Article a) {
-    DataManager().deleteArticle(DataManager.getAllArticles().indexOf(a));
+    DataManager.getAllArticles().contains(a)
+        ? DataManager().deleteArticle(DataManager.getAllArticles().indexOf(a))
+        : DataManager().updateWishlistArticlesList(a, false);
   }
 }

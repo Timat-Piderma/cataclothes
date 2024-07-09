@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: Text(
-                    "Non lo metti più? Mettilo su Vinted",
+                    "Jeans per oggi",
                     style: Theme.of(context).textTheme.titleSmall,
                     textAlign: TextAlign.left,
                   ),
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     flex: 9,
                     child: ItemHorizontalList(
-                        items: buildWidgets(DataManager.getAllArticles()),
+                        items: buildWidgets(DataManager.getAllArticles().where((element) => element.articleCategory != null && element.articleCategory!.name == "Jeans").toList()),
                         type: 1,
                         ))
               ],
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: Text(
-                    "Non lo metti più? Mettilo su Vinted",
+                    "Caldo? Vai Leggero",
                     style: Theme.of(context).textTheme.titleSmall,
                     textAlign: TextAlign.left,
                   ),
@@ -85,8 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     flex: 9,
                     child: ItemHorizontalList(
-                        items: buildWidgets(DataManager.getAllArticles()),
-                        type: 1,
+                      items: buildWidgets(DataManager.getAllArticles().where((element) => element.articleCategory != null && element.articleCategory!.name == "Camicia").toList()),
+                      type: 1,
                         ))
               ],
             ),
@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: Text(
-                    "Non lo metti più? Mettilo su Vinted",
+                    "Colore del Giorno: Giallo",
                     style: Theme.of(context).textTheme.titleSmall,
                     textAlign: TextAlign.left,
                   ),
@@ -108,8 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     flex: 9,
                     child: ItemHorizontalList(
-                        items: buildWidgets(DataManager.getAllArticles()),
-                        type: 1,
+                      items: buildWidgets(DataManager.getAllArticles().where((element) => element.color != null && element.color!.name == "Giallo").toList()),
+                      type: 1,
                     ))
               ],
             ),

@@ -272,7 +272,7 @@ class SampleData {
     jeans3
   ];
 
-  static List<Article> featuredItems = [
+  static List<ArticleStore> featuredItems = [
     maglietta3,
   ];
 

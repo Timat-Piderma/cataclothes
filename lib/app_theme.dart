@@ -117,10 +117,6 @@ class CataClothesTheme {
       navigationBarTheme: NavigationBarThemeData(
         indicatorColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        indicatorShape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.orange, width: 3),
-            borderRadius: BorderRadius.circular(16)
-        ),
       ),
       tabBarTheme: const TabBarTheme(
         labelColor: Colors.black,

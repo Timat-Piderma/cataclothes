@@ -23,6 +23,7 @@ class ClosetScreen extends StatefulWidget {
 }
 
 class _ClosetScreenState extends State<ClosetScreen> {
+
   ArticleCategory? filter;
   ArticleCategory favouriteFilter = ArticleCategory(name: "Preferiti");
   ArticleCategory wishlistFilter = ArticleCategory(name: "Wishlist");
@@ -35,6 +36,8 @@ class _ClosetScreenState extends State<ClosetScreen> {
   @override
   void initState() {
     setState(() {});
+
+
   }
 
   double computeHeight() {
@@ -100,7 +103,7 @@ class _ClosetScreenState extends State<ClosetScreen> {
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     backgroundColor: Colors.amberAccent, // <-- Button color
                     foregroundColor: Colors.grey, // <-- Splash color
                   ),
