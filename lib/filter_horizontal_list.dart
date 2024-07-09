@@ -50,7 +50,7 @@ class _FilterHorizontalListState extends State<FilterHorizontalList> {
               }
             },
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Stack(
                 children: [
                   widget.items[index],
@@ -72,7 +72,7 @@ class ItemBubble extends StatefulWidget {
   final Item item;
   final Function func;
 
-  ItemBubble({super.key, required this.item, required this.func});
+  const ItemBubble({super.key, required this.item, required this.func});
 
   @override
   State<ItemBubble> createState() {

@@ -1,5 +1,6 @@
 import 'article.dart';
 import 'article_detail.dart';
+import 'article_detail_home.dart';
 import 'item_card_home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -47,71 +48,89 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           //Start of items Row
-          SizedBox(
-            height: computeHeight() / 6,
-            child: Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    "Jeans per oggi",
-                    style: Theme.of(context).textTheme.titleSmall,
-                    textAlign: TextAlign.left,
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: SizedBox(
+              height: computeHeight() / 6,
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      "Jeans per oggi",
+                      style: Theme.of(context).textTheme.titleSmall,
+                      textAlign: TextAlign.left,
+                    ),
                   ),
-                ),
-                Expanded(
-                    flex: 9,
-                    child: ItemHorizontalList(
-                        items: buildWidgets(DataManager.getAllArticles().where((element) => element.articleCategory != null && element.articleCategory!.name == "Jeans").toList()),
-                        type: 1,
-                        ))
-              ],
+                  Expanded(
+                      flex: 9,
+                      child: ItemHorizontalList(
+                        items: buildWidgets(DataManager.getAllArticles()
+                            .where((element) =>
+                                element.articleCategory != null &&
+                                element.articleCategory!.name == "Jeans")
+                            .toList()),
+                      ))
+                ],
+              ),
             ),
           ),
 
           //Start of items Row
-          SizedBox(
-            height: computeHeight() / 6,
-            child: Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    "Caldo? Vai Leggero",
-                    style: Theme.of(context).textTheme.titleSmall,
-                    textAlign: TextAlign.left,
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: SizedBox(
+              height: computeHeight() / 6,
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      "Caldo? Vai Leggero",
+                      style: Theme.of(context).textTheme.titleSmall,
+                      textAlign: TextAlign.left,
+                    ),
                   ),
-                ),
-                Expanded(
-                    flex: 9,
-                    child: ItemHorizontalList(
-                      items: buildWidgets(DataManager.getAllArticles().where((element) => element.articleCategory != null && element.articleCategory!.name == "Camicia").toList()),
-                      type: 1,
-                        ))
-              ],
+                  Expanded(
+                      flex: 9,
+                      child: ItemHorizontalList(
+                        items: buildWidgets(DataManager.getAllArticles()
+                            .where((element) =>
+                                element.articleCategory != null &&
+                                element.articleCategory!.name == "Camicia")
+                            .toList()),
+                      ))
+                ],
+              ),
             ),
           ),
 
           //Start of items Row
-          SizedBox(
-            height: computeHeight() / 6,
-            child: Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    "Colore del Giorno: Giallo",
-                    style: Theme.of(context).textTheme.titleSmall,
-                    textAlign: TextAlign.left,
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: SizedBox(
+              height: computeHeight() / 6,
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      "Colore del Giorno: Giallo",
+                      style: Theme.of(context).textTheme.titleSmall,
+                      textAlign: TextAlign.left,
+                    ),
                   ),
-                ),
-                Expanded(
-                    flex: 9,
-                    child: ItemHorizontalList(
-                      items: buildWidgets(DataManager.getAllArticles().where((element) => element.color != null && element.color!.name == "Giallo").toList()),
-                      type: 1,
-                    ))
-              ],
+                  Expanded(
+                      flex: 9,
+                      child: ItemHorizontalList(
+                        items: buildWidgets(DataManager.getAllArticles()
+                            .where((element) =>
+                                element.color != null &&
+                                element.color!.name == "Giallo")
+                            .toList()),
+                      ))
+                ],
+              ),
             ),
           ),
         ]);
@@ -127,7 +146,18 @@ class _HomeScreenState extends State<HomeScreen> {
         aspectRatio: 1,
         child: Container(
           width: double.infinity,
-          child: ItemCardSmall(item: a, func: () {}),
+          child: ItemCardSmall(
+              item: a,
+              func: (Article art) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return ArticleDetailHome(article: art);
+                    },
+                  ),
+                );
+              }),
         ),
       ));
     }

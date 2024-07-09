@@ -87,11 +87,6 @@ class _CataClothesAppHomeState extends State<CataClothesAppHome> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Image.asset(
-                'assets/logo_alpha.png',
-                fit: BoxFit.cover,
-                height: 45.0,
-              ),
               Text(
                 widget.title,
                 style: Theme.of(context).textTheme.titleLarge,

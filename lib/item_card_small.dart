@@ -36,8 +36,13 @@ class _ItemCardSmallState extends State<ItemCardSmall> {
               ),
             ),
             child: ClipRect(
-              child: Image(
-                image: getImage(widget.item.image),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    image: getImage(widget.item.image),
+                  ),
+                ),
               ),
             )),
         Visibility(

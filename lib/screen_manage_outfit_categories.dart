@@ -79,7 +79,8 @@ class _ManageOutfitCategoriesScreenState
       categories.add(o);
     }
 
-    categories.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+    categories
+        .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
     String prec = '';
 
@@ -99,7 +100,9 @@ class _ManageOutfitCategoriesScreenState
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             children: [
-              Text(c.name, style: Theme.of(context).textTheme.bodyLarge),
+              Text(
+                  c.name.length > 30 ? "${c.name.substring(0, 30)}..." : c.name,
+                  style: Theme.of(context).textTheme.bodyLarge),
               Expanded(
                 child: Container(),
               ),

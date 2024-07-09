@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 class ItemHorizontalList extends StatefulWidget {
   final List<Widget> items;
-  final int type;
 
   const ItemHorizontalList(
-      {required this.items, required this.type, Key? key})
+      {required this.items, Key? key})
       : super(key: key);
 
   @override
