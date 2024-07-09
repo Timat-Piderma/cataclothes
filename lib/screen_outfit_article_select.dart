@@ -20,8 +20,8 @@ class ScreenOutfitArticleSelect extends StatefulWidget {
 class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
     with SingleTickerProviderStateMixin {
   ArticleCategory? filter;
-  ArticleCategory favouriteFilter = ArticleCategory(name: "fav");
-  List<Article> filteredArticles = DataManager().allArticles;
+  ArticleCategory favouriteFilter = ArticleCategory(name: "Preferiti");
+  List<Article> filteredArticles = DataManager().allArticles + DataManager().wishlistArticles;
   List<Article> selectedArticles = [];
 
   @override
@@ -135,13 +135,13 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
 
       List<Article> res = [];
       if (filter != null) {
-        if (filter!.name != "fav") {
-          res.addAll(DataManager()
-              .allArticles
+        if (filter!.name != "Preferiti") {
+          res.addAll((DataManager()
+              .allArticles  + DataManager().wishlistArticles)
               .where((element) => element.articleCategory == filter));
         } else {
-          res.addAll(DataManager()
-              .allArticles
+          res.addAll((DataManager()
+              .allArticles + DataManager().wishlistArticles)
               .where((element) => element.isFavourite));
         }
         setState(() {
@@ -151,7 +151,7 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
     } else {
       setState(() {
         filter = null;
-        filteredArticles = DataManager().allArticles;
+        filteredArticles = DataManager().allArticles + DataManager().wishlistArticles;
       });
     }
   }
@@ -170,9 +170,9 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
 
   void updateSearchResult(String query) {
     List<Article> result = query.isEmpty
-        ? DataManager().allArticles
-        : DataManager()
-            .allArticles
+        ? DataManager().allArticles  + DataManager().wishlistArticles
+        : (DataManager()
+            .allArticles + DataManager().wishlistArticles)
             .where((element) =>
                 element.name.toLowerCase().contains(query.toLowerCase()))
             .toList();

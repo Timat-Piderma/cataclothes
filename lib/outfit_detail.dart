@@ -24,10 +24,12 @@ class _OutfitDetailState extends State<OutfitDetail>
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCost = TextEditingController();
   TextEditingController controllerOccasion = TextEditingController();
-  TextEditingController controllerSeason = TextEditingController();
 
   List<OutfitCategory> categoryItems = DataManager.getAllOutfitsCategories();
   OutfitCategory? dropdownCategoryValue;
+
+  List<String> seasonItems = ["Estate", "Autunno", "Inverno", "Primavera"];
+  String? dropdownSeasonValue;
 
   bool _isFavourited = false;
   late TabController _tabController;
@@ -39,11 +41,9 @@ class _OutfitDetailState extends State<OutfitDetail>
 
     controllerName.text = widget.outfit.name;
     controllerCost.text = widget.outfit.cost;
-
-    controllerSeason.text = widget.outfit.season;
-
     controllerOccasion.text = widget.outfit.occasion;
 
+    dropdownSeasonValue = widget.outfit.season;
     dropdownCategoryValue = widget.outfit.outfitCategory;
   }
 
@@ -263,10 +263,13 @@ class _OutfitDetailState extends State<OutfitDetail>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Stagione",
-                            style: TextStyle(
-                                fontSize: 14.0, color: Colors.grey[600]),
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 4.0),
+                            child: Text(
+                              "Stagione",
+                              style: TextStyle(
+                                  fontSize: 14.0, color: Colors.grey[600]),
+                            ),
                           ),
                           Row(
                             children: [
@@ -274,19 +277,40 @@ class _OutfitDetailState extends State<OutfitDetail>
                                 width: computeWidth() / 1.1,
                                 child: IgnorePointer(
                                   ignoring: !isEditable,
-                                  child: TextField(
-                                    style: const TextStyle(fontSize: 18),
-                                    controller: controllerSeason,
-                                    decoration: const InputDecoration(
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.black),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: DropdownButtonHideUnderline(
+                                              child: DropdownButton<String>(
+                                                menuMaxHeight: 200,
+                                                value: dropdownSeasonValue,
+                                                items: seasonItems
+                                                    .map(
+                                                      (map) => DropdownMenuItem<
+                                                          String>(
+                                                        value: map,
+                                                        child: Text(map),
+                                                      ),
+                                                    )
+                                                    .toList(),
+                                                onChanged: (String? value) {
+                                                  setState(() {
+                                                    dropdownSeasonValue = value;
+                                                  });
+                                                },
+                                                isExpanded: true,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.orange),
-                                      ),
-                                    ),
+                                      const Divider(
+                                          color: Colors.black, height: 1.0),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -373,8 +397,7 @@ class _OutfitDetailState extends State<OutfitDetail>
                                   if (isEditable) {
                                     widget.outfit.name = controllerName.text;
                                     widget.outfit.cost = controllerCost.text;
-                                    widget.outfit.season =
-                                        controllerSeason.text;
+                                    widget.outfit.season = dropdownSeasonValue;
                                     widget.outfit.occasion =
                                         controllerOccasion.text;
                                     widget.outfit.outfitCategory =

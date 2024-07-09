@@ -24,9 +24,13 @@ class ScreenAddOutfitState extends State<ScreenAddOutfit>
     with SingleTickerProviderStateMixin {
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCost = TextEditingController();
+  TextEditingController controllerOccasion = TextEditingController();
 
   List<ArticleColor> colorItems = DataManager.getAllColors();
   ArticleColor? dropdownColorValue;
+
+  List<String> seasonItems = ["Estate", "Autunno", "Inverno", "Primavera"];
+  String? dropdownSeasonValue;
 
   List<OutfitCategory> categoryItems = DataManager.getAllOutfitsCategories();
   OutfitCategory? dropdownCategoryValue;
@@ -48,7 +52,7 @@ class ScreenAddOutfitState extends State<ScreenAddOutfit>
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
-          title: Text("Dettagli"),
+          title: const Text("Dettagli"),
           backgroundColor: Colors.tealAccent,
         ),
       ),
@@ -56,37 +60,58 @@ class ScreenAddOutfitState extends State<ScreenAddOutfit>
       floatingActionButton: Visibility(
         visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
         child: FloatingActionButton.extended(
-          backgroundColor: Colors.tealAccent,
-          label: Text(
+          backgroundColor:
+              dropdownCategoryValue == null ? Colors.grey : Colors.tealAccent,
+          label: const Text(
             "Salva",
             style: TextStyle(color: Colors.black, fontSize: 20),
           ),
-          onPressed: () => {
-            setState(() async {
-              Directory directory = await getApplicationDocumentsDirectory();
+          onPressed: dropdownCategoryValue == null
+              ? () {
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Ok")),
+                            ],
+                            content: Text(
+                              "Per continuare i seguenti campi devono essere compilati:\n${dropdownCategoryValue == null ? "  - Categoria\n" : " "}",
+                            ),
+                          ));
+                }
+              : () => {
+                    setState(() async {
+                      Directory directory =
+                          await getApplicationDocumentsDirectory();
 
-              String path = directory.path;
+                      String path = directory.path;
 
-              final String filePath =
-                  '$path/${DateTime.now().microsecondsSinceEpoch.toString()}.png';
+                      final String filePath =
+                          '$path/${DateTime.now().microsecondsSinceEpoch.toString()}.png';
 
-              final File itemImage = await widget.photo.copy(filePath);
-              debugPrint(itemImage.path);
+                      final File itemImage = await widget.photo.copy(filePath);
+                      debugPrint(itemImage.path);
 
-              final dataManager =
-                  Provider.of<DataManager>(context, listen: false);
-              dataManager.addOutfit(new Outfit(
-                name: controllerName.text,
-                outfitCategory: dropdownCategoryValue,
-                cost: controllerCost.text,
-                image: itemImage.path,
-              ));
+                      final dataManager =
+                          Provider.of<DataManager>(context, listen: false);
+                      dataManager.addOutfit(Outfit(
+                        name: controllerName.text,
+                        outfitCategory: dropdownCategoryValue,
+                        cost: controllerCost.text,
+                        image: itemImage.path,
+                        occasion: controllerOccasion.text,
+                        season: dropdownSeasonValue,
+                      ));
 
-              Navigator.pop(context);
-              Navigator.pop(context);
-              Navigator.pop(context);
-            })
-          },
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    })
+                  },
         ),
       ),
 
@@ -122,61 +147,218 @@ class ScreenAddOutfitState extends State<ScreenAddOutfit>
                 shrinkWrap: true,
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                 children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: TextField(
-                          style: TextStyle(fontSize: 18),
-                          controller: controllerName,
-                          decoration: InputDecoration(
-                            labelText: 'Nome',
-                          ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Nome",
+                          style: TextStyle(
+                              fontSize: 14.0, color: Colors.grey[600]),
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: TextField(
-                          controller: controllerCost,
-                          style: TextStyle(fontSize: 18),
-                          decoration: InputDecoration(
-                            labelText: 'Costo',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: computeWidth() / 1.1,
-                        child: DropdownButton<OutfitCategory>(
-                          value: dropdownCategoryValue,
-                          items: categoryItems
-                              .map(
-                                (map) => DropdownMenuItem<OutfitCategory>(
-                                  child: Text(
-                                    map.name.length > 30
-                                        ? map.name.substring(0, 30) + "..."
-                                        : map.name,
-                                    overflow: TextOverflow.ellipsis,
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: computeWidth() / 1.1,
+                              child: TextField(
+                                style: const TextStyle(fontSize: 18),
+                                controller: controllerName,
+                                decoration: const InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.black),
                                   ),
-                                  value: map,
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.orange),
+                                  ),
                                 ),
-                              )
-                              .toList(),
-                          onChanged: (OutfitCategory? value) {
-                            setState(() {
-                              dropdownCategoryValue = value;
-                            });
-                          },
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 4.0),
+                          child: Text(
+                            "Categoria",
+                            style: TextStyle(
+                                fontSize: 14.0, color: Colors.grey[600]),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: computeWidth() / 1.1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: DropdownButtonHideUnderline(
+                                          child: DropdownButton<OutfitCategory>(
+                                            menuMaxHeight: 200,
+                                            value: dropdownCategoryValue,
+                                            items: categoryItems
+                                                .map(
+                                                  (map) => DropdownMenuItem<
+                                                      OutfitCategory>(
+                                                    value: map,
+                                                    child: Text(map.name),
+                                                  ),
+                                                )
+                                                .toList(),
+                                            onChanged: (OutfitCategory? value) {
+                                              setState(() {
+                                                dropdownCategoryValue = value;
+                                              });
+                                            },
+                                            isExpanded: true,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Divider(
+                                      color: Colors.black, height: 1.0),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Costo",
+                          style: TextStyle(
+                              fontSize: 14.0, color: Colors.grey[600]),
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: computeWidth() / 1.1,
+                              child: TextField(
+                                style: const TextStyle(fontSize: 18),
+                                controller: controllerCost,
+                                decoration: const InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.black),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.orange),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 4.0),
+                          child: Text(
+                            "Stagione",
+                            style: TextStyle(
+                                fontSize: 14.0, color: Colors.grey[600]),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: computeWidth() / 1.1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: DropdownButtonHideUnderline(
+                                          child: DropdownButton<String>(
+                                            menuMaxHeight: 200,
+                                            value: dropdownSeasonValue,
+                                            items: seasonItems
+                                                .map(
+                                                  (e) =>
+                                                      DropdownMenuItem<String>(
+                                                    value: e,
+                                                    child: Text(e),
+                                                  ),
+                                                )
+                                                .toList(),
+                                            onChanged: (String? value) {
+                                              setState(() {
+                                                dropdownSeasonValue = value;
+                                              });
+                                            },
+                                            isExpanded: true,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const Divider(
+                                      color: Colors.black, height: 1.0),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Occasione",
+                          style: TextStyle(
+                              fontSize: 14.0, color: Colors.grey[600]),
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: computeWidth() / 1.1,
+                              child: TextField(
+                                style: const TextStyle(fontSize: 18),
+                                controller: controllerOccasion,
+                                decoration: const InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.black),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.orange),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

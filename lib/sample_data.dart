@@ -238,6 +238,7 @@ class SampleData {
     image: 'assets/outfits/outfit1.jpg',
     cost: "999.00 €",
     outfitCategory: co_casual,
+    season: "Estate",
     isFavourite: false,
   );
   static Outfit outfit2 = Outfit(
@@ -245,6 +246,7 @@ class SampleData {
     image: 'assets/outfits/outfit2.jpg',
     cost: "999.00 €",
     outfitCategory: co_casual,
+    season: "Estate",
     isFavourite: false,
   );
 

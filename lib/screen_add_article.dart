@@ -50,7 +50,7 @@ class ScreenAddArticleState extends State<ScreenAddArticle>
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
-          title: Text("Dettagli"),
+          title: const Text("Dettagli"),
           backgroundColor: Colors.tealAccent,
         ),
       ),
@@ -59,14 +59,14 @@ class ScreenAddArticleState extends State<ScreenAddArticle>
         visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
         child: FloatingActionButton.extended(
           backgroundColor:
-              controllerName.text.isEmpty || dropdownCategoryValue == null
+               dropdownCategoryValue == null
                   ? Colors.grey
                   : Colors.tealAccent,
-          label: Text(
+          label: const Text(
             "Salva",
             style: TextStyle(color: Colors.black, fontSize: 20),
           ),
-          onPressed: controllerName.text.isEmpty ||
+          onPressed:
                   dropdownCategoryValue == null
               ? () {
                   showDialog(
@@ -80,9 +80,7 @@ class ScreenAddArticleState extends State<ScreenAddArticle>
                                   child: const Text("Ok")),
                             ],
                             content: Text(
-                              "Per continuare i seguenti campi devono essere compilati:\n${controllerName.text.isEmpty
-                                      ? "  - Nome\n"
-                                      : " "}${dropdownCategoryValue == null
+                              "Per continuare i seguenti campi devono essere compilati:\n${dropdownCategoryValue == null
                                       ? "  - Categoria\n"
                                       : " "}",
                             ),

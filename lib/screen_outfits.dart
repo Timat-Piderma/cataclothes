@@ -138,7 +138,7 @@ class _OutfitScreenState extends State<OutfitsScreen> {
 
       List<Outfit> res = [];
       if (filter != null) {
-        if (filter!.name != "fav") {
+        if (filter!.name != "Preferiti") {
           res.addAll(DataManager()
               .allOutfits
               .where((element) => element.outfitCategory == filter));

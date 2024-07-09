@@ -9,7 +9,7 @@ class Outfit extends Item {
   bool isFavourite = false;
   OutfitCategory? outfitCategory;
   List<Article>? articles;
-  String season = "";
+  String? season = "";
   String occasion = "";
 
   Outfit({
