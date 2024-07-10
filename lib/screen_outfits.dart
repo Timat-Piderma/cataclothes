@@ -96,7 +96,7 @@ class _OutfitScreenState extends State<OutfitsScreen> {
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),
                     padding: EdgeInsets.all(15),
-                    backgroundColor: Colors.amberAccent, // <-- Button color
+                    backgroundColor: Color.fromARGB(255, 116, 167, 163), // <-- Button color
                     foregroundColor: Colors.grey, // <-- Splash color
                   ),
                   child: const Icon(Icons.add, color: Colors.black),

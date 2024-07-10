@@ -39,8 +39,8 @@ class _ArticleCardHomeState extends State<ArticleCardHome> {
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   height: 24,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).brightness == Brightness.dark ? Colors.black.withOpacity(0.6) : Colors.white.withOpacity(0.6),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
                   ),
                 ),
               ),

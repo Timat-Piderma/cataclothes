@@ -46,7 +46,6 @@ class ScreenAddPhotoArticlePreviewState
           preferredSize: const Size.fromHeight(60),
           child: AppBar(
             title: const Text("Ritaglia Foto"),
-            backgroundColor: Colors.tealAccent,
           ),
         ),
         body: Column(

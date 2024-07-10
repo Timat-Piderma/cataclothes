@@ -58,7 +58,6 @@ class _ArticleDetailHomeState extends State<ArticleDetailHome>
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
           title: const Text("Dettagli"),
-          backgroundColor: Colors.tealAccent,
         ),
       ),
       body: SingleChildScrollView(

@@ -67,7 +67,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
                                 padding: EdgeInsets.symmetric(vertical: 20),
                                 child: ListTile(
                                   title:
-                                      Text("12:00          Pranzo con Michele"),
+                                      Text("12:00 Pranzo con Michele"),
                                 ),
                               ),
                               Align(
@@ -78,7 +78,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
                                     border: Border.all(
-                                        color: Colors.black, width: 4),
+                                        color: Colors.blueGrey, width: 4),
                                     image: const DecorationImage(
                                       image: AssetImage(
                                           "assets/outfits/outfit1.jpg"),

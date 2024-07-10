@@ -51,7 +51,6 @@ class ScreenAddArticleState extends State<ScreenAddArticle>
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
           title: const Text("Dettagli"),
-          backgroundColor: Colors.tealAccent,
         ),
       ),
 
@@ -61,7 +60,7 @@ class ScreenAddArticleState extends State<ScreenAddArticle>
           backgroundColor:
                dropdownCategoryValue == null
                   ? Colors.grey
-                  : Colors.tealAccent,
+                  : Color.fromARGB(255, 116, 167, 163),
           label: const Text(
             "Salva",
             style: TextStyle(color: Colors.black, fontSize: 20),

@@ -42,14 +42,13 @@ class ScreenOutfitArticleSelectState extends State<ScreenOutfitArticleSelect>
           preferredSize: const Size.fromHeight(60),
           child: AppBar(
             title: Text("Seleziona Vestiti"),
-            backgroundColor: Colors.tealAccent,
           ),
         ),
         floatingActionButton: Visibility(
           visible: selectedArticles.isNotEmpty &&
               MediaQuery.of(context).viewInsets.bottom == 0.0,
           child: FloatingActionButton.extended(
-            backgroundColor: Colors.amber,
+            backgroundColor: Color.fromARGB(255, 116, 167, 163),
             label: Text(
               "Aggiungi ${selectedArticles.length} articoli",
               style: TextStyle(

@@ -83,7 +83,6 @@ class _CataClothesAppHomeState extends State<CataClothesAppHome> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
-          backgroundColor: Colors.tealAccent,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -166,59 +165,73 @@ class _CataClothesAppHomeState extends State<CataClothesAppHome> {
           ],
         ),
       ),
-
       body: IndexedStack(
         index: _selectedTabIndex,
         children: _pages,
       ),
-
-      bottomNavigationBar: NavigationBar(
-
-        selectedIndex: _selectedTabIndex,
-        onDestinationSelected: _onItemTapped,
-        destinations:  [
-          NavigationDestination(
-            icon: _selectedTabIndex == 0
-                ? _buildSelectedIcon(Icons.shopping_cart)
-                : Icon(Icons.shopping_cart),
-            label: 'Shop',
-          ),
-          NavigationDestination(
-            icon: _selectedTabIndex == 1
-                ? _buildSelectedIcon(Icons.calendar_month)
-                : Icon(Icons.calendar_month),
-            label: "Planner",
-          ),
-          NavigationDestination(            icon: _selectedTabIndex == 2
-              ? _buildSelectedIcon(Icons.home)
-              : Icon(Icons.home),
-            label: "Home",
-          ),
-          NavigationDestination(            icon: _selectedTabIndex == 3
-              ? _buildSelectedIcon(Icons.warehouse)
-              : Icon(Icons.warehouse),
-            label: "Armadio",
-          ),
-          NavigationDestination(            icon: _selectedTabIndex == 4
-              ? _buildSelectedIcon(Icons.hail)
-              : Icon(Icons.hail),
-            label: "Outfits",
-          ),
-        ],
-
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+            color: Colors.black,
+            border: Border(top: BorderSide(color: Colors.black, width: 1.0))),
+        child: NavigationBar(
+          selectedIndex: _selectedTabIndex,
+          onDestinationSelected: _onItemTapped,
+          destinations: [
+            NavigationDestination(
+              icon: _selectedTabIndex == 0
+                  ? _buildSelectedIcon(Icons.shopping_cart)
+                  : Icon(Icons.shopping_cart),
+              label: 'Shop',
+            ),
+            NavigationDestination(
+              icon: _selectedTabIndex == 1
+                  ? _buildSelectedIcon(Icons.calendar_month)
+                  : Icon(Icons.calendar_month),
+              label: "Planner",
+            ),
+            NavigationDestination(
+              icon: _selectedTabIndex == 2
+                  ? _buildSelectedIcon(Icons.home)
+                  : Icon(Icons.home),
+              label: "Home",
+            ),
+            NavigationDestination(
+              icon: _selectedTabIndex == 3
+                  ? _buildSelectedIconImage("assets/icons/tshirt_icon.png")
+                  : ImageIcon(AssetImage("assets/icons/tshirt_icon.png")),
+              label: "Armadio",
+            ),
+            NavigationDestination(
+              icon: _selectedTabIndex == 4
+                  ? _buildSelectedIconImage("assets/icons/coathanger_icon.png")
+                  : ImageIcon(AssetImage("assets/icons/coathanger_icon.png")),
+              label: "Outfits",
+            ),
+          ],
+        ),
       ),
     );
   }
 
-
   Widget _buildSelectedIcon(IconData icon) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: Color.fromARGB(255, 116, 167, 163),
         borderRadius: BorderRadius.circular(10),
       ),
       padding: EdgeInsets.all(8),
       child: Icon(icon, color: Colors.white),
+    );
+  }
+
+  Widget _buildSelectedIconImage(String icon) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, 116, 167, 163),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: EdgeInsets.all(8),
+      child: ImageIcon(AssetImage(icon), color: Colors.white),
     );
   }
 }

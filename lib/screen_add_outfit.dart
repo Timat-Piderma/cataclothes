@@ -53,7 +53,6 @@ class ScreenAddOutfitState extends State<ScreenAddOutfit>
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
           title: const Text("Dettagli"),
-          backgroundColor: Colors.tealAccent,
         ),
       ),
 
@@ -61,7 +60,7 @@ class ScreenAddOutfitState extends State<ScreenAddOutfit>
         visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
         child: FloatingActionButton.extended(
           backgroundColor:
-              dropdownCategoryValue == null ? Colors.grey : Colors.tealAccent,
+              dropdownCategoryValue == null ? Colors.grey : Color.fromARGB(255, 116, 167, 163),
           label: const Text(
             "Salva",
             style: TextStyle(color: Colors.black, fontSize: 20),

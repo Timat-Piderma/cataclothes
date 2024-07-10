@@ -12,7 +12,6 @@ class ItemCardHome extends StatefulWidget {
 }
 
 class _ItemCardHomeState extends State<ItemCardHome> {
-  Color cardColor = Colors.white;
 
   @override
   void initState() {
@@ -25,7 +24,7 @@ class _ItemCardHomeState extends State<ItemCardHome> {
       children: <Widget>[
         Expanded(
             child: Card(
-                color: cardColor,
+                color: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
                   side: const BorderSide(
@@ -50,7 +49,6 @@ class _ItemCardHomeState extends State<ItemCardHome> {
                 flex: 4,
                 child: Container(
                   padding: EdgeInsets.all(8.0),
-                  color: Colors.blue,
                   child: Text(
                     widget.item.description,
                     overflow: TextOverflow.ellipsis,

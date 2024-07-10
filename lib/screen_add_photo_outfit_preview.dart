@@ -66,7 +66,6 @@ class ScreenAddPhotoOutfitPreviewState
           preferredSize: const Size.fromHeight(60),
           child: AppBar(
             title: Text("Crea Outfit"),
-            backgroundColor: Colors.tealAccent,
           ),
         ),
         body: Column(

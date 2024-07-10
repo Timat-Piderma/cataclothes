@@ -22,6 +22,8 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerCost = TextEditingController();
   TextEditingController controllerCategory = TextEditingController();
+  TextEditingController controllerColor = TextEditingController();
+  TextEditingController controllerBrand = TextEditingController();
 
   bool _isFavourited = false;
   late TabController _tabController;
@@ -31,6 +33,8 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
     _isFavourited = widget.article.isFavourite;
     controllerName.text = widget.article.name;
     controllerCost.text = widget.article.cost;
+    controllerColor.text = widget.article.color!.name;
+    controllerBrand.text = widget.article.brand;
     controllerCategory.text = widget.article.articleCategory!.name;
   }
 
@@ -54,8 +58,7 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
-          title: Text("Dettagli"),
-          backgroundColor: Colors.tealAccent,
+          title: const Text("Dettagli"),
         ),
       ),
 
@@ -79,7 +82,7 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
               },
             )
           : FloatingActionButton.extended(
-              backgroundColor: Colors.tealAccent,
+              backgroundColor: Color.fromARGB(255, 116, 167, 163),
               label: const Text(
                 "Aggiungi alla wishlist",
                 style: TextStyle(color: Colors.black, fontSize: 20),
@@ -214,11 +217,11 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
                           child: IgnorePointer(
                             ignoring: true,
                             child: TextField(
-                              controller: controllerCost,
                               style: TextStyle(fontSize: 18),
                               readOnly: true,
+                              controller: controllerCategory,
                               decoration: InputDecoration(
-                                labelText: 'Costo',
+                                labelText: 'Categoria',
                               ),
                             ),
                           ),
@@ -232,16 +235,55 @@ class _ArticleStoreDetailState extends State<ArticleStoreDetail>
                           child: IgnorePointer(
                             ignoring: true,
                             child: TextField(
+                              controller: controllerBrand,
                               style: TextStyle(fontSize: 18),
                               readOnly: true,
-                              controller: controllerCategory,
                               decoration: InputDecoration(
-                                labelText: 'Categoria',
+                                labelText: 'Brand',
                               ),
                             ),
                           ),
                         ),
                       ],
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: computeWidth() / 1.1,
+                          child: IgnorePointer(
+                            ignoring: true,
+                            child: TextField(
+                              controller: controllerColor,
+                              style: TextStyle(fontSize: 18),
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                labelText: 'Colore',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: computeWidth() / 1.1,
+                          child: IgnorePointer(
+                            ignoring: true,
+                            child: TextField(
+                              controller: controllerCost,
+                              style: TextStyle(fontSize: 18),
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                labelText: 'Costo',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 80,
                     ),
                   ],
                 ),

@@ -67,8 +67,7 @@ class _OutfitDetailState extends State<OutfitDetail>
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
-          title: Text("Dettagli Outfit"),
-          backgroundColor: Colors.tealAccent,
+          title: const Text("Dettagli Outfit"),
         ),
       ),
 
@@ -83,7 +82,7 @@ class _OutfitDetailState extends State<OutfitDetail>
                       icon: Icon(_isFavourited
                           ? Icons.favorite
                           : Icons.favorite_border),
-                      color: Colors.orange,
+                      color: Colors.blueGrey,
                       onPressed: () {
                         setState(() {
                           _isFavourited = !_isFavourited;
@@ -101,7 +100,7 @@ class _OutfitDetailState extends State<OutfitDetail>
                   height: computeWidth() / 2,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black, width: 4),
+                    border: Border.all(color: Colors.blueGrey, width: 4),
                     image: DecorationImage(
                       image: getImage(widget.outfit.image),
                     ),
@@ -145,8 +144,9 @@ class _OutfitDetailState extends State<OutfitDetail>
                                             BorderSide(color: Colors.black),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.orange),
+                                        borderSide: BorderSide(
+                                          color: Colors.blueGrey,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -246,8 +246,9 @@ class _OutfitDetailState extends State<OutfitDetail>
                                             BorderSide(color: Colors.black),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.orange),
+                                        borderSide: BorderSide(
+                                          color: Colors.blueGrey,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -344,8 +345,9 @@ class _OutfitDetailState extends State<OutfitDetail>
                                             BorderSide(color: Colors.black),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.orange),
+                                        borderSide: BorderSide(
+                                          color: Colors.blueGrey,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -384,8 +386,8 @@ class _OutfitDetailState extends State<OutfitDetail>
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateColor.resolveWith(
                                     (states) => isEditable
-                                        ? Colors.red
-                                        : Colors.tealAccent),
+                                        ? Colors.blueGrey
+                                        : Color.fromARGB(255, 116, 167, 163)),
                               ),
                               child: Text(
                                 isEditable ? "Salva" : "Modifica",

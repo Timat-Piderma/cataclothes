@@ -104,7 +104,7 @@ class _ClosetScreenState extends State<ClosetScreen> {
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),
                     padding: const EdgeInsets.all(15),
-                    backgroundColor: Colors.amberAccent, // <-- Button color
+                    backgroundColor: Color.fromARGB(255, 116, 167, 163), // <-- Button color
                     foregroundColor: Colors.grey, // <-- Splash color
                   ),
                   child: const Icon(Icons.add, color: Colors.black),
@@ -213,10 +213,13 @@ class _ClosetScreenState extends State<ClosetScreen> {
         uiSettings: [
           AndroidUiSettings(
             toolbarTitle: 'Cropper',
-            toolbarColor: Colors.deepOrange,
-            toolbarWidgetColor: Colors.white,
+            toolbarColor:const Color.fromARGB(100, 8, 138, 127),
+            toolbarWidgetColor: Colors.black,
             initAspectRatio: CropAspectRatioPreset.square,
             lockAspectRatio: true,
+            activeControlsWidgetColor: Colors.grey,
+            backgroundColor: Colors.white,
+
           ),
         ],
       );

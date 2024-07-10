@@ -63,7 +63,6 @@ class _ArticleDetailState extends State<ArticleDetail>
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
           title: const Text("Dettagli"),
-          backgroundColor: Colors.tealAccent,
         ),
       ),
       body: SingleChildScrollView(
@@ -77,7 +76,7 @@ class _ArticleDetailState extends State<ArticleDetail>
                       icon: Icon(_isFavourited
                           ? Icons.favorite
                           : Icons.favorite_border),
-                      color: Colors.orange,
+                      color: Colors.blueGrey,
                       onPressed: () {
                         setState(() {
                           _isFavourited = !_isFavourited;
@@ -95,7 +94,7 @@ class _ArticleDetailState extends State<ArticleDetail>
                   height: computeWidth() / 2,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black, width: 4),
+                    border: Border.all(color: Colors.blueGrey, width: 4),
                     image: DecorationImage(
                       image: getImage(widget.article.image),
                     ),
@@ -139,8 +138,9 @@ class _ArticleDetailState extends State<ArticleDetail>
                                             BorderSide(color: Colors.black),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.orange),
+                                        borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                                100, 8, 138, 127)),
                                       ),
                                     ),
                                   ),
@@ -244,7 +244,7 @@ class _ArticleDetailState extends State<ArticleDetail>
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: Colors.orange),
+                                            BorderSide(color: Colors.blueGrey),
                                       ),
                                     ),
                                   ),
@@ -347,7 +347,7 @@ class _ArticleDetailState extends State<ArticleDetail>
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: Colors.orange),
+                                            BorderSide(color: Colors.blueGrey),
                                       ),
                                     ),
                                   ),
@@ -387,7 +387,7 @@ class _ArticleDetailState extends State<ArticleDetail>
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide:
-                                            BorderSide(color: Colors.orange),
+                                            BorderSide(color: Colors.blueGrey),
                                       ),
                                     ),
                                   ),
@@ -426,8 +426,8 @@ class _ArticleDetailState extends State<ArticleDetail>
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateColor.resolveWith(
                                     (states) => isEditable
-                                        ? Colors.red
-                                        : Colors.tealAccent),
+                                        ? Colors.blueGrey
+                                        : Color.fromARGB(255, 116, 167, 163)),
                               ),
                               child: Text(
                                 isEditable ? "Salva" : "Modifica",

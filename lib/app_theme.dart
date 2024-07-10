@@ -100,12 +100,12 @@ class CataClothesTheme {
       //   brightness: Brightness.light,
       // ),
       // colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
-      colorScheme: ColorScheme.light().copyWith(
-        primary: Colors.orange,
+      colorScheme: const ColorScheme.light().copyWith(
+        primary:Color.fromARGB(255, 116, 167, 163),
       ),
       appBarTheme: AppBarTheme(
         foregroundColor: Colors.black,
-        backgroundColor: Colors.transparent,// Color(0x12FFFFFF),
+        backgroundColor: const Color.fromARGB(100, 8, 138, 127),
         surfaceTintColor: Colors.transparent,
         titleTextStyle: lightTextTheme.titleMedium,
         elevation: 0,
@@ -114,15 +114,14 @@ class CataClothesTheme {
         foregroundColor: Colors.white,
         backgroundColor: Colors.black,
       ),
-      navigationBarTheme: NavigationBarThemeData(
+      navigationBarTheme: const NavigationBarThemeData(
         indicatorColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
       ),
-      tabBarTheme: const TabBarTheme(
-        labelColor: Colors.black,
-        unselectedLabelColor: Colors.black26,
-        indicator: UnderlineTabIndicator(
-          borderSide: BorderSide(width: 2.0, color: Colors.orange),
+      dialogTheme: DialogTheme(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
         ),
       ),
       switchTheme: SwitchThemeData(
@@ -157,69 +156,6 @@ class CataClothesTheme {
         }),
       ),
       textTheme: lightTextTheme,
-    );
-  }
-
-  static ThemeData dark() {
-    return ThemeData(
-      useMaterial3: true,
-      // colorScheme: ColorScheme.fromSwatch().copyWith(
-      //   primary: Colors.orange,
-      //   brightness: Brightness.dark,
-      // ),
-      colorScheme: ColorScheme.dark().copyWith(
-        primary: Colors.orange,
-      ),
-      appBarTheme: AppBarTheme(
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,
-        ),
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.transparent,// Color(0x12000000),
-        surfaceTintColor: Colors.transparent,// Color(0x12000000),
-        titleTextStyle: darkTextTheme.titleMedium,
-        elevation: 0,
-      ),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        foregroundColor: Colors.black,
-        backgroundColor: Colors.white,
-      ),
-      navigationBarTheme: NavigationBarThemeData(
-        indicatorColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        indicatorShape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.orange, width: 3),
-            borderRadius: BorderRadius.circular(16)
-        ),
-        iconTheme: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
-            return IconThemeData(color: Colors.white);
-          }
-          return null;
-        }),
-      ),
-      tabBarTheme: const TabBarTheme(
-        indicator: UnderlineTabIndicator(
-          borderSide: BorderSide(width: 2.0, color: Colors.orange),
-        ),
-      ),
-      switchTheme: SwitchThemeData(
-        thumbColor: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
-            return Colors.black;
-          }
-          return null;
-        }),
-      ),
-      chipTheme: ChipThemeData(
-        color: MaterialStateProperty.resolveWith((states) {
-          if (states.contains(MaterialState.selected)) {
-            return Colors.white;
-          }
-          return null;
-        }),
-      ),
-      textTheme: darkTextTheme,
     );
   }
 }

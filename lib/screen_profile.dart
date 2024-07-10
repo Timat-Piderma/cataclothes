@@ -53,7 +53,6 @@ class _ProfileScreenState extends State<ProfileScreen>
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
           title: const Text("Profilo"),
-          backgroundColor: Colors.tealAccent,
         ),
       ),
       body: SingleChildScrollView(

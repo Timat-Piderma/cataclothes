@@ -21,16 +21,8 @@ class _SettingsScreenState extends State<SettingsScreen>
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
-          title: Text("Impostazioni"),
-          backgroundColor: Colors.tealAccent,
+          title: const Text("Impostazioni"),
         ),
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(eccentricity: 1),
-        backgroundColor: Colors.amberAccent,
-        child: const Icon(Icons.add, color: Colors.black, size: 40),
-        onPressed: () => {},
       ),
 
       body: ListView(),

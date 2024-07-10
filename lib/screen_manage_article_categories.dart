@@ -39,12 +39,11 @@ class _ManageArticleCategoriesScreenState
           preferredSize: const Size.fromHeight(60),
           child: AppBar(
             title: const Text("Gestisci Categorie Vestiti"),
-            backgroundColor: Colors.tealAccent,
           ),
         ),
         floatingActionButton: FloatingActionButton(
           shape: const CircleBorder(eccentricity: 1),
-          backgroundColor: Colors.amberAccent,
+          backgroundColor: Color.fromARGB(255, 116, 167, 163),
           child: const Icon(Icons.add, color: Colors.black, size: 40),
           onPressed: () => {openDialog()},
         ),
